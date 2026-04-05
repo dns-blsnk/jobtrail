@@ -30,7 +30,7 @@ Foundation setup in progress:
 - `apps/web` and `apps/mobile` are placeholders
 - Docker structure is prepared under `infra/docker`
 
-## Docker API Runtime
+## Docker API Local
 
 Use Docker Compose from repository root:
 
@@ -46,6 +46,14 @@ Manual equivalent:
 
 ```bash
 docker compose up --build api postgres
+```
+
+Docker Compose uses the `dev` target from `apps/api/Dockerfile`.
+
+To build a production image later:
+
+```bash
+docker build -f apps/api/Dockerfile --target prod -t job-search-api:prod .
 ```
 
 ## Next Steps
