@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "turbo run dev",
     "dev:api": "pnpm --filter @job-search-tracker/api dev",
+    "docker:up": "docker compose up --build",
+    "docker:up:api": "docker compose up --build api",
+    "docker:down": "docker compose down",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck"

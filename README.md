@@ -30,6 +30,32 @@ Foundation setup in progress:
 - `apps/web` and `apps/mobile` are placeholders
 - Docker structure is prepared under `infra/docker`
 
+## Docker API Local
+
+Use Docker Compose from repository root:
+
+```bash
+# API + Postgres
+pnpm docker:up:api
+
+# stop containers
+pnpm docker:down
+```
+
+Manual equivalent:
+
+```bash
+docker compose up --build api postgres
+```
+
+Docker Compose uses the `dev` target from `apps/api/Dockerfile`.
+
+To build a production image later:
+
+```bash
+docker build -f apps/api/Dockerfile --target prod -t job-search-api:prod .
+```
+
 ## Next Steps
 
 1. Scaffold `apps/web` with FSD-ready structure.
