@@ -6,8 +6,13 @@
   "scripts": {
     "dev": "turbo run dev",
     "dev:api": "pnpm --filter @job-search-tracker/api dev",
+    "dev:mobile": "pnpm --filter @job-search-tracker/mobile dev",
+    "dev:mobile:ios": "pnpm --filter @job-search-tracker/mobile ios",
+    "dev:mobile:android": "pnpm --filter @job-search-tracker/mobile android",
+    "dev:mobile:web": "pnpm --filter @job-search-tracker/mobile web",
     "docker:up": "docker compose up --build",
     "docker:up:api": "docker compose up --build api",
+    "docker:up:mobile": "docker compose --profile mobile up --build mobile",
     "docker:down": "docker compose down",
     "build": "turbo run build",
     "lint": "turbo run lint",

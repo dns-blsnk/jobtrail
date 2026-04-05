@@ -56,6 +56,31 @@ To build a production image later:
 docker build -f apps/api/Dockerfile --target prod -t job-search-api:prod .
 ```
 
+## Mobile (Expo)
+
+Install dependencies from repository root:
+
+```bash
+pnpm install
+```
+
+Run Expo locally:
+
+```bash
+pnpm dev:mobile
+pnpm dev:mobile:ios
+pnpm dev:mobile:android
+pnpm dev:mobile:web
+```
+
+Optional Docker container for Expo dev server:
+
+```bash
+pnpm docker:up:mobile
+```
+
+Docker runs only the Expo dev server. iOS and Android simulators should be started on the host machine.
+
 ## Next Steps
 
 1. Scaffold `apps/web` with FSD-ready structure.
