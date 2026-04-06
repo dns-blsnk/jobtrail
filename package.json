@@ -12,7 +12,6 @@
     "dev:mobile:web": "pnpm --filter @job-search-tracker/mobile web",
     "docker:up": "docker compose up --build",
     "docker:up:api": "docker compose up --build api",
-    "docker:up:mobile": "docker compose --profile mobile up --build mobile",
     "docker:down": "docker compose down",
     "build": "turbo run build",
     "lint": "turbo run lint",
