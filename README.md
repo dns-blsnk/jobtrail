@@ -73,14 +73,6 @@ pnpm dev:mobile:android
 pnpm dev:mobile:web
 ```
 
-Optional Docker container for Expo dev server:
-
-```bash
-pnpm docker:up:mobile
-```
-
-Docker runs only the Expo dev server. iOS and Android simulators should be started on the host machine.
-
 ## Next Steps
 
 1. Scaffold `apps/web` with FSD-ready structure.

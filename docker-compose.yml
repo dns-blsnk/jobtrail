@@ -39,22 +39,5 @@ services:
       timeout: 5s
       retries: 5
 
-  mobile:
-    profiles: ['mobile']
-    build:
-      context: .
-      dockerfile: apps/mobile/Dockerfile
-    environment:
-      NODE_ENV: development
-      EXPO_DEVTOOLS_LISTEN_ADDRESS: 0.0.0.0
-      CI: '1'
-    restart: unless-stopped
-    ports:
-      - '8081:8081'
-      - '19000:19000'
-      - '19001:19001'
-      - '19002:19002'
-      - '19006:19006'
-
 volumes:
   postgres_data:
