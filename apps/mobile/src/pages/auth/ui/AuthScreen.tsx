@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { useMemo } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { theme } from '../../../shared';
-import { AuthFormSection } from '../../../widgets';
+import { theme } from '../../../shared/config/theme';
+import { AuthFormSection } from '../../../widgets/auth-form/ui/AuthFormSection';
 
 const AuthScreen = () => {
   const patternCells = useMemo(() => Array.from({ length: 42 }, (_, index) => index), []);

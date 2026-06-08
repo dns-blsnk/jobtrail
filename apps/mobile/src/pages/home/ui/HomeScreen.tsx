@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { useSessionStore } from '../../../entities/session/model/sessionStore';
-import { theme } from '../../../shared';
+import { useSessionStore } from '../../../entities/session/model/session-store';
+import { theme } from '../../../shared/config/theme';
 
 const HomeScreen = () => {
   const user = useSessionStore((state) => state.user);

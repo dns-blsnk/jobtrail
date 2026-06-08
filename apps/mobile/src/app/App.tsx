@@ -1,8 +1,8 @@
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { useSessionStore } from '../entities/session/model/sessionStore';
+import { useSessionStore } from '../entities/session/model/session-store';
 import AuthScreen from '../pages/auth/ui/AuthScreen';
 import HomeScreen from '../pages/home/ui/HomeScreen';
-import { theme } from '../shared';
+import { theme } from '../shared/config/theme';
 
 export const App = () => {
   const user = useSessionStore((state) => state.user);
