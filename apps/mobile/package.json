@@ -8,6 +8,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "debug": "react-devtools",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@types/react": "~19.1.0",
+    "react-devtools": "^7.0.1",
     "typescript": "~5.9.2"
   },
   "private": true
