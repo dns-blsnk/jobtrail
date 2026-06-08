@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "figma-local": {
+      "command": "node",
+      "args": [
+        "/Users/denys-bilousenko/Documents/GitHub/figma-mcp-server/dist/index.js"
+      ],
+      "env": {
+        "FIGMA_TOKEN": "figd_w0CFtlbX7vHQCQXWn4_8iEQCxeDCEVDhJ0V91-gc"
+      }
+    }
+  }
+}
