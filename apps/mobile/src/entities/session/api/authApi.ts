@@ -2,24 +2,19 @@ import type { AuthResponse, LoginDto, RegisterDto } from '@job-search-tracker/ty
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const createAuthResponse = (email: string): AuthResponse => {
-  const now = new Date();
-  const expiresAt = new Date(now.getTime() + 1000 * 60 * 60 * 24).toISOString();
-
-  return {
-    user: {
-      id: `user_${email.toLowerCase()}`,
-      email: email.toLowerCase(),
-      fullName: email.split('@')[0],
-      createdAt: now.toISOString(),
-    },
-    session: {
-      accessToken: 'mock_access_token',
-      refreshToken: 'mock_refresh_token',
-      expiresAt,
-    },
-  };
-};
+const createAuthResponse = (email: string): AuthResponse => ({
+  user: {
+    id: `user_${email.toLowerCase()}`,
+    email: email.toLowerCase(),
+    name: email.split('@')[0],
+    role: 'USER' as const,
+    createdAt: new Date(),
+  },
+  tokens: {
+    accessToken: 'mock_access_token',
+    refreshToken: 'mock_refresh_token',
+  },
+});
 
 export const signIn = async (payload: LoginDto): Promise<AuthResponse> => {
   await wait(450);
