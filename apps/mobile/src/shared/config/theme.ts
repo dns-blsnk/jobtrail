@@ -1,0 +1,30 @@
+export const theme = {
+  colors: {
+    background: '#FFFFFF',
+    heading: '#1A1C1E',
+    text: '#1A1C1E',
+    mutedText: '#6C7278',
+    borderSoft: '#EDF1F3',
+    borderStrong: '#EFF0F6',
+    tabBackground: '#F5F6F9',
+    tabActiveText: '#232447',
+    tabInactiveText: '#7D7D91',
+    primary: '#1D61E7',
+    link: '#4D81E7',
+    white: '#FFFFFF',
+    iconMuted: '#ACB5BB',
+  },
+  radius: {
+    sm: 6,
+    md: 10,
+    lg: 12,
+  },
+  spacing: {
+    xs: 4,
+    sm: 8,
+    md: 12,
+    lg: 16,
+    xl: 24,
+    xxl: 32,
+  },
+} as const;
