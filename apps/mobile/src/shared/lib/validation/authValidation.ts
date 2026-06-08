@@ -10,7 +10,10 @@ export interface AuthFormErrors {
 
 export const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
-export const isValidPassword = (value: string) => value.trim().length >= 6;
+export const isValidPassword = (value: string) => {
+  const v = value.trim();
+  return v.length >= 8 && /\d/.test(v) && /[A-Z]/.test(v);
+};
 
 export const validateAuthForm = (values: AuthFormValues): AuthFormErrors => {
   const errors: AuthFormErrors = {};
@@ -24,7 +27,7 @@ export const validateAuthForm = (values: AuthFormValues): AuthFormErrors => {
   if (!values.password.trim()) {
     errors.password = 'Password is required';
   } else if (!isValidPassword(values.password)) {
-    errors.password = 'Password must be at least 6 characters';
+    errors.password = 'Min 8 chars, 1 uppercase letter and 1 digit';
   }
 
   return errors;
