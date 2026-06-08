@@ -1,17 +1,18 @@
 import type { AuthMode } from '@job-search-tracker/types';
 import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useSessionStore } from '../../../entities/session/model/sessionStore';
-import { signInByEmail, signUpByEmail, useAuthFlowStore } from '../../../features';
-import { type AuthFormErrors, type AuthFormValues, theme, validateAuthForm } from '../../../shared';
-import {
-  CheckboxField,
-  PrimaryButton,
-  SegmentedControl,
-  SocialLoginButton,
-  TextField,
-  TextSeparator,
-} from '../../../shared/ui';
+import { useSessionStore } from '../../../entities/session/model/session-store';
+import { useAuthFlowStore } from '../../../features/auth/model/use-auth-flow-store';
+import { signInByEmail } from '../../../features/auth/sign-in/model/sign-in-by-email';
+import { signUpByEmail } from '../../../features/auth/sign-up/model/sign-up-by-email';
+import { theme } from '../../../shared/config/theme';
+import { type AuthFormErrors, type AuthFormValues, validateAuthForm } from '../../../shared/lib/validation/auth-validation';
+import { CheckboxField } from '../../../shared/ui/checkbox/CheckboxField';
+import { PrimaryButton } from '../../../shared/ui/button/PrimaryButton';
+import { SegmentedControl } from '../../../shared/ui/segmented-control/SegmentedControl';
+import { SocialLoginButton } from '../../../shared/ui/social/SocialLoginButton';
+import { TextField } from '../../../shared/ui/input/TextField';
+import { TextSeparator } from '../../../shared/ui/separator/TextSeparator';
 
 const modeOptions: { label: string; value: AuthMode }[] = [
   { label: 'Log In', value: 'login' },
