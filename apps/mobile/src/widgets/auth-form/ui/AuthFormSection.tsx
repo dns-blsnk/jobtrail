@@ -60,9 +60,8 @@ export const AuthFormSection = () => {
         const result = await signInByEmail({
           email: values.email,
           password: values.password,
-          rememberMe,
         });
-        setSubmitMessage(`Welcome back, ${result.user.fullName}`);
+        setSubmitMessage(`Welcome back, ${result.user.name ?? result.user.email}`);
       } else {
         const result = await signUpByEmail({
           email: values.email,
