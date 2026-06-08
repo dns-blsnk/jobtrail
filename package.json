@@ -10,6 +10,7 @@
     "dev:mobile:ios": "pnpm --filter @job-search-tracker/mobile ios",
     "dev:mobile:android": "pnpm --filter @job-search-tracker/mobile android",
     "dev:mobile:web": "pnpm --filter @job-search-tracker/mobile web",
+    "debug:mobile": "pnpm --filter @job-search-tracker/mobile debug",
     "docker:up": "docker compose up --build",
     "docker:up:api": "docker compose up --build api",
     "docker:down": "docker compose down",
