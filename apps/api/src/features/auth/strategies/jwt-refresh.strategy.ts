@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import type { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { PrismaService } from '../../../modules/prisma/prisma.service';
+import { PrismaService } from '../../../shared/database/prisma.service';
 import { TokenService } from '../token.service';
 
 interface JwtPayload {

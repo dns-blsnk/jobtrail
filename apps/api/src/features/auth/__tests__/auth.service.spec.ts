@@ -2,7 +2,7 @@ import { UserRole } from '@job-search-tracker/types';
 import { ConflictException, UnauthorizedException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as bcrypt from 'bcrypt';
-import { PrismaService } from '../../../modules/prisma/prisma.service';
+import { PrismaService } from '../../../shared/database/prisma.service';
 import { AuthService } from '../auth.service';
 import { TokenService } from '../token.service';
 

@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { createHash } from 'node:crypto';
-import { PrismaService } from '../../modules/prisma/prisma.service';
+import { PrismaService } from '../../shared/database/prisma.service';
 
 @Injectable()
 export class TokenService {
