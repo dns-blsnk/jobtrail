@@ -1,15 +1,35 @@
-import type { AuthResponse } from '@job-search-tracker/types';
-import { useMutation } from '@tanstack/react-query';
-import { signIn } from '@/entities/session/api/auth-api';
-import { useSessionStore } from '@/entities/session/model/session-store';
+'use client';
+
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export function useSignIn() {
-  const setSession = useSessionStore((state) => state.setSession);
+  const router = useRouter();
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  return useMutation<AuthResponse, Error, { email: string; password: string }>({
-    mutationFn: (payload) => signIn(payload),
-    onSuccess: (data) => {
-      setSession(data.user, data.tokens);
-    },
-  });
+  const mutate = async (values: { email: string; password: string }) => {
+    setIsPending(true);
+    setError(null);
+
+    const result = await signIn('credentials', {
+      ...values,
+      mode: 'login',
+      redirect: false,
+    });
+
+    setIsPending(false);
+
+    if (result?.error) {
+      setError('Invalid email or password');
+      return;
+    }
+
+    router.push('/profile');
+  };
+
+  const reset = () => setError(null);
+
+  return { mutate, isPending, error, reset };
 }

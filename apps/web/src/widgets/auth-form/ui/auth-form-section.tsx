@@ -26,7 +26,7 @@ export function AuthFormSection() {
   const [errors, setErrors] = useState<AuthFormErrors>({});
 
   const isPending = signIn.isPending || signUp.isPending;
-  const submitError = signIn.error?.message ?? signUp.error?.message ?? null;
+  const submitError = signIn.error ?? signUp.error ?? null;
 
   const handleChangeMode = (nextMode: AuthMode) => {
     setMode(nextMode);
@@ -42,9 +42,9 @@ export function AuthFormSection() {
     if (Object.keys(validationErrors).length > 0) return;
 
     if (mode === 'login') {
-      signIn.mutate(values);
+      void signIn.mutate(values);
     } else {
-      signUp.mutate(values);
+      void signUp.mutate(values);
     }
   };
 

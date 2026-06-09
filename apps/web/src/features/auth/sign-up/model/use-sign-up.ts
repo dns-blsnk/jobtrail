@@ -1,15 +1,35 @@
-import type { AuthResponse } from '@job-search-tracker/types';
-import { useMutation } from '@tanstack/react-query';
-import { signUp } from '@/entities/session/api/auth-api';
-import { useSessionStore } from '@/entities/session/model/session-store';
+'use client';
+
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export function useSignUp() {
-  const setSession = useSessionStore((state) => state.setSession);
+  const router = useRouter();
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  return useMutation<AuthResponse, Error, { email: string; password: string }>({
-    mutationFn: (payload) => signUp(payload),
-    onSuccess: (data) => {
-      setSession(data.user, data.tokens);
-    },
-  });
+  const mutate = async (values: { email: string; password: string }) => {
+    setIsPending(true);
+    setError(null);
+
+    const result = await signIn('credentials', {
+      ...values,
+      mode: 'register',
+      redirect: false,
+    });
+
+    setIsPending(false);
+
+    if (result?.error) {
+      setError('Email already in use or registration failed');
+      return;
+    }
+
+    router.push('/profile');
+  };
+
+  const reset = () => setError(null);
+
+  return { mutate, isPending, error, reset };
 }
