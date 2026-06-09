@@ -1,9 +1,18 @@
 import type { AuthMode } from '@job-search-tracker/types';
 import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { signInByEmail, signUpByEmail, useAuthFlowStore } from '../../../features';
-import { type AuthFormErrors, type AuthFormValues, theme, validateAuthForm } from '../../../shared';
-import { CheckboxField, PrimaryButton, SegmentedControl, SocialLoginButton, TextField, TextSeparator } from '../../../shared/ui';
+import { useSessionStore } from '../../../entities/session/model/session-store';
+import { useAuthFlowStore } from '../../../features/auth/model/use-auth-flow-store';
+import { signInByEmail } from '../../../features/auth/sign-in/model/sign-in-by-email';
+import { signUpByEmail } from '../../../features/auth/sign-up/model/sign-up-by-email';
+import { theme } from '../../../shared/config/theme';
+import { type AuthFormErrors, type AuthFormValues, validateAuthForm } from '../../../shared/lib/validation/auth-validation';
+import { CheckboxField } from '../../../shared/ui/checkbox/CheckboxField';
+import { PrimaryButton } from '../../../shared/ui/button/PrimaryButton';
+import { SegmentedControl } from '../../../shared/ui/segmented-control/SegmentedControl';
+import { SocialLoginButton } from '../../../shared/ui/social/SocialLoginButton';
+import { TextField } from '../../../shared/ui/input/TextField';
+import { TextSeparator } from '../../../shared/ui/separator/TextSeparator';
 
 const modeOptions: { label: string; value: AuthMode }[] = [
   { label: 'Log In', value: 'login' },
@@ -11,12 +20,14 @@ const modeOptions: { label: string; value: AuthMode }[] = [
 ];
 
 export const AuthFormSection = () => {
-  const { mode, rememberMe, isSubmitting, setMode, toggleRememberMe, setSubmitting } = useAuthFlowStore();
+  const { mode, rememberMe, isSubmitting, setMode, toggleRememberMe, setSubmitting } =
+    useAuthFlowStore();
+  const setSession = useSessionStore((state) => state.setSession);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [errors, setErrors] = useState<AuthFormErrors>({});
-  const [submitMessage, setSubmitMessage] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const submitTitle = mode === 'login' ? 'Log In' : 'Sign Up';
@@ -28,49 +39,36 @@ export const AuthFormSection = () => {
       { key: 'apple', icon: 'A' },
       { key: 'phone', icon: 'P' },
     ],
-    []
+    [],
   );
 
   const handleChangeMode = (nextMode: AuthMode) => {
     setMode(nextMode);
     setErrors({});
     setSubmitError(null);
-    setSubmitMessage(null);
   };
 
   const handleSubmit = async () => {
-    const values: AuthFormValues = {
-      email: email.trim(),
-      password: password.trim(),
-    };
+    const values: AuthFormValues = { email: email.trim(), password: password.trim() };
     const validationResult = validateAuthForm(values);
 
     setErrors(validationResult);
-
-    if (Object.keys(validationResult).length > 0) {
-      return;
-    }
+    if (Object.keys(validationResult).length > 0) return;
 
     setSubmitting(true);
     setSubmitError(null);
-    setSubmitMessage(null);
 
     try {
       if (mode === 'login') {
-        const result = await signInByEmail({
-          email: values.email,
-          password: values.password,
-        });
-        setSubmitMessage(`Welcome back, ${result.user.name ?? result.user.email}`);
+        const result = await signInByEmail({ email: values.email, password: values.password });
+        setSession(result.user, result.tokens);
       } else {
-        const result = await signUpByEmail({
-          email: values.email,
-          password: values.password,
-        });
-        setSubmitMessage(`Account created for ${result.user.email}`);
+        const result = await signUpByEmail({ email: values.email, password: values.password });
+        setSession(result.user, result.tokens);
       }
-    } catch {
-      setSubmitError('Unable to continue. Please try again.');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Unable to continue. Please try again.';
+      setSubmitError(message);
     } finally {
       setSubmitting(false);
     }
@@ -105,7 +103,7 @@ export const AuthFormSection = () => {
           secureTextEntry={!passwordVisible}
           value={password}
           onChangeText={setPassword}
-          onRightActionPress={() => setPasswordVisible((current) => !current)}
+          onRightActionPress={() => setPasswordVisible((v) => !v)}
         />
         <View style={styles.linksRow}>
           <CheckboxField checked={rememberMe} label="Remember me" onToggle={toggleRememberMe} />
@@ -135,21 +133,14 @@ export const AuthFormSection = () => {
         </View>
       </View>
 
-      {submitMessage ? <Text style={styles.success}>{submitMessage}</Text> : null}
       {submitError ? <Text style={styles.error}>{submitError}</Text> : null}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    gap: 24,
-  },
-  headline: {
-    alignItems: 'center',
-    gap: 12,
-  },
+  container: { width: '100%', gap: 24 },
+  headline: { alignItems: 'center', gap: 12 },
   title: {
     color: theme.colors.heading,
     fontSize: 32,
@@ -164,42 +155,16 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     textAlign: 'center',
   },
-  fieldGroup: {
-    gap: 16,
-  },
+  fieldGroup: { gap: 16 },
   linksRow: {
     minHeight: 19,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  forgot: {
-    color: theme.colors.link,
-    fontSize: 12,
-    lineHeight: 17,
-    fontWeight: '600',
-  },
-  actions: {
-    gap: 24,
-  },
-  socialSection: {
-    gap: 16,
-  },
-  socialRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    gap: 15,
-  },
-  success: {
-    color: '#0A7D22',
-    fontSize: 12,
-    lineHeight: 18,
-    textAlign: 'center',
-  },
-  error: {
-    color: '#E5484D',
-    fontSize: 12,
-    lineHeight: 18,
-    textAlign: 'center',
-  },
+  forgot: { color: theme.colors.link, fontSize: 12, lineHeight: 17, fontWeight: '600' },
+  actions: { gap: 24 },
+  socialSection: { gap: 16 },
+  socialRow: { flexDirection: 'row', justifyContent: 'space-between', gap: 15 },
+  error: { color: '#E5484D', fontSize: 12, lineHeight: 18, textAlign: 'center' },
 });

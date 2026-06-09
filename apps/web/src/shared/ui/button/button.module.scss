@@ -1,0 +1,34 @@
+@use '@/shared/styles/variables' as v;
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 48px;
+  padding: 0 24px;
+  border: none;
+  border-radius: v.$radius-md;
+  background-color: v.$color-primary;
+  color: v.$color-white;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background-color: v.$color-primary-hover;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.label {
+  opacity: 0.6;
+  font-size: 12px;
+}

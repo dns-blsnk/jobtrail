@@ -1,0 +1,53 @@
+@use '@/shared/styles/variables' as v;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.headline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  color: v.$color-heading;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: v.$color-muted;
+  text-align: center;
+  max-width: 260px;
+  line-height: 1.5;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+}
+
+.submitErrorSlot {
+  min-height: 20px;
+}
+
+.submitError {
+  font-size: 12px;
+  line-height: 20px;
+  color: v.$color-error;
+  text-align: center;
+}

@@ -1,0 +1,15 @@
+import type { AuthResponse } from '@job-search-tracker/types';
+import { useMutation } from '@tanstack/react-query';
+import { signIn } from '@/entities/session/api/auth-api';
+import { useSessionStore } from '@/entities/session/model/session-store';
+
+export function useSignIn() {
+  const setSession = useSessionStore((state) => state.setSession);
+
+  return useMutation<AuthResponse, Error, { email: string; password: string }>({
+    mutationFn: (payload) => signIn(payload),
+    onSuccess: (data) => {
+      setSession(data.user, data.tokens);
+    },
+  });
+}

@@ -2,7 +2,7 @@ import { UserRole } from '@job-search-tracker/types';
 import { UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { PrismaService } from '../../../modules/prisma/prisma.service';
+import { PrismaService } from '../../../shared/database/prisma.service';
 import { JwtStrategy } from '../strategies/jwt.strategy';
 
 const mockUser = {
