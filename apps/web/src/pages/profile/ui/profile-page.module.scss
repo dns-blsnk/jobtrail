@@ -1,0 +1,40 @@
+@use '@/shared/styles/variables' as v;
+
+.root {
+  min-height: 100vh;
+  background: v.$color-background;
+  padding: 48px 24px;
+}
+
+.inner {
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: v.$color-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: v.$color-white;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  color: v.$color-heading;
+}

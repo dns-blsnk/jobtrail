@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import helmet from 'helmet';
 import { AppModule } from './app/app.module';
-import { getApiPort } from './config/app.config';
+import { getApiPort } from './shared/config/app.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

@@ -2,7 +2,7 @@ import { AuthResponse, IUser, OAuthProfile, UserRole } from '@job-search-tracker
 import { ConflictException, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import type { Provider, User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
-import { PrismaService } from '../../modules/prisma/prisma.service';
+import { PrismaService } from '../../shared/database/prisma.service';
 import type { RegisterDto } from './dto/register.dto';
 import { TokenService } from './token.service';
 
