@@ -4,6 +4,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from '../features/auth/auth.module';
 import { HealthModule } from '../features/health/health.module';
+import { UsersModule } from '../features/users/users.module';
 import { PollingModule } from '../features/polling/polling.module';
 import { PrismaModule } from '../shared/database/prisma.module';
 import { envValidationSchema } from '../shared/config/env.validation';
@@ -31,6 +32,7 @@ import { envValidationSchema } from '../shared/config/env.validation';
     }),
     PrismaModule,
     AuthModule,
+    UsersModule,
     HealthModule,
     PollingModule,
   ],
