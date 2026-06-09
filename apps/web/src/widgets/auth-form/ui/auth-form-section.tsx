@@ -63,7 +63,6 @@ export function AuthFormSection() {
           error={errors.email}
           label="Email"
           placeholder="yourname@gmail.com"
-          prefix="@"
           type="email"
           value={email}
           onChange={setEmail}
@@ -73,7 +72,6 @@ export function AuthFormSection() {
           error={errors.password}
           label="Password"
           placeholder="Password"
-          prefix="*"
           type="password"
           value={password}
           onChange={setPassword}
@@ -83,15 +81,15 @@ export function AuthFormSection() {
       <div className={styles.actions}>
         <Button
           disabled={isPending}
-          leftLabel="+"
           loading={isPending}
-          rightLabel=">"
           title={mode === 'login' ? 'Log In' : 'Sign Up'}
           onClick={handleSubmit}
         />
       </div>
 
-      {submitError && <p className={styles.error}>{submitError}</p>}
+      <div className={styles.submitErrorSlot}>
+        {submitError && <p className={styles.submitError}>{submitError}</p>}
+      </div>
     </div>
   );
 }

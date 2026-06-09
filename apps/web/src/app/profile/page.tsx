@@ -1,4 +1,4 @@
-import { ProfilePage } from '@/pages/profile/ui/profile-page';
+import { ProfilePage } from '@/views/profile/ui/profile-page';
 
 export default function ProfileRoute() {
   return <ProfilePage />;

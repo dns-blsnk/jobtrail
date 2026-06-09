@@ -20,7 +20,10 @@ export function AuthPage() {
   return (
     <main className={styles.root}>
       <div className={styles.inner}>
-        <div className={styles.brand} aria-hidden>*</div>
+        <div className={styles.logo}>
+          <div className={styles.logoMark} aria-hidden>JT</div>
+          <span className={styles.logoName}>Job Tracker</span>
+        </div>
         <AuthFormSection />
       </div>
     </main>
