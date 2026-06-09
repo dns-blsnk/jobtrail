@@ -3,10 +3,10 @@
 .root {
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   background: v.$color-background;
-  padding: 24px;
+  padding: 64px 24px 40px;
 }
 
 .inner {
@@ -18,15 +18,30 @@
   gap: 32px;
 }
 
-.brand {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoMark {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   background: v.$color-primary;
   display: flex;
   align-items: center;
   justify-content: center;
   color: v.$color-white;
-  font-size: 16px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.logoName {
+  font-size: 15px;
   font-weight: 700;
+  color: v.$color-heading;
+  letter-spacing: -0.2px;
 }

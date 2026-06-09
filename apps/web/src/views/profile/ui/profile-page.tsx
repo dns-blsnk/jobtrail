@@ -32,8 +32,8 @@ export function ProfilePage() {
     <main className={styles.root}>
       <div className={styles.inner}>
         <div className={styles.header}>
-          <div className={styles.brand} aria-hidden>*</div>
-          <h1 className={styles.title}>My Profile</h1>
+          <div className={styles.logoMark} aria-hidden>JT</div>
+          <span className={styles.logoName}>Job Tracker</span>
         </div>
         <ProfileCard user={user} onLogout={handleLogout} />
       </div>

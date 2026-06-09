@@ -9,24 +9,28 @@ interface TextFieldProps {
   placeholder?: string;
   type?: 'text' | 'email' | 'password';
   error?: string;
-  prefix?: string;
   autoComplete?: string;
   onChange: (value: string) => void;
 }
 
-export function TextField({ label, value, placeholder, type = 'text', error, prefix, autoComplete, onChange }: TextFieldProps) {
+export function TextField({ label, value, placeholder, type = 'text', error, autoComplete, onChange }: TextFieldProps) {
   const [visible, setVisible] = useState(false);
   const isPassword = type === 'password';
   const inputType = isPassword ? (visible ? 'text' : 'password') : type;
+
+  const inputClass = [
+    styles.input,
+    error ? styles.hasError : '',
+    isPassword ? styles.withToggle : '',
+  ].filter(Boolean).join(' ');
 
   return (
     <div className={styles.wrapper}>
       <label className={styles.label}>{label}</label>
       <div className={styles.inputRow}>
-        {prefix && <span className={styles.prefix}>{prefix}</span>}
         <input
           autoComplete={autoComplete}
-          className={`${styles.input} ${error ? styles.hasError : ''}`}
+          className={inputClass}
           placeholder={placeholder}
           type={inputType}
           value={value}
@@ -43,7 +47,9 @@ export function TextField({ label, value, placeholder, type = 'text', error, pre
           </button>
         )}
       </div>
-      {error && <span className={styles.error}>{error}</span>}
+      <div className={styles.errorSlot}>
+        {error && <span className={styles.error}>{error}</span>}
+      </div>
     </div>
   );
 }
