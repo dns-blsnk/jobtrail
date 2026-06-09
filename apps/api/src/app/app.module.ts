@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { envValidationSchema } from '../config/env.validation';
 import { AuthModule } from '../features/auth/auth.module';
-import { HealthModule } from '../modules/health/health.module';
-import { PollingModule } from '../modules/polling/polling.module';
-import { PrismaModule } from '../modules/prisma/prisma.module';
+import { HealthModule } from '../features/health/health.module';
+import { PollingModule } from '../features/polling/polling.module';
+import { PrismaModule } from '../shared/database/prisma.module';
+import { envValidationSchema } from '../shared/config/env.validation';
 
 @Module({
   imports: [

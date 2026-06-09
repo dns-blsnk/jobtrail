@@ -5,6 +5,7 @@
   "packageManager": "pnpm@10.0.0",
   "scripts": {
     "dev": "turbo run dev",
+    "dev:web": "pnpm --filter @job-search-tracker/web dev",
     "dev:api": "pnpm --filter @job-search-tracker/api dev",
     "dev:mobile": "pnpm --filter @job-search-tracker/mobile dev",
     "dev:mobile:ios": "pnpm --filter @job-search-tracker/mobile ios",
