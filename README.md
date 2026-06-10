@@ -1,83 +1,83 @@
 # Job Search Tracker
 
-Monorepo for a production-oriented job search tracking platform with AI support. The repository is structured to support backend, web, and mobile applications with shared packages and infrastructure configuration in one workspace.
+A full-stack monorepo for tracking job applications. Manage your job search across web and mobile with a shared backend and database.
 
-## Monorepo Structure
+## Structure
 
 ```text
 apps/
-  api/      NestJS API
-  web/      Next.js app (planned, FSD)
-  mobile/   React Native / Expo app (planned, pragmatic FSD)
-packages/   Shared packages
-infra/      Docker and infrastructure configs
+  api/      NestJS REST API
+  web/      Next.js web app (FSD)
+  mobile/   React Native / Expo app
+packages/
+  types/    Shared TypeScript types
+  config/   Shared configs (ESLint, TS)
+  shared/   Shared utilities
 ```
 
-## Main Stack
+## Stack
 
-- pnpm workspaces
-- Turborepo
-- NestJS (`apps/api`)
-- Next.js (`apps/web`, planned)
-- React Native + Expo (`apps/mobile`, planned)
-- Docker + PostgreSQL (`infra`, planned runtime for api/web/db)
+| Layer    | Technology                          |
+| -------- | ----------------------------------- |
+| API      | NestJS, Prisma 7, PostgreSQL        |
+| Auth     | Passport.js (JWT + Local), next-auth v5 |
+| Web      | Next.js 15, Zustand, TanStack Query |
+| Mobile   | React Native, Expo                  |
+| Infra    | Docker, Docker Compose              |
+| Tooling  | pnpm workspaces, Turborepo          |
 
-## Current Stage
+## Getting Started
 
-Foundation setup in progress:
-- root workspace and Turbo config are present
-- `apps/api` is scaffolded and runnable
-- `apps/web` and `apps/mobile` are placeholders
-- Docker structure is prepared under `infra/docker`
+### Prerequisites
 
-## Docker API Local
+- Node.js 20+
+- pnpm 10+
+- Docker Desktop
 
-Use Docker Compose from repository root:
-
-```bash
-# API + Postgres
-pnpm docker:up:api
-
-# stop containers
-pnpm docker:down
-```
-
-Manual equivalent:
-
-```bash
-docker compose up --build api postgres
-```
-
-Docker Compose uses the `dev` target from `apps/api/Dockerfile`.
-
-To build a production image later:
-
-```bash
-docker build -f apps/api/Dockerfile --target prod -t job-search-api:prod .
-```
-
-## Mobile (Expo)
-
-Install dependencies from repository root:
+### Install
 
 ```bash
 pnpm install
 ```
 
-Run Expo locally:
+### Run locally
 
 ```bash
+# All apps
+pnpm dev
+
+# Individually
+pnpm dev:api
+pnpm dev:web
 pnpm dev:mobile
+```
+
+### Docker (API + PostgreSQL)
+
+```bash
+# Start
+pnpm docker:up
+
+# Stop
+pnpm docker:down
+```
+
+Requires a `.env` file at the repo root — see `.env.example`.
+
+## Mobile (Expo)
+
+```bash
 pnpm dev:mobile:ios
 pnpm dev:mobile:android
 pnpm dev:mobile:web
 ```
 
-## Next Steps
+## Scripts
 
-1. Scaffold `apps/web` with FSD-ready structure.
-2. Scaffold `apps/mobile` with pragmatic FSD for mobile.
-3. Add Docker Compose for `api + web + postgres`.
-4. Introduce database schema and migrations.
-5. Add auth flow: registration and login.
-6. Add job application tracking domain.
+| Command          | Description                  |
+| ---------------- | ---------------------------- |
+| `pnpm dev`       | Run all apps in watch mode   |
+| `pnpm build`     | Build all apps               |
+| `pnpm lint`      | Lint all apps                |
+| `pnpm typecheck` | TypeScript check all apps    |
+| `pnpm docker:up` | Start full stack via Docker  |
