@@ -1,0 +1,31 @@
+.root {
+  position: absolute;
+  top: calc(100% + 10px);
+  width: 288px;
+  z-index: 70;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-pop);
+  transform-origin: top right;
+  transform: translateY(-6px) scale(0.97);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease, transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  &.open {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.alignRight {
+  right: 0;
+  transform-origin: top right;
+}
+
+.alignLeft {
+  left: 0;
+  transform-origin: top left;
+}
