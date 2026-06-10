@@ -1,4 +1,4 @@
-# Job Search Tracker + AI
+# Job Search Tracker
 
 Monorepo for a production-oriented job search tracking platform with AI support. The repository is structured to support backend, web, and mobile applications with shared packages and infrastructure configuration in one workspace.
 

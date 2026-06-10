@@ -1,10 +1,9 @@
 import type { AuthMode } from '@job-search-tracker/types';
 import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useSessionStore } from '../../../entities/session/model/session-store';
 import { useAuthFlowStore } from '../../../features/auth/model/use-auth-flow-store';
-import { signInByEmail } from '../../../features/auth/sign-in/model/sign-in-by-email';
-import { signUpByEmail } from '../../../features/auth/sign-up/model/sign-up-by-email';
+import { useSignIn } from '../../../features/auth/sign-in/model/use-sign-in';
+import { useSignUp } from '../../../features/auth/sign-up/model/use-sign-up';
 import { theme } from '../../../shared/config/theme';
 import { type AuthFormErrors, type AuthFormValues, validateAuthForm } from '../../../shared/lib/validation/auth-validation';
 import { CheckboxField } from '../../../shared/ui/checkbox/CheckboxField';
@@ -20,16 +19,16 @@ const modeOptions: { label: string; value: AuthMode }[] = [
 ];
 
 export const AuthFormSection = () => {
-  const { mode, rememberMe, isSubmitting, setMode, toggleRememberMe, setSubmitting } =
-    useAuthFlowStore();
-  const setSession = useSessionStore((state) => state.setSession);
+  const { mode, rememberMe, setMode, toggleRememberMe } = useAuthFlowStore();
+  const signIn = useSignIn();
+  const signUp = useSignUp();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [errors, setErrors] = useState<AuthFormErrors>({});
-  const [submitError, setSubmitError] = useState<string | null>(null);
 
+  const auth = mode === 'login' ? signIn : signUp;
   const submitTitle = mode === 'login' ? 'Log In' : 'Sign Up';
 
   const socialOptions = useMemo(
@@ -45,7 +44,8 @@ export const AuthFormSection = () => {
   const handleChangeMode = (nextMode: AuthMode) => {
     setMode(nextMode);
     setErrors({});
-    setSubmitError(null);
+    signIn.reset();
+    signUp.reset();
   };
 
   const handleSubmit = async () => {
@@ -55,23 +55,7 @@ export const AuthFormSection = () => {
     setErrors(validationResult);
     if (Object.keys(validationResult).length > 0) return;
 
-    setSubmitting(true);
-    setSubmitError(null);
-
-    try {
-      if (mode === 'login') {
-        const result = await signInByEmail({ email: values.email, password: values.password });
-        setSession(result.user, result.tokens);
-      } else {
-        const result = await signUpByEmail({ email: values.email, password: values.password });
-        setSession(result.user, result.tokens);
-      }
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Unable to continue. Please try again.';
-      setSubmitError(message);
-    } finally {
-      setSubmitting(false);
-    }
+    await auth.mutate({ email: values.email, password: values.password });
   };
 
   return (
@@ -115,9 +99,9 @@ export const AuthFormSection = () => {
 
       <View style={styles.actions}>
         <PrimaryButton
-          disabled={isSubmitting}
+          disabled={auth.isPending}
           leftLabel="+"
-          loading={isSubmitting}
+          loading={auth.isPending}
           rightLabel=">"
           title={submitTitle}
           onPress={handleSubmit}
@@ -133,7 +117,7 @@ export const AuthFormSection = () => {
         </View>
       </View>
 
-      {submitError ? <Text style={styles.error}>{submitError}</Text> : null}
+      {auth.error ? <Text style={styles.error}>{auth.error}</Text> : null}
     </View>
   );
 };
