@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from '@/fsd-app/intl/intl-provider';
 import styles from './profile-card.module.scss';
 
 interface ProfileUser {
@@ -13,6 +14,7 @@ interface ProfileCardProps {
 }
 
 export function ProfileCard({ user, onLogout }: ProfileCardProps) {
+  const t = useTranslations();
   const displayName = user.name ?? user.email ?? '';
   const initial = displayName.charAt(0).toUpperCase();
 
@@ -22,7 +24,7 @@ export function ProfileCard({ user, onLogout }: ProfileCardProps) {
       <p className={styles.name}>{displayName}</p>
       {user.name && user.email && <p className={styles.email}>{user.email}</p>}
       <button className={styles.logoutButton} type="button" onClick={onLogout}>
-        Log Out
+        {t.profileCard.logOut}
       </button>
     </div>
   );

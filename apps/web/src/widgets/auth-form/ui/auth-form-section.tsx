@@ -2,6 +2,7 @@
 
 import type { AuthMode } from '@job-search-tracker/types';
 import { useState } from 'react';
+import { useTranslations } from '@/fsd-app/intl/intl-provider';
 import { useAuthFlowStore } from '@/features/auth/model/use-auth-flow-store';
 import { useSignIn } from '@/features/auth/sign-in/model/use-sign-in';
 import { useSignUp } from '@/features/auth/sign-up/model/use-sign-up';
@@ -11,12 +12,8 @@ import { SegmentedControl } from '@/shared/ui/segmented-control/segmented-contro
 import { TextField } from '@/shared/ui/text-field/text-field';
 import styles from './auth-form-section.module.scss';
 
-const modeOptions: { label: string; value: AuthMode }[] = [
-  { label: 'Log In', value: 'login' },
-  { label: 'Sign Up', value: 'register' },
-];
-
 export function AuthFormSection() {
+  const t = useTranslations();
   const { mode, setMode } = useAuthFlowStore();
   const signIn = useSignIn();
   const signUp = useSignUp();
@@ -24,6 +21,11 @@ export function AuthFormSection() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<AuthFormErrors>({});
+
+  const modeOptions: { label: string; value: AuthMode }[] = [
+    { label: t.auth.form.modeLogin, value: 'login' },
+    { label: t.auth.form.modeRegister, value: 'register' },
+  ];
 
   const isPending = signIn.isPending || signUp.isPending;
   const submitError = signIn.error ?? signUp.error ?? null;
@@ -37,7 +39,7 @@ export function AuthFormSection() {
 
   const handleSubmit = () => {
     const values = { email: email.trim(), password: password.trim() };
-    const validationErrors = validateAuthForm(values);
+    const validationErrors = validateAuthForm(values, t.auth.validation);
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length > 0) return;
 
@@ -51,8 +53,8 @@ export function AuthFormSection() {
   return (
     <div className={styles.container}>
       <div className={styles.headline}>
-        <h1 className={styles.title}>Get Started now</h1>
-        <p className={styles.subtitle}>Create an account or log in to explore about our app</p>
+        <h1 className={styles.title}>{t.auth.form.title}</h1>
+        <p className={styles.subtitle}>{t.auth.form.subtitle}</p>
       </div>
 
       <SegmentedControl options={modeOptions} value={mode} onChange={handleChangeMode} />
@@ -61,8 +63,8 @@ export function AuthFormSection() {
         <TextField
           autoComplete="email"
           error={errors.email}
-          label="Email"
-          placeholder="yourname@gmail.com"
+          label={t.auth.form.emailLabel}
+          placeholder={t.auth.form.emailPlaceholder}
           type="email"
           value={email}
           onChange={setEmail}
@@ -70,8 +72,8 @@ export function AuthFormSection() {
         <TextField
           autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
           error={errors.password}
-          label="Password"
-          placeholder="Password"
+          label={t.auth.form.passwordLabel}
+          placeholder={t.auth.form.passwordPlaceholder}
           type="password"
           value={password}
           onChange={setPassword}
@@ -82,7 +84,7 @@ export function AuthFormSection() {
         <Button
           disabled={isPending}
           loading={isPending}
-          title={mode === 'login' ? 'Log In' : 'Sign Up'}
+          title={mode === 'login' ? t.auth.form.modeLogin : t.auth.form.modeRegister}
           onClick={handleSubmit}
         />
       </div>

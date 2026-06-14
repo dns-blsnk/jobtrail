@@ -1,35 +1,20 @@
 'use client';
 
 import Link from 'next/link';
+import { useTranslations } from '@/fsd-app/intl/intl-provider';
 import { Icon } from '@/shared/ui/icon/icon';
 import { useMobile } from '@/shared/lib/hooks/use-mobile';
 import { LangSwitch } from './lang-switch';
 import styles from './footer.module.scss';
 
-const FOOTER_COLS = [
-  {
-    title: 'Product',
-    links: ['Features', 'Pricing', 'Job parsing', 'Analytics', 'Roadmap'],
-  },
-  {
-    title: 'Resources',
-    links: ['Blog', 'Job-search guides', 'Resume templates', 'Help'],
-  },
-  {
-    title: 'Company',
-    links: ['About', 'Contact', 'Privacy', 'Terms'],
-  },
+const SOCIAL_HREFS = [
+  { icon: 'linkedin' as const, key: 'linkedin' as const, href: 'https://linkedin.com/in/dns-blsnk' },
+  { icon: 'github' as const, key: 'github' as const, href: 'https://github.com/dns-blsnk' },
+  { icon: 'fileText' as const, key: 'blog' as const, href: '#' },
 ];
-
-const SOCIAL = [
-  { icon: 'linkedin' as const, label: 'LinkedIn', href: 'https://linkedin.com/in/dns-blsnk' },
-  { icon: 'github' as const, label: 'GitHub', href: 'https://github.com/dns-blsnk' },
-  { icon: 'fileText' as const, label: 'Blog', href: '#' },
-];
-
-const YEAR = 2026;
 
 export function Footer() {
+  const t = useTranslations();
   const isMobile = useMobile();
 
   if (isMobile) {
@@ -37,14 +22,12 @@ export function Footer() {
       <footer className={styles.footer}>
         <div className={styles.mobileTop}>
           <Logo />
-          <p className={styles.desc}>
-            Drop in job links — we parse them and gather the key details in one place.
-          </p>
+          <p className={styles.desc}>{t.footer.descMobile}</p>
           <SocialRow />
         </div>
 
         <div className={styles.accordion}>
-          {FOOTER_COLS.map((col) => (
+          {t.footer.columns.map((col) => (
             <details key={col.title} className={styles.details}>
               <summary className={styles.summary}>
                 {col.title}
@@ -61,7 +44,7 @@ export function Footer() {
 
         <div className={styles.mobileBottom}>
           <LangSwitch up />
-          <span className={styles.copyright}>© {YEAR} Jobtrail · Built by Denys</span>
+          <span className={styles.copyright}>{t.footer.copyright}</span>
         </div>
       </footer>
     );
@@ -72,13 +55,11 @@ export function Footer() {
       <div className={styles.grid}>
         <div className={styles.brand}>
           <Logo />
-          <p className={styles.desc}>
-            Drop in job links — Jobtrail parses the description, extracts the key requirements, and keeps everything in one tracker.
-          </p>
+          <p className={styles.desc}>{t.footer.descDesktop}</p>
           <SocialRow />
         </div>
 
-        {FOOTER_COLS.map((col) => (
+        {t.footer.columns.map((col) => (
           <div key={col.title} className={styles.col}>
             <h4 className={styles.colTitle}>{col.title}</h4>
             <div className={styles.colLinks}>
@@ -91,7 +72,7 @@ export function Footer() {
       </div>
 
       <div className={styles.bottom}>
-        <span className={styles.copyright}>© {YEAR} Jobtrail · Built by Denys</span>
+        <span className={styles.copyright}>{t.footer.copyright}</span>
         <LangSwitch up />
       </div>
     </footer>
@@ -99,23 +80,25 @@ export function Footer() {
 }
 
 function Logo() {
+  const t = useTranslations();
   return (
-    <Link aria-label="Jobtrail home" className={styles.logo} href="/">
+    <Link aria-label={t.common.logoAriaLabel} className={styles.logo} href="/">
       <span className={styles.logoMark}>
         <Icon name="briefcase" size={18} strokeWidth={2.1} />
       </span>
-      <span className={styles.logoWord}>Jobtrail</span>
+      <span className={styles.logoWord}>{t.common.appName}</span>
     </Link>
   );
 }
 
 function SocialRow() {
+  const t = useTranslations();
   return (
     <div className={styles.social}>
-      {SOCIAL.map((s) => (
+      {SOCIAL_HREFS.map((s) => (
         <a
-          key={s.label}
-          aria-label={s.label}
+          key={s.key}
+          aria-label={t.footer.social[s.key]}
           className={styles.socialBtn}
           href={s.href}
           rel="noreferrer"
