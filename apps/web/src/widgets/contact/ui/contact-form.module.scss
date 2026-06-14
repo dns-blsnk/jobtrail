@@ -1,0 +1,161 @@
+@use '@/shared/styles/variables' as v;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px;
+  border: 1px solid v.$color-border-soft;
+  border-radius: v.$radius-lg;
+  background: v.$color-background;
+}
+
+.heading {
+  font-size: 18px;
+  font-weight: 700;
+  color: v.$color-heading;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: v.$color-text;
+}
+
+.input {
+  padding: 10px 14px;
+  font-size: 14px;
+  color: v.$color-text;
+  background: #fafafa;
+  border: 1px solid v.$color-border-soft;
+  border-radius: v.$radius-sm;
+  outline: none;
+  font-family: v.$font-sans;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+  width: 100%;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: v.$color-muted;
+  }
+
+  &:focus {
+    border-color: v.$color-primary;
+    background: v.$color-background;
+    box-shadow: 0 0 0 3px rgba(55, 93, 251, 0.12);
+  }
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+.submitBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: v.$color-white;
+  background: v.$color-primary;
+  border: none;
+  border-radius: v.$radius-sm;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  align-self: flex-start;
+
+  &:hover:not(:disabled) {
+    background: v.$color-primary-hover;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.successState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 48px 24px;
+  text-align: center;
+  min-height: 220px;
+}
+
+.successIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+.successText {
+  font-size: 15px;
+  color: v.$color-text;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.resetBtn {
+  font-size: 13px;
+  font-weight: 500;
+  color: v.$color-muted;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+
+  &:hover {
+    color: v.$color-text;
+  }
+}

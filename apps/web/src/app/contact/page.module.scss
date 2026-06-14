@@ -5,11 +5,11 @@
 }
 
 .inner {
-  max-width: 720px;
+  max-width: 1080px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 40px;
 }
 
 .hero {
@@ -32,24 +32,13 @@
   margin: 0;
 }
 
-.emailRow {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 15px;
-  color: v.$color-text;
-}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 24px;
+  align-items: start;
 
-.emailLabel {
-  color: v.$color-muted;
-}
-
-.emailLink {
-  color: v.$color-link;
-  text-decoration: none;
-  font-weight: 500;
-
-  &:hover {
-    text-decoration: underline;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
   }
 }
