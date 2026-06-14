@@ -10,8 +10,24 @@ import styles from './footer.module.scss';
 const SOCIAL_HREFS = [
   { icon: 'linkedin' as const, key: 'linkedin' as const, href: 'https://linkedin.com/in/dns-blsnk' },
   { icon: 'github' as const, key: 'github' as const, href: 'https://github.com/dns-blsnk' },
-  { icon: 'fileText' as const, key: 'blog' as const, href: '#' },
+  { icon: 'fileText' as const, key: 'blog' as const, href: '/blog' },
 ];
+
+const LINK_HREFS: Record<string, string> = {
+  Features: '/#features',
+  Pricing: '/#pricing',
+  'Job parsing': '/#job-parsing',
+  Analytics: '/#analytics',
+  Roadmap: '/#roadmap',
+  Blog: '/blog',
+  'Job-search guides': '/job-search-guides',
+  'Resume templates': '/resume-templates',
+  Help: '/help',
+  About: '/about',
+  Contact: '/contact',
+  Privacy: '/privacy',
+  Terms: '/terms',
+};
 
 export function Footer() {
   const t = useTranslations();
@@ -112,8 +128,9 @@ function SocialRow() {
 }
 
 function FootLink({ label }: { label: string }) {
+  const href = LINK_HREFS[label] ?? '#';
   return (
-    <Link className={styles.footLink} href="#">
+    <Link className={styles.footLink} href={href}>
       {label}
     </Link>
   );

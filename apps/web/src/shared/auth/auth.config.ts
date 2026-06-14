@@ -1,5 +1,7 @@
 import type { NextAuthConfig } from 'next-auth';
 
+const PROTECTED_PATHS = ['/dashboard', '/jobs', '/applications', '/analytics', '/profile'];
+
 export const authConfig: NextAuthConfig = {
   pages: {
     signIn: '/auth',
@@ -7,12 +9,12 @@ export const authConfig: NextAuthConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isOnProfile = nextUrl.pathname.startsWith('/profile');
+      const isProtected = PROTECTED_PATHS.some((p) => nextUrl.pathname.startsWith(p));
       const isOnAuth = nextUrl.pathname.startsWith('/auth');
 
-      if (isOnProfile) return isLoggedIn;
+      if (isProtected) return isLoggedIn;
       if (isOnAuth && isLoggedIn) {
-        return Response.redirect(new URL('/profile', nextUrl));
+        return Response.redirect(new URL('/dashboard', nextUrl));
       }
       return true;
     },

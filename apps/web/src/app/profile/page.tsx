@@ -1,5 +1,4 @@
+import { withAuthGuard } from '@/fsd-app/auth/with-auth-guard';
 import { ProfilePage } from '@/views/profile/ui/profile-page';
 
-export default function ProfileRoute() {
-  return <ProfilePage />;
-}
+export default withAuthGuard(ProfilePage);

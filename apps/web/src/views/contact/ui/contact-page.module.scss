@@ -1,0 +1,55 @@
+@use '@/shared/styles/variables' as v;
+
+.root {
+  padding: 64px 24px 96px;
+}
+
+.inner {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 800;
+  color: v.$color-heading;
+  letter-spacing: -1.5px;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: v.$color-muted;
+  margin: 0;
+}
+
+.emailRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: v.$color-text;
+}
+
+.emailLabel {
+  color: v.$color-muted;
+}
+
+.emailLink {
+  color: v.$color-link;
+  text-decoration: none;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
