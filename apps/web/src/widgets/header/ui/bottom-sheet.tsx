@@ -1,6 +1,7 @@
 'use client';
 
-import styles from './bottom-sheet.module.scss';
+import { clsx } from 'clsx';
+import s from './bottom-sheet.module.scss';
 
 interface BottomSheetProps {
   open: boolean;
@@ -15,15 +16,15 @@ export function BottomSheet({ open, onClose, label, tone = 'light', children }: 
     <>
       <div
         aria-hidden
-        className={`${styles.scrim} ${open ? styles.scrimVisible : ''}`}
+        className={clsx(s.scrim, open && s.scrimVisible)}
         onClick={onClose}
       />
       <div
         aria-label={label}
-        className={`${styles.sheet} ${tone === 'deep' ? styles.deep : ''} ${open ? styles.open : ''}`}
+        className={clsx(s.sheet, tone === 'deep' && s.deep, open && s.open)}
         role="dialog"
       >
-        <div className={styles.handle} />
+        <div className={s.handle} />
         {children}
       </div>
     </>

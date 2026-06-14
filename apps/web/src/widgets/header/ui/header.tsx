@@ -14,7 +14,8 @@ import { useMobile } from '@/shared/lib/hooks/use-mobile';
 import { BottomSheet } from './bottom-sheet';
 import { Dropdown } from './dropdown';
 import { NavDrawer } from './nav-drawer';
-import styles from './header.module.scss';
+import { clsx } from 'clsx';
+import s from './header.module.scss';
 
 export function Header() {
   const tc = useTranslations('common');
@@ -50,22 +51,22 @@ export function Header() {
 
   if (isMobile) {
     return (
-      <header className={styles.header}>
-        <div className={`${styles.inner} ${styles.innerMobile}`}>
-          <div className={styles.left}>
+      <header className={s.header}>
+        <div className={clsx(s.inner, s.innerMobile)}>
+          <div className={s.left}>
             <IconButton icon="menu" label={th('aria.openMenu')} onClick={() => setDrawerOpen(true)} />
             <Logo />
           </div>
 
-          <div className={styles.right}>
+          <div className={s.right}>
             {isLoggedIn ? (
               <>
-                <button aria-label={th('aria.addJob')} className={styles.addBtn} type="button">
+                <button aria-label={th('aria.addJob')} className={s.addBtn} type="button">
                   <Icon name="plus" size={18} strokeWidth={2} />
                 </button>
                 <button
                   aria-label={th('aria.userMenu')}
-                  className={styles.avatarTrigger}
+                  className={s.avatarTrigger}
                   type="button"
                   onClick={() => setMenuOpen(true)}
                 >
@@ -73,7 +74,7 @@ export function Header() {
                 </button>
               </>
             ) : (
-              <button className={styles.outlineBtn} type="button" onClick={() => setDrawerOpen(true)}>
+              <button className={s.outlineBtn} type="button" onClick={() => setDrawerOpen(true)}>
                 {tc('logIn')}
               </button>
             )}
@@ -81,38 +82,38 @@ export function Header() {
         </div>
 
         <NavDrawer label={th('drawer.navLabel')} open={drawerOpen} onClose={closeDrawer}>
-          <div className={styles.drawerHeader}>
+          <div className={s.drawerHeader}>
             <Logo />
             <IconButton icon="x" label={th('aria.closeMenu')} onClick={closeDrawer} />
           </div>
-          <nav className={styles.drawerNav}>
+          <nav className={s.drawerNav}>
             {navItems.map((item) => (
               <Link
                 key={item.label}
-                className={styles.drawerLink}
+                className={s.drawerLink}
                 href={item.href}
                 onClick={closeDrawer}
               >
                 {'icon' in item && typeof item.icon === 'string' && (
-                  <Icon className={styles.drawerLinkIcon} name={item.icon as import('@/shared/ui/icon/icon').IconName} size={19} strokeWidth={1.9} />
+                  <Icon className={s.drawerLinkIcon} name={item.icon as import('@/shared/ui/icon/icon').IconName} size={19} strokeWidth={1.9} />
                 )}
                 {item.label}
-                <Icon className={styles.drawerChevron} name="chevronRight" size={16} />
+                <Icon className={s.drawerChevron} name="chevronRight" size={16} />
               </Link>
             ))}
           </nav>
-          <div className={styles.drawerFooter}>
+          <div className={s.drawerFooter}>
             {isLoggedIn ? (
-              <button className={styles.primaryBtn} type="button">
+              <button className={s.primaryBtn} type="button">
                 <Icon name="plus" size={16} strokeWidth={2} />
                 {tc('addJob')}
               </button>
             ) : (
               <>
-                <Link className={styles.primaryBtn} href="/auth" onClick={closeDrawer}>
+                <Link className={s.primaryBtn} href="/auth" onClick={closeDrawer}>
                   {tc('signUp')}
                 </Link>
-                <Link className={`${styles.outlineBtn} ${styles.fullWidth}`} href="/auth" onClick={closeDrawer}>
+                <Link className={clsx(s.outlineBtn, s.fullWidth)} href="/auth" onClick={closeDrawer}>
                   {tc('logIn')}
                 </Link>
               </>
@@ -135,38 +136,38 @@ export function Header() {
   }
 
   return (
-    <header className={styles.header}>
-      <div className={styles.inner}>
-        <div className={styles.left}>
+    <header className={s.header}>
+      <div className={s.inner}>
+        <div className={s.left}>
           <Logo />
-          <nav className={styles.nav}>
+          <nav className={s.nav}>
             {navItems.map((item, i) => (
               <NavLink key={item.label} active={isLoggedIn && i === 0} item={item} />
             ))}
           </nav>
         </div>
 
-        <div className={styles.right}>
+        <div className={s.right}>
           {isLoggedIn ? (
             <>
               <IconButton icon="search" label={th('aria.search')} />
               <IconButton dot icon="bell" label={th('aria.notifications')} />
-              <span className={styles.divider} />
-              <button className={styles.primaryBtn} type="button">
+              <span className={s.divider} />
+              <button className={s.primaryBtn} type="button">
                 <Icon name="plus" size={18} strokeWidth={2} />
                 {tc('addJob')}
               </button>
-              <div ref={avatarWrapRef as RefObject<HTMLDivElement>} className={styles.avatarWrap}>
+              <div ref={avatarWrapRef as RefObject<HTMLDivElement>} className={s.avatarWrap}>
                 <button
                   aria-expanded={menuOpen}
                   aria-label={th('aria.userMenu')}
-                  className={`${styles.avatarTrigger} ${menuOpen ? styles.avatarTriggerOpen : ''}`}
+                  className={clsx(s.avatarTrigger, menuOpen && s.avatarTriggerOpen)}
                   type="button"
                   onClick={() => setMenuOpen((v) => !v)}
                 >
                   <Avatar avatarMode="initials" loggedIn={isLoggedIn} size={34} user={user} />
                   <Icon
-                    className={`${styles.chevron} ${menuOpen ? styles.chevronOpen : ''}`}
+                    className={clsx(s.chevron, menuOpen && s.chevronOpen)}
                     name="chevronDown"
                     size={16}
                   />
@@ -185,10 +186,10 @@ export function Header() {
             </>
           ) : (
             <>
-              <Link className={styles.ghostBtn} href="/auth">
+              <Link className={s.ghostBtn} href="/auth">
                 {tc('logIn')}
               </Link>
-              <Link className={styles.primaryBtn} href="/auth">
+              <Link className={s.primaryBtn} href="/auth">
                 {tc('signUp')}
               </Link>
             </>
@@ -208,11 +209,11 @@ interface NavItem {
 function Logo({ size = 30 }: { size?: number }) {
   const tc = useTranslations('common');
   return (
-    <Link aria-label={tc('logoAriaLabel')} className={styles.logo} href="/">
-      <span className={styles.logoMark} style={{ width: size, height: size }}>
+    <Link aria-label={tc('logoAriaLabel')} className={s.logo} href="/">
+      <span className={s.logoMark} style={{ width: size, height: size }}>
         <Icon name="briefcase" size={Math.round(size * 0.6)} strokeWidth={2.1} />
       </span>
-      <span className={styles.logoWord}>{tc('appName')}</span>
+      <span className={s.logoWord}>{tc('appName')}</span>
     </Link>
   );
 }
@@ -220,7 +221,7 @@ function Logo({ size = 30 }: { size?: number }) {
 function NavLink({ item, active }: { item: NavItem; active: boolean }) {
   return (
     <Link
-      className={`${styles.navLink} ${active ? styles.navLinkActive : ''}`}
+      className={clsx(s.navLink, active && s.navLinkActive)}
       href={item.href}
     >
       {item.icon && <Icon name={item.icon} size={17} strokeWidth={1.9} />}

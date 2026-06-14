@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import styles from './text-field.module.scss';
+import s from './text-field.module.scss';
 
 interface TextFieldProps {
   label: string;
@@ -19,15 +19,15 @@ export function TextField({ label, value, placeholder, type = 'text', error, aut
   const inputType = isPassword ? (visible ? 'text' : 'password') : type;
 
   const inputClass = [
-    styles.input,
-    error ? styles.hasError : '',
-    isPassword ? styles.withToggle : '',
+    s.input,
+    error ? s.hasError : '',
+    isPassword ? s.withToggle : '',
   ].filter(Boolean).join(' ');
 
   return (
-    <div className={styles.wrapper}>
-      <label className={styles.label}>{label}</label>
-      <div className={styles.inputRow}>
+    <div className={s.wrapper}>
+      <label className={s.label}>{label}</label>
+      <div className={s.inputRow}>
         <input
           autoComplete={autoComplete}
           className={inputClass}
@@ -38,7 +38,7 @@ export function TextField({ label, value, placeholder, type = 'text', error, aut
         />
         {isPassword && (
           <button
-            className={styles.toggle}
+            className={s.toggle}
             tabIndex={-1}
             type="button"
             onClick={() => setVisible((v) => !v)}
@@ -47,8 +47,8 @@ export function TextField({ label, value, placeholder, type = 'text', error, aut
           </button>
         )}
       </div>
-      <div className={styles.errorSlot}>
-        {error && <span className={styles.error}>{error}</span>}
+      <div className={s.errorSlot}>
+        {error && <span className={s.error}>{error}</span>}
       </div>
     </div>
   );

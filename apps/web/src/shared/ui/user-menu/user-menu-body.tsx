@@ -5,7 +5,8 @@ import { useTranslations } from 'next-intl';
 import { Icon, type IconName } from '@/shared/ui/icon/icon';
 import { Avatar, type AvatarMode, type AvatarUser } from '@/shared/ui/avatar/avatar';
 import { SegmentedControl } from '@/shared/ui/segmented-control/segmented-control';
-import styles from './user-menu-body.module.scss';
+import { clsx } from 'clsx';
+import s from './user-menu-body.module.scss';
 
 interface UserMenuBodyProps {
   user: AvatarUser;
@@ -26,28 +27,28 @@ export function UserMenuBody({ user, avatarMode = 'photo', tone = 'light', onClo
   ];
 
   return (
-    <div className={`${styles.root} ${deep ? styles.deep : ''}`}>
-      <div className={styles.identity}>
+    <div className={clsx(s.root, deep && s.deep)}>
+      <div className={s.identity}>
         <Avatar loggedIn avatarMode={avatarMode} size={44} user={user} />
-        <div className={styles.identityText}>
-          <span className={styles.name}>{user.name ?? t('fallbackName')}</span>
-          <span className={styles.email}>{user.email}</span>
+        <div className={s.identityText}>
+          <span className={s.name}>{user.name ?? t('fallbackName')}</span>
+          <span className={s.email}>{user.email}</span>
         </div>
       </div>
 
-      <div className={styles.divider} />
+      <div className={s.divider} />
 
-      <div className={styles.group}>
+      <div className={s.group}>
         <MenuRow icon="userCircle" label={t('profile')} onPress={onClose} />
         <MenuRow badge="12" icon="bookmark" label={t('myApplications')} onPress={onClose} />
         <MenuRow icon="creditCard" label={t('subscription')} meta={t('subscriptionFree')} onPress={onClose} />
         <MenuRow icon="settings" label={t('settings')} onPress={onClose} />
       </div>
 
-      <div className={styles.divider} />
+      <div className={s.divider} />
 
-      <div className={styles.themeRow}>
-        <span className={styles.themeLabel}>
+      <div className={s.themeRow}>
+        <span className={s.themeLabel}>
           <Icon name={theme === 'dark' ? 'moon' : 'sun'} size={19} strokeWidth={1.9} />
           {t('theme')}
         </span>
@@ -58,7 +59,7 @@ export function UserMenuBody({ user, avatarMode = 'photo', tone = 'light', onClo
         />
       </div>
 
-      <div className={styles.divider} />
+      <div className={s.divider} />
 
       <MenuRow danger icon="logOut" label={t('logOut')} onPress={onLogout} />
     </div>
@@ -77,14 +78,14 @@ interface MenuRowProps {
 function MenuRow({ icon, label, badge, meta, danger, onPress }: MenuRowProps) {
   return (
     <button
-      className={`${styles.row} ${danger ? styles.danger : ''}`}
+      className={clsx(s.row, danger && s.danger)}
       type="button"
       onClick={onPress}
     >
-      <Icon className={styles.rowIcon} name={icon} size={19} strokeWidth={1.9} />
-      <span className={styles.rowLabel}>{label}</span>
-      {badge && <span className={styles.badge}>{badge}</span>}
-      {meta && <span className={styles.meta}>{meta}</span>}
+      <Icon className={s.rowIcon} name={icon} size={19} strokeWidth={1.9} />
+      <span className={s.rowLabel}>{label}</span>
+      {badge && <span className={s.badge}>{badge}</span>}
+      {meta && <span className={s.meta}>{meta}</span>}
     </button>
   );
 }

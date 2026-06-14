@@ -1,6 +1,7 @@
 'use client';
 
-import styles from './nav-drawer.module.scss';
+import { clsx } from 'clsx';
+import s from './nav-drawer.module.scss';
 
 interface NavDrawerProps {
   open: boolean;
@@ -15,12 +16,12 @@ export function NavDrawer({ open, onClose, label, tone = 'light', children }: Na
     <>
       <div
         aria-hidden
-        className={`${styles.scrim} ${open ? styles.scrimVisible : ''}`}
+        className={clsx(s.scrim, open && s.scrimVisible)}
         onClick={onClose}
       />
       <div
         aria-label={label}
-        className={`${styles.drawer} ${tone === 'deep' ? styles.deep : ''} ${open ? styles.open : ''}`}
+        className={clsx(s.drawer, tone === 'deep' && s.deep, open && s.open)}
         role="dialog"
       >
         {children}

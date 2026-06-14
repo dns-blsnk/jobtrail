@@ -2,7 +2,7 @@
 
 import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import styles from './profile-card.module.scss';
+import s from './profile-card.module.scss';
 
 interface ProfileUser {
   email?: string | null;
@@ -19,12 +19,12 @@ export function ProfileCard({ user }: ProfileCardProps) {
   const initial = displayName.charAt(0).toUpperCase();
 
   return (
-    <div className={styles.card}>
-      <div aria-hidden className={styles.avatar}>{initial}</div>
-      <p className={styles.name}>{displayName}</p>
-      {user.name && user.email && <p className={styles.email}>{user.email}</p>}
+    <div className={s.card}>
+      <div aria-hidden className={s.avatar}>{initial}</div>
+      <p className={s.name}>{displayName}</p>
+      {user.name && user.email && <p className={s.email}>{user.email}</p>}
       <button
-        className={styles.logoutButton}
+        className={s.logoutButton}
         type="button"
         onClick={() => void signOut({ callbackUrl: '/auth' })}
       >

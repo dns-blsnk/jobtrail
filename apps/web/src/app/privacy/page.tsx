@@ -1,14 +1,14 @@
 import { getTranslations } from 'next-intl/server';
-import styles from './page.module.scss';
+import s from './page.module.scss';
 
 export default async function PrivacyRoute() {
   const t = await getTranslations('privacyPage');
   return (
-    <div className={styles.root}>
-      <div className={styles.inner}>
-        <h1 className={styles.title}>{t('title')}</h1>
-        <p className={styles.subtitle}>{t('subtitle')}</p>
-        <p className={styles.placeholder}>{t('placeholder')}</p>
+    <div className={s.root}>
+      <div className={s.inner}>
+        <h1 className={s.title}>{t('title')}</h1>
+        <p className={s.subtitle}>{t('subtitle')}</p>
+        <p className={s.placeholder}>{t('placeholder')}</p>
       </div>
     </div>
   );

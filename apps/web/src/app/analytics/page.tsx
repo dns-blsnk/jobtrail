@@ -1,19 +1,19 @@
 import { getTranslations } from 'next-intl/server';
 import { withAuthGuard } from '@/fsd-app/auth/with-auth-guard';
-import styles from './page.module.scss';
+import s from './page.module.scss';
 
 export default withAuthGuard(async () => {
   const t = await getTranslations('analyticsPage');
   return (
-    <div className={styles.root}>
-      <div className={styles.inner}>
-        <div className={styles.pageHeader}>
-          <h1 className={styles.title}>{t('title')}</h1>
-          <p className={styles.subtitle}>{t('subtitle')}</p>
+    <div className={s.root}>
+      <div className={s.inner}>
+        <div className={s.pageHeader}>
+          <h1 className={s.title}>{t('title')}</h1>
+          <p className={s.subtitle}>{t('subtitle')}</p>
         </div>
-        <div className={styles.emptyState}>
-          <p className={styles.emptyTitle}>{t('empty')}</p>
-          <p className={styles.emptyHint}>{t('emptyHint')}</p>
+        <div className={s.emptyState}>
+          <p className={s.emptyTitle}>{t('empty')}</p>
+          <p className={s.emptyHint}>{t('emptyHint')}</p>
         </div>
       </div>
     </div>

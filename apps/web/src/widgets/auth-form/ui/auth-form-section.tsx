@@ -10,7 +10,7 @@ import { type AuthFormErrors, type AuthValidationMessages, validateAuthForm } fr
 import { Button } from '@/shared/ui/button/button';
 import { SegmentedControl } from '@/shared/ui/segmented-control/segmented-control';
 import { TextField } from '@/shared/ui/text-field/text-field';
-import styles from './auth-form-section.module.scss';
+import s from './auth-form-section.module.scss';
 
 export function AuthFormSection() {
   const tf = useTranslations('auth.form');
@@ -58,15 +58,15 @@ export function AuthFormSection() {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.headline}>
-        <h1 className={styles.title}>{tf('title')}</h1>
-        <p className={styles.subtitle}>{tf('subtitle')}</p>
+    <div className={s.container}>
+      <div className={s.headline}>
+        <h1 className={s.title}>{tf('title')}</h1>
+        <p className={s.subtitle}>{tf('subtitle')}</p>
       </div>
 
       <SegmentedControl options={modeOptions} value={mode} onChange={handleChangeMode} />
 
-      <div className={styles.fields}>
+      <div className={s.fields}>
         <TextField
           autoComplete="email"
           error={errors.email}
@@ -87,7 +87,7 @@ export function AuthFormSection() {
         />
       </div>
 
-      <div className={styles.actions}>
+      <div className={s.actions}>
         <Button
           disabled={isPending}
           loading={isPending}
@@ -96,8 +96,8 @@ export function AuthFormSection() {
         />
       </div>
 
-      <div className={styles.submitErrorSlot}>
-        {submitError && <p className={styles.submitError}>{submitError}</p>}
+      <div className={s.submitErrorSlot}>
+        {submitError && <p className={s.submitError}>{submitError}</p>}
       </div>
     </div>
   );
