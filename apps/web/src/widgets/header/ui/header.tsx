@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { type RefObject, useCallback, useState } from 'react';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import { useTranslations } from '@/fsd-app/intl/intl-provider';
+import { useProfile } from '@/entities/session/model/use-profile';
 import { Icon } from '@/shared/ui/icon/icon';
 import { Avatar } from '@/shared/ui/avatar/avatar';
 import { IconButton } from '@/shared/ui/icon-button/icon-button';
@@ -17,7 +18,7 @@ import styles from './header.module.scss';
 
 export function Header() {
   const t = useTranslations();
-  const { data: session, status } = useSession();
+  const { user: profileUser, isLoggedIn } = useProfile();
   const isMobile = useMobile();
   const [menuOpen, setMenuOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -27,9 +28,8 @@ export function Header() {
 
   const avatarWrapRef = useDismiss(menuOpen, closeMenu);
 
-  const loggedIn = status === 'authenticated';
-  const user = session?.user
-    ? { name: session.user.name ?? null, email: session.user.email ?? '' }
+  const user = profileUser
+    ? { name: profileUser.name ?? null, email: profileUser.email }
     : null;
 
   const navLogged = [
@@ -45,7 +45,7 @@ export function Header() {
     { label: t.header.nav.about, href: '/#about' },
   ];
 
-  const navItems = loggedIn ? navLogged : navGuest;
+  const navItems = isLoggedIn ? navLogged : navGuest;
 
   if (isMobile) {
     return (
@@ -57,7 +57,7 @@ export function Header() {
           </div>
 
           <div className={styles.right}>
-            {loggedIn ? (
+            {isLoggedIn ? (
               <>
                 <button aria-label={t.header.aria.addJob} className={styles.addBtn} type="button">
                   <Icon name="plus" size={18} strokeWidth={2} />
@@ -68,7 +68,7 @@ export function Header() {
                   type="button"
                   onClick={() => setMenuOpen(true)}
                 >
-                  <Avatar avatarMode="initials" loggedIn={loggedIn} size={36} user={user} />
+                  <Avatar avatarMode="initials" loggedIn={isLoggedIn} size={36} user={user} />
                 </button>
               </>
             ) : (
@@ -101,7 +101,7 @@ export function Header() {
             ))}
           </nav>
           <div className={styles.drawerFooter}>
-            {loggedIn ? (
+            {isLoggedIn ? (
               <button className={styles.primaryBtn} type="button">
                 <Icon name="plus" size={16} strokeWidth={2} />
                 {t.common.addJob}
@@ -125,7 +125,7 @@ export function Header() {
               avatarMode="initials"
               user={user}
               onClose={closeMenu}
-              onLogout={() => { closeMenu(); signOut(); }}
+              onLogout={() => { closeMenu(); void signOut(); }}
             />
           )}
         </BottomSheet>
@@ -140,13 +140,13 @@ export function Header() {
           <Logo />
           <nav className={styles.nav}>
             {navItems.map((item, i) => (
-              <NavLink key={item.label} active={loggedIn && i === 0} item={item} />
+              <NavLink key={item.label} active={isLoggedIn && i === 0} item={item} />
             ))}
           </nav>
         </div>
 
         <div className={styles.right}>
-          {loggedIn ? (
+          {isLoggedIn ? (
             <>
               <IconButton icon="search" label={t.header.aria.search} />
               <IconButton dot icon="bell" label={t.header.aria.notifications} />
@@ -163,7 +163,7 @@ export function Header() {
                   type="button"
                   onClick={() => setMenuOpen((v) => !v)}
                 >
-                  <Avatar avatarMode="initials" loggedIn={loggedIn} size={34} user={user} />
+                  <Avatar avatarMode="initials" loggedIn={isLoggedIn} size={34} user={user} />
                   <Icon
                     className={`${styles.chevron} ${menuOpen ? styles.chevronOpen : ''}`}
                     name="chevronDown"
@@ -176,7 +176,7 @@ export function Header() {
                       avatarMode="initials"
                       user={user}
                       onClose={closeMenu}
-                      onLogout={() => { closeMenu(); signOut(); }}
+                      onLogout={() => { closeMenu(); void signOut(); }}
                     />
                   )}
                 </Dropdown>

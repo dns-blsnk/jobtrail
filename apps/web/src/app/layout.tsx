@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { auth } from '@/shared/auth/auth';
 import { Footer } from '@/widgets/footer/ui/footer';
 import { Header } from '@/widgets/header/ui/header';
 import { Providers } from './providers';
@@ -9,11 +10,13 @@ export const metadata: Metadata = {
   description: 'Track your job applications in one place',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const session = await auth();
+
   return (
     <html lang="en">
       <body>
-        <Providers>
+        <Providers session={session}>
           <Header />
           <main>{children}</main>
           <Footer />
