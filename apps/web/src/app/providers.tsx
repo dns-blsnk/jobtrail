@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SessionProvider } from 'next-auth/react';
 import { useState } from 'react';
-import { IntlProvider } from '@/fsd-app/intl/intl-provider';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -24,13 +23,11 @@ export function Providers({ children, session }: ProvidersProps) {
   );
 
   return (
-    <IntlProvider>
-      <SessionProvider session={session}>
-        <QueryClientProvider client={queryClient}>
-          {children}
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </SessionProvider>
-    </IntlProvider>
+    <SessionProvider session={session}>
+      <QueryClientProvider client={queryClient}>
+        {children}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </SessionProvider>
   );
 }

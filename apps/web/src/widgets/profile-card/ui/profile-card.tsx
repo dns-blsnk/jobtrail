@@ -1,7 +1,7 @@
 'use client';
 
 import { signOut } from 'next-auth/react';
-import { useTranslations } from '@/fsd-app/intl/intl-provider';
+import { useTranslations } from 'next-intl';
 import styles from './profile-card.module.scss';
 
 interface ProfileUser {
@@ -14,7 +14,7 @@ interface ProfileCardProps {
 }
 
 export function ProfileCard({ user }: ProfileCardProps) {
-  const t = useTranslations();
+  const t = useTranslations('profileCard');
   const displayName = user.name ?? user.email ?? '';
   const initial = displayName.charAt(0).toUpperCase();
 
@@ -28,7 +28,7 @@ export function ProfileCard({ user }: ProfileCardProps) {
         type="button"
         onClick={() => void signOut({ callbackUrl: '/auth' })}
       >
-        {t.profileCard.logOut}
+        {t('logOut')}
       </button>
     </div>
   );

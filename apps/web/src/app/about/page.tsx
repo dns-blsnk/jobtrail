@@ -1,21 +1,21 @@
-import { aboutPage } from '@/fsd-app/intl/messages/en/about-page';
+import { getTranslations } from 'next-intl/server';
 import styles from './page.module.scss';
 
-export default function AboutRoute() {
-  const t = aboutPage;
+export default async function AboutRoute() {
+  const t = await getTranslations('aboutPage');
   return (
     <div className={styles.root}>
       <div className={styles.inner}>
         <div className={styles.hero}>
-          <h1 className={styles.title}>{t.title}</h1>
-          <p className={styles.subtitle}>{t.subtitle}</p>
+          <h1 className={styles.title}>{t('title')}</h1>
+          <p className={styles.subtitle}>{t('subtitle')}</p>
         </div>
         <div className={styles.section}>
-          <p className={styles.body}>{t.body}</p>
+          <p className={styles.body}>{t('body')}</p>
         </div>
         <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>{t.missionTitle}</h2>
-          <p className={styles.body}>{t.missionBody}</p>
+          <h2 className={styles.sectionTitle}>{t('missionTitle')}</h2>
+          <p className={styles.body}>{t('missionBody')}</p>
         </div>
       </div>
     </div>

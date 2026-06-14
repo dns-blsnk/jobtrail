@@ -1,7 +1,12 @@
 import { z } from 'zod';
-import type { Messages } from '@/fsd-app/intl/messages/en';
 
-export type AuthValidationMessages = Messages['auth']['validation'];
+export interface AuthValidationMessages {
+  emailRequired: string;
+  emailInvalid: string;
+  passwordRequired: string;
+  passwordWeak: string;
+}
+
 export type AuthFormErrors = Partial<Record<'email' | 'password', string>>;
 
 export function createAuthSchema(msgs: AuthValidationMessages) {

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { type RefObject, useCallback, useState } from 'react';
 import { signOut } from 'next-auth/react';
-import { useTranslations } from '@/fsd-app/intl/intl-provider';
+import { useTranslations } from 'next-intl';
 import { useProfile } from '@/entities/session/model/use-profile';
 import { Icon } from '@/shared/ui/icon/icon';
 import { Avatar } from '@/shared/ui/avatar/avatar';
@@ -17,7 +17,8 @@ import { NavDrawer } from './nav-drawer';
 import styles from './header.module.scss';
 
 export function Header() {
-  const t = useTranslations();
+  const tc = useTranslations('common');
+  const th = useTranslations('header');
   const { user: profileUser, isLoggedIn } = useProfile();
   const isMobile = useMobile();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -33,16 +34,16 @@ export function Header() {
     : null;
 
   const navLogged = [
-    { label: t.header.nav.dashboard, icon: 'layoutDashboard' as const, href: '/dashboard' },
-    { label: t.header.nav.jobs, icon: 'briefcase' as const, href: '/jobs' },
-    { label: t.header.nav.applications, icon: 'fileText' as const, href: '/applications' },
-    { label: t.header.nav.analytics, icon: 'barChart' as const, href: '/analytics' },
+    { label: th('nav.dashboard'), icon: 'layoutDashboard' as const, href: '/dashboard' },
+    { label: th('nav.jobs'), icon: 'briefcase' as const, href: '/jobs' },
+    { label: th('nav.applications'), icon: 'fileText' as const, href: '/applications' },
+    { label: th('nav.analytics'), icon: 'barChart' as const, href: '/analytics' },
   ];
 
   const navGuest = [
-    { label: t.header.nav.features, href: '/#features' },
-    { label: t.header.nav.pricing, href: '/#pricing' },
-    { label: t.header.nav.about, href: '/#about' },
+    { label: th('nav.features'), href: '/#features' },
+    { label: th('nav.pricing'), href: '/#pricing' },
+    { label: th('nav.about'), href: '/#about' },
   ];
 
   const navItems = isLoggedIn ? navLogged : navGuest;
@@ -52,18 +53,18 @@ export function Header() {
       <header className={styles.header}>
         <div className={`${styles.inner} ${styles.innerMobile}`}>
           <div className={styles.left}>
-            <IconButton icon="menu" label={t.header.aria.openMenu} onClick={() => setDrawerOpen(true)} />
-            <Logo size={28} />
+            <IconButton icon="menu" label={th('aria.openMenu')} onClick={() => setDrawerOpen(true)} />
+            <Logo />
           </div>
 
           <div className={styles.right}>
             {isLoggedIn ? (
               <>
-                <button aria-label={t.header.aria.addJob} className={styles.addBtn} type="button">
+                <button aria-label={th('aria.addJob')} className={styles.addBtn} type="button">
                   <Icon name="plus" size={18} strokeWidth={2} />
                 </button>
                 <button
-                  aria-label={t.header.aria.userMenu}
+                  aria-label={th('aria.userMenu')}
                   className={styles.avatarTrigger}
                   type="button"
                   onClick={() => setMenuOpen(true)}
@@ -73,16 +74,16 @@ export function Header() {
               </>
             ) : (
               <button className={styles.outlineBtn} type="button" onClick={() => setDrawerOpen(true)}>
-                {t.common.logIn}
+                {tc('logIn')}
               </button>
             )}
           </div>
         </div>
 
-        <NavDrawer label={t.header.drawer.navLabel} open={drawerOpen} onClose={closeDrawer}>
+        <NavDrawer label={th('drawer.navLabel')} open={drawerOpen} onClose={closeDrawer}>
           <div className={styles.drawerHeader}>
-            <Logo size={28} />
-            <IconButton icon="x" label={t.header.aria.closeMenu} onClick={closeDrawer} />
+            <Logo />
+            <IconButton icon="x" label={th('aria.closeMenu')} onClick={closeDrawer} />
           </div>
           <nav className={styles.drawerNav}>
             {navItems.map((item) => (
@@ -104,22 +105,22 @@ export function Header() {
             {isLoggedIn ? (
               <button className={styles.primaryBtn} type="button">
                 <Icon name="plus" size={16} strokeWidth={2} />
-                {t.common.addJob}
+                {tc('addJob')}
               </button>
             ) : (
               <>
                 <Link className={styles.primaryBtn} href="/auth" onClick={closeDrawer}>
-                  {t.common.signUp}
+                  {tc('signUp')}
                 </Link>
                 <Link className={`${styles.outlineBtn} ${styles.fullWidth}`} href="/auth" onClick={closeDrawer}>
-                  {t.common.logIn}
+                  {tc('logIn')}
                 </Link>
               </>
             )}
           </div>
         </NavDrawer>
 
-        <BottomSheet label={t.header.drawer.userMenuLabel} open={menuOpen} onClose={closeMenu}>
+        <BottomSheet label={th('drawer.userMenuLabel')} open={menuOpen} onClose={closeMenu}>
           {user && (
             <UserMenuBody
               avatarMode="initials"
@@ -148,17 +149,17 @@ export function Header() {
         <div className={styles.right}>
           {isLoggedIn ? (
             <>
-              <IconButton icon="search" label={t.header.aria.search} />
-              <IconButton dot icon="bell" label={t.header.aria.notifications} />
+              <IconButton icon="search" label={th('aria.search')} />
+              <IconButton dot icon="bell" label={th('aria.notifications')} />
               <span className={styles.divider} />
               <button className={styles.primaryBtn} type="button">
                 <Icon name="plus" size={18} strokeWidth={2} />
-                {t.common.addJob}
+                {tc('addJob')}
               </button>
               <div ref={avatarWrapRef as RefObject<HTMLDivElement>} className={styles.avatarWrap}>
                 <button
                   aria-expanded={menuOpen}
-                  aria-label={t.header.aria.userMenu}
+                  aria-label={th('aria.userMenu')}
                   className={`${styles.avatarTrigger} ${menuOpen ? styles.avatarTriggerOpen : ''}`}
                   type="button"
                   onClick={() => setMenuOpen((v) => !v)}
@@ -185,10 +186,10 @@ export function Header() {
           ) : (
             <>
               <Link className={styles.ghostBtn} href="/auth">
-                {t.common.logIn}
+                {tc('logIn')}
               </Link>
               <Link className={styles.primaryBtn} href="/auth">
-                {t.common.signUp}
+                {tc('signUp')}
               </Link>
             </>
           )}
@@ -205,13 +206,13 @@ interface NavItem {
 }
 
 function Logo({ size = 30 }: { size?: number }) {
-  const t = useTranslations();
+  const tc = useTranslations('common');
   return (
-    <Link aria-label={t.common.logoAriaLabel} className={styles.logo} href="/">
+    <Link aria-label={tc('logoAriaLabel')} className={styles.logo} href="/">
       <span className={styles.logoMark} style={{ width: size, height: size }}>
         <Icon name="briefcase" size={Math.round(size * 0.6)} strokeWidth={2.1} />
       </span>
-      <span className={styles.logoWord}>{t.common.appName}</span>
+      <span className={styles.logoWord}>{tc('appName')}</span>
     </Link>
   );
 }

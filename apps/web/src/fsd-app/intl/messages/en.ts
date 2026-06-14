@@ -1,4 +1,19 @@
-export const en = {
+import { aboutPage } from './en/about-page';
+import { analyticsPage } from './en/analytics-page';
+import { applicationsPage } from './en/applications-page';
+import { authPage } from './en/auth-page';
+import { blogPage } from './en/blog-page';
+import { contactPage } from './en/contact-page';
+import { dashboardPage } from './en/dashboard-page';
+import { helpPage } from './en/help-page';
+import { jobSearchGuidesPage } from './en/job-search-guides-page';
+import { jobsPage } from './en/jobs-page';
+import { privacyPage } from './en/privacy-page';
+import { profilePage } from './en/profile-page';
+import { resumeTemplatesPage } from './en/resume-templates-page';
+import { termsPage } from './en/terms-page';
+
+const en = {
   common: {
     appName: 'Jobtrail',
     appNameFull: 'Job Tracker',
@@ -89,6 +104,21 @@ export const en = {
   profileCard: {
     logOut: 'Log Out',
   },
+  authPage,
+  aboutPage,
+  analyticsPage,
+  applicationsPage,
+  blogPage,
+  contactPage,
+  dashboardPage,
+  helpPage,
+  jobSearchGuidesPage,
+  jobsPage,
+  privacyPage,
+  profilePage,
+  resumeTemplatesPage,
+  termsPage,
 } as const;
 
+export default en;
 export type Messages = typeof en;

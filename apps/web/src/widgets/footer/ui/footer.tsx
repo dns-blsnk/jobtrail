@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useTranslations } from '@/fsd-app/intl/intl-provider';
+import { useTranslations } from 'next-intl';
 import { Icon } from '@/shared/ui/icon/icon';
 import { useMobile } from '@/shared/lib/hooks/use-mobile';
 import { LangSwitch } from './lang-switch';
@@ -30,27 +30,28 @@ const LINK_HREFS: Record<string, string> = {
 };
 
 export function Footer() {
-  const t = useTranslations();
+  const tf = useTranslations('footer');
+  const tc = useTranslations('common');
   const isMobile = useMobile();
 
   if (isMobile) {
     return (
       <footer className={styles.footer}>
         <div className={styles.mobileTop}>
-          <Logo />
-          <p className={styles.desc}>{t.footer.descMobile}</p>
-          <SocialRow />
+          <Logo tc={tc} />
+          <p className={styles.desc}>{tf('descMobile')}</p>
+          <SocialRow tf={tf} />
         </div>
 
         <div className={styles.accordion}>
-          {t.footer.columns.map((col) => (
-            <details key={col.title} className={styles.details}>
+          {([0, 1, 2] as const).map((i) => (
+            <details key={tf(`columns.${i}.title`)} className={styles.details}>
               <summary className={styles.summary}>
-                {col.title}
+                {tf(`columns.${i}.title`)}
                 <Icon className={styles.summaryIcon} name="chevronDown" size={18} />
               </summary>
               <div className={styles.colLinks}>
-                {col.links.map((l) => (
+                {getColumnLinks(i).map((l) => (
                   <FootLink key={l} label={l} />
                 ))}
               </div>
@@ -60,7 +61,7 @@ export function Footer() {
 
         <div className={styles.mobileBottom}>
           <LangSwitch up />
-          <span className={styles.copyright}>{t.footer.copyright}</span>
+          <span className={styles.copyright}>{tf('copyright')}</span>
         </div>
       </footer>
     );
@@ -70,16 +71,16 @@ export function Footer() {
     <footer className={styles.footer}>
       <div className={styles.grid}>
         <div className={styles.brand}>
-          <Logo />
-          <p className={styles.desc}>{t.footer.descDesktop}</p>
-          <SocialRow />
+          <Logo tc={tc} />
+          <p className={styles.desc}>{tf('descDesktop')}</p>
+          <SocialRow tf={tf} />
         </div>
 
-        {t.footer.columns.map((col) => (
-          <div key={col.title} className={styles.col}>
-            <h4 className={styles.colTitle}>{col.title}</h4>
+        {([0, 1, 2] as const).map((i) => (
+          <div key={tf(`columns.${i}.title`)} className={styles.col}>
+            <h4 className={styles.colTitle}>{tf(`columns.${i}.title`)}</h4>
             <div className={styles.colLinks}>
-              {col.links.map((l) => (
+              {getColumnLinks(i).map((l) => (
                 <FootLink key={l} label={l} />
               ))}
             </div>
@@ -88,33 +89,48 @@ export function Footer() {
       </div>
 
       <div className={styles.bottom}>
-        <span className={styles.copyright}>{t.footer.copyright}</span>
+        <span className={styles.copyright}>{tf('copyright')}</span>
         <LangSwitch up />
       </div>
     </footer>
   );
 }
 
-function Logo() {
-  const t = useTranslations();
+function getColumnLinks(colIndex: 0 | 1 | 2): string[] {
+  const cols = [
+    ['Features', 'Pricing', 'Job parsing', 'Analytics', 'Roadmap'],
+    ['Blog', 'Job-search guides', 'Resume templates', 'Help'],
+    ['About', 'Contact', 'Privacy', 'Terms'],
+  ];
+  return cols[colIndex];
+}
+
+interface LogoProps {
+  tc: ReturnType<typeof useTranslations<'common'>>;
+}
+
+function Logo({ tc }: LogoProps) {
   return (
-    <Link aria-label={t.common.logoAriaLabel} className={styles.logo} href="/">
+    <Link aria-label={tc('logoAriaLabel')} className={styles.logo} href="/">
       <span className={styles.logoMark}>
         <Icon name="briefcase" size={18} strokeWidth={2.1} />
       </span>
-      <span className={styles.logoWord}>{t.common.appName}</span>
+      <span className={styles.logoWord}>{tc('appName')}</span>
     </Link>
   );
 }
 
-function SocialRow() {
-  const t = useTranslations();
+interface SocialRowProps {
+  tf: ReturnType<typeof useTranslations<'footer'>>;
+}
+
+function SocialRow({ tf }: SocialRowProps) {
   return (
     <div className={styles.social}>
       {SOCIAL_HREFS.map((s) => (
         <a
           key={s.key}
-          aria-label={t.footer.social[s.key]}
+          aria-label={tf(`social.${s.key}`)}
           className={styles.socialBtn}
           href={s.href}
           rel="noreferrer"
