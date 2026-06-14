@@ -1,7 +1,10 @@
 export const blogPage = {
   title: 'Blog',
-  subtitle: 'Tips and insights for job seekers',
-  placeholder: 'Articles coming soon. Check back later.',
+  subtitle: 'Practical tips and insights for every stage of your job search.',
+  readMore: 'Read article',
+  minRead: 'min read',
+  backToBlog: '← Back to Blog',
+  popularPostsTitle: 'Popular Posts',
 } as const;
 
 export type BlogPageMessages = typeof blogPage;

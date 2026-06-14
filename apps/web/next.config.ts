@@ -7,6 +7,9 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 const nextConfig: NextConfig = {
   transpilePackages: ['@job-search-tracker/types'],
   outputFileTracingRoot: path.join(__dirname, '../../'),
+  images: {
+    remotePatterns: [{ protocol: 'https', hostname: 'picsum.photos' }],
+  },
 };
 
 export default withNextIntl(nextConfig);

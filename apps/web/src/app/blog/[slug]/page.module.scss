@@ -1,0 +1,120 @@
+@use '@/shared/styles/variables' as v;
+
+.root {
+  padding: 40px 24px 96px;
+}
+
+.inner {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.back-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: v.$color-muted;
+  text-decoration: none;
+  transition: color 0.15s;
+
+  &:hover {
+    color: v.$color-text;
+  }
+}
+
+.article {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.article-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.category {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: v.$color-primary;
+}
+
+.title {
+  font-size: 38px;
+  font-weight: 800;
+  color: v.$color-heading;
+  letter-spacing: -1.2px;
+  margin: 0;
+  line-height: 1.15;
+
+  @media (max-width: 600px) {
+    font-size: 28px;
+    letter-spacing: -0.8px;
+  }
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: v.$color-muted;
+}
+
+.cover-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: v.$radius-lg;
+  overflow: hidden;
+
+  @media (max-width: 600px) {
+    aspect-ratio: 4 / 3;
+    border-radius: v.$radius-md;
+  }
+}
+
+.cover-img {
+  object-fit: cover;
+}
+
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: v.$color-text;
+
+  @media (max-width: 600px) {
+    font-size: 15px;
+  }
+}
+
+.lead {
+  font-size: 18px;
+  line-height: 1.7;
+  color: v.$color-heading;
+  font-weight: 500;
+  border-left: 3px solid v.$color-primary;
+  padding-left: 16px;
+  margin: 0;
+
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
+}
+
+.prose p {
+  margin: 0;
+}
+
+.divider {
+  height: 1px;
+  background: v.$color-border-soft;
+}
