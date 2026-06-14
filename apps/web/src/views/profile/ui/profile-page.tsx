@@ -12,7 +12,7 @@ export function ProfilePage() {
   if (!session) return null;
 
   return (
-    <main className={styles.root}>
+    <div className={styles.root}>
       <div className={styles.inner}>
         <div className={styles.header}>
           <div className={styles.logoMark} aria-hidden>JT</div>
@@ -23,6 +23,6 @@ export function ProfilePage() {
           onLogout={() => void signOut({ callbackUrl: '/auth' })}
         />
       </div>
-    </main>
+    </div>
   );
 }
