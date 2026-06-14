@@ -1,4 +1,5 @@
-import { ValidationPipe } from '@nestjs/common';
+import { HttpException, HttpStatus, ValidationPipe } from '@nestjs/common';
+import type { ValidationError } from 'class-validator';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import helmet from 'helmet';
@@ -19,7 +20,22 @@ async function bootstrap() {
   app.enableCors({ origin: allowedOrigins, credentials: true });
 
   app.useGlobalPipes(
-    new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }),
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+      exceptionFactory: (errors: ValidationError[]) => {
+        const fields: Record<string, string> = {};
+        for (const err of errors) {
+          fields[err.property] =
+            Object.values(err.constraints ?? {}).at(-1) ?? 'Invalid value';
+        }
+        return new HttpException(
+          { message: 'Validation failed', fields },
+          HttpStatus.UNPROCESSABLE_ENTITY,
+        );
+      },
+    }),
   );
 
   app.setGlobalPrefix('api/v1');
