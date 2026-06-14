@@ -1,8 +1,8 @@
-import { en } from '@/fsd-app/intl/messages/en';
+import { jobSearchGuidesPage } from '@/fsd-app/intl/messages/en/job-search-guides-page';
 import styles from './job-search-guides-page.module.scss';
 
 export function JobSearchGuidesPage() {
-  const t = en.pages.jobSearchGuides;
+  const t = jobSearchGuidesPage;
 
   return (
     <div className={styles.root}>

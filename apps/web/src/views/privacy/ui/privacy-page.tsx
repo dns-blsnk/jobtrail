@@ -1,8 +1,8 @@
-import { en } from '@/fsd-app/intl/messages/en';
+import { privacyPage } from '@/fsd-app/intl/messages/en/privacy-page';
 import styles from './privacy-page.module.scss';
 
 export function PrivacyPage() {
-  const t = en.pages.privacy;
+  const t = privacyPage;
 
   return (
     <div className={styles.root}>

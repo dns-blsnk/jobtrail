@@ -1,9 +1,9 @@
-import { en } from '@/fsd-app/intl/messages/en';
+import { jobsPage } from '@/fsd-app/intl/messages/en/jobs-page';
 import type { WithSession } from '@/fsd-app/auth/with-auth-guard';
 import styles from './jobs-page.module.scss';
 
 export function JobsPage(_props: WithSession) {
-  const t = en.pages.jobs;
+  const t = jobsPage;
 
   return (
     <div className={styles.root}>

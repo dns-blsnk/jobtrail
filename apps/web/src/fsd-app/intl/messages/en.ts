@@ -57,10 +57,6 @@ export const en = {
     },
   },
   auth: {
-    page: {
-      logoMark: 'JT',
-      logoName: 'Job Tracker',
-    },
     form: {
       title: 'Get Started now',
       subtitle: 'Create an account or log in to explore about our app',
@@ -92,86 +88,6 @@ export const en = {
   },
   profileCard: {
     logOut: 'Log Out',
-  },
-  pages: {
-    dashboard: {
-      title: 'Dashboard',
-      subtitle: 'Your job search at a glance',
-      welcome: 'Welcome back',
-      recentActivity: 'Recent Activity',
-      emptyActivity: 'No recent activity. Add a job to get started.',
-      stats: {
-        totalApplications: 'Total Applications',
-        interviews: 'Interviews',
-        offers: 'Offers',
-      },
-    },
-    jobs: {
-      title: 'Jobs',
-      subtitle: 'Browse and save job opportunities',
-      empty: 'No jobs added yet',
-      emptyHint: 'Paste a job posting URL above to parse and save it automatically.',
-      addFirst: 'Add your first job',
-    },
-    applications: {
-      title: 'Applications',
-      subtitle: 'Track your application progress',
-      empty: 'No applications yet',
-      emptyHint: 'Applications you submit will appear here.',
-    },
-    analytics: {
-      title: 'Analytics',
-      subtitle: 'Insights into your job search',
-      empty: 'Not enough data yet',
-      emptyHint: 'Track more applications to unlock analytics.',
-    },
-    profile: {
-      title: 'Profile',
-      subtitle: 'Manage your account',
-    },
-    about: {
-      title: 'About Jobtrail',
-      subtitle: 'Built to simplify your job search',
-      body: 'Jobtrail helps you stay organised during your job search. Paste a job link and we automatically parse the key details — title, company, requirements — so you can focus on applying, not copy-pasting.',
-      missionTitle: 'Our mission',
-      missionBody: 'To give every job seeker clarity and control over their search.',
-    },
-    contact: {
-      title: 'Contact',
-      subtitle: "We'd love to hear from you",
-      emailLabel: 'Email us at',
-      emailAddress: 'bilousenko.denys@gmail.com',
-    },
-    privacy: {
-      title: 'Privacy Policy',
-      subtitle: 'Last updated: January 2026',
-      placeholder: 'Full privacy policy content coming soon.',
-    },
-    terms: {
-      title: 'Terms of Service',
-      subtitle: 'Last updated: January 2026',
-      placeholder: 'Full terms of service content coming soon.',
-    },
-    blog: {
-      title: 'Blog',
-      subtitle: 'Tips and insights for job seekers',
-      placeholder: 'Articles coming soon. Check back later.',
-    },
-    jobSearchGuides: {
-      title: 'Job-search Guides',
-      subtitle: 'Proven strategies for landing your next role',
-      placeholder: 'Guides coming soon.',
-    },
-    resumeTemplates: {
-      title: 'Resume Templates',
-      subtitle: 'Professional templates to stand out',
-      placeholder: 'Templates coming soon.',
-    },
-    help: {
-      title: 'Help Center',
-      subtitle: 'Everything you need to get started',
-      placeholder: 'Help content coming soon.',
-    },
   },
 } as const;
 

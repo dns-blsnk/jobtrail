@@ -1,8 +1,8 @@
-import { en } from '@/fsd-app/intl/messages/en';
+import { resumeTemplatesPage } from '@/fsd-app/intl/messages/en/resume-templates-page';
 import styles from './resume-templates-page.module.scss';
 
 export function ResumeTemplatesPage() {
-  const t = en.pages.resumeTemplates;
+  const t = resumeTemplatesPage;
 
   return (
     <div className={styles.root}>

@@ -1,8 +1,8 @@
-import { en } from '@/fsd-app/intl/messages/en';
+import { helpPage } from '@/fsd-app/intl/messages/en/help-page';
 import styles from './help-page.module.scss';
 
 export function HelpPage() {
-  const t = en.pages.help;
+  const t = helpPage;
 
   return (
     <div className={styles.root}>

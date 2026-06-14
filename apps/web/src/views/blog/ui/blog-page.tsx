@@ -1,8 +1,8 @@
-import { en } from '@/fsd-app/intl/messages/en';
+import { blogPage } from '@/fsd-app/intl/messages/en/blog-page';
 import styles from './blog-page.module.scss';
 
 export function BlogPage() {
-  const t = en.pages.blog;
+  const t = blogPage;
 
   return (
     <div className={styles.root}>

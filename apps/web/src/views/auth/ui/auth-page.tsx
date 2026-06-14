@@ -1,15 +1,15 @@
-import { en } from '@/fsd-app/intl/messages/en';
+import { authPage } from '@/fsd-app/intl/messages/en/auth-page';
 import { AuthFormSection } from '@/widgets/auth-form/ui/auth-form-section';
 import styles from './auth-page.module.scss';
 
 export function AuthPage() {
-  const t = en;
+  const t = authPage;
   return (
     <main className={styles.root}>
       <div className={styles.inner}>
         <div className={styles.logo}>
-          <div className={styles.logoMark} aria-hidden>{t.auth.page.logoMark}</div>
-          <span className={styles.logoName}>{t.auth.page.logoName}</span>
+          <div className={styles.logoMark} aria-hidden>{t.logoMark}</div>
+          <span className={styles.logoName}>{t.logoName}</span>
         </div>
         <AuthFormSection />
       </div>

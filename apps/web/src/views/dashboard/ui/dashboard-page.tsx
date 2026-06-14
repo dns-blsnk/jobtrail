@@ -1,9 +1,9 @@
-import { en } from '@/fsd-app/intl/messages/en';
+import { dashboardPage } from '@/fsd-app/intl/messages/en/dashboard-page';
 import type { WithSession } from '@/fsd-app/auth/with-auth-guard';
 import styles from './dashboard-page.module.scss';
 
 export function DashboardPage({ session }: WithSession) {
-  const t = en.pages.dashboard;
+  const t = dashboardPage;
   const displayName = session.user.name ?? session.user.email;
 
   return (

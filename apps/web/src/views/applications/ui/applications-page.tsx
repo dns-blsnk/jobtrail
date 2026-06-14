@@ -1,9 +1,9 @@
-import { en } from '@/fsd-app/intl/messages/en';
+import { applicationsPage } from '@/fsd-app/intl/messages/en/applications-page';
 import type { WithSession } from '@/fsd-app/auth/with-auth-guard';
 import styles from './applications-page.module.scss';
 
 export function ApplicationsPage(_props: WithSession) {
-  const t = en.pages.applications;
+  const t = applicationsPage;
 
   return (
     <div className={styles.root}>

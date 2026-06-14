@@ -1,8 +1,8 @@
-import { en } from '@/fsd-app/intl/messages/en';
+import { termsPage } from '@/fsd-app/intl/messages/en/terms-page';
 import styles from './terms-page.module.scss';
 
 export function TermsPage() {
-  const t = en.pages.terms;
+  const t = termsPage;
 
   return (
     <div className={styles.root}>

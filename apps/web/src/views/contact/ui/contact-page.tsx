@@ -1,8 +1,8 @@
-import { en } from '@/fsd-app/intl/messages/en';
+import { contactPage } from '@/fsd-app/intl/messages/en/contact-page';
 import styles from './contact-page.module.scss';
 
 export function ContactPage() {
-  const t = en.pages.contact;
+  const t = contactPage;
 
   return (
     <div className={styles.root}>

@@ -1,8 +1,8 @@
-import { en } from '@/fsd-app/intl/messages/en';
+import { aboutPage } from '@/fsd-app/intl/messages/en/about-page';
 import styles from './about-page.module.scss';
 
 export function AboutPage() {
-  const t = en.pages.about;
+  const t = aboutPage;
 
   return (
     <div className={styles.root}>

@@ -1,9 +1,9 @@
-import { en } from '@/fsd-app/intl/messages/en';
+import { analyticsPage } from '@/fsd-app/intl/messages/en/analytics-page';
 import type { WithSession } from '@/fsd-app/auth/with-auth-guard';
 import styles from './analytics-page.module.scss';
 
 export function AnalyticsPage(_props: WithSession) {
-  const t = en.pages.analytics;
+  const t = analyticsPage;
 
   return (
     <div className={styles.root}>
