@@ -21,7 +21,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
 }
 
 .row {
@@ -70,14 +70,38 @@
   }
 }
 
+.inputError {
+  border-color: #dc2626 !important;
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12) !important;
+  }
+}
+
 .textarea {
   resize: vertical;
   min-height: 120px;
   line-height: 1.6;
 }
 
+.fieldError {
+  display: block;
+  min-height: 18px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #dc2626;
+  font-weight: 500;
+}
+
+.submitArea {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .submitBtn {
-  display: inline-flex;
+  display: flex;
+  width: 100%;
   align-items: center;
   justify-content: center;
   gap: 8px;
@@ -90,7 +114,6 @@
   border-radius: v.$radius-sm;
   cursor: pointer;
   transition: background 0.15s, opacity 0.15s;
-  align-self: flex-start;
 
   &:hover:not(:disabled) {
     background: v.$color-primary-hover;
@@ -116,46 +139,40 @@
   to { transform: rotate(360deg); }
 }
 
-.successState {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding: 48px 24px;
-  text-align: center;
-  min-height: 220px;
-}
-
-.successIcon {
+.successBanner {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: #f0fdf4;
+  gap: 10px;
+  padding: 11px 16px;
+  font-size: 14px;
+  font-weight: 500;
   color: #16a34a;
-}
-
-.successText {
-  font-size: 15px;
-  color: v.$color-text;
-  margin: 0;
-  line-height: 1.6;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: v.$radius-sm;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .resetBtn {
-  font-size: 13px;
+  margin-left: auto;
+  font-size: 12px;
   font-weight: 500;
   color: v.$color-muted;
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 0;
+  white-space: nowrap;
   text-decoration: underline;
 
   &:hover {
     color: v.$color-text;
   }
+}
+
+.errorText {
+  font-size: 13px;
+  color: #dc2626;
+  margin: 0;
 }

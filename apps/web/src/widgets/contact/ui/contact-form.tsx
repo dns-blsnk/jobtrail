@@ -1,147 +1,174 @@
 'use client';
 
-import { useState } from 'react';
+import { useFormik } from 'formik';
 import { useTranslations } from 'next-intl';
 import { Icon } from '@/shared/ui/icon/icon';
-import styles from './contact-form.module.scss';
+import { contactSchema } from '@/features/contact/model/contact-schema';
+import { useContactForm } from '@/features/contact/model/use-contact-form';
+import { ContactApiError } from '@/features/contact/api/contact-api';
+import type { ContactPayload } from '@/features/contact/api/contact-api';
+import { clsx } from 'clsx';
+import s from './contact-form.module.scss';
 
-interface FormFields {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-}
-
-type FormStatus = 'idle' | 'sending' | 'success' | 'error';
-
-const EMPTY: FormFields = { name: '', email: '', subject: '', message: '' };
+const INITIAL_VALUES: ContactPayload = { name: '', email: '', subject: '', message: '' };
 
 export function ContactForm() {
   const t = useTranslations('contactPage.form');
-  const [fields, setFields] = useState<FormFields>(EMPTY);
-  const [status, setStatus] = useState<FormStatus>('idle');
+  const mutation = useContactForm();
 
-  const set = (key: keyof FormFields) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFields((prev) => ({ ...prev, [key]: e.target.value }));
-  };
+  const formik = useFormik<ContactPayload>({
+    initialValues: INITIAL_VALUES,
+    validationSchema: contactSchema,
+    validateOnBlur: true,
+    validateOnChange: false,
+    onSubmit: (values, { resetForm, setFieldError }) => {
+      mutation.mutate(values, {
+        onSuccess: () => resetForm(),
+        onError: (error) => {
+          if (error instanceof ContactApiError && error.fields) {
+            Object.entries(error.fields).forEach(([field, message]) => {
+              setFieldError(field, message);
+            });
+          }
+        },
+      });
+    },
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus('sending');
-    setTimeout(() => {
-      setStatus('success');
-      setFields(EMPTY);
-    }, 1200);
-  };
-
-  if (status === 'success') {
-    return (
-      <section className={styles.root}>
-        <div className={styles.successState}>
-          <span className={styles.successIcon}>
-            <Icon name="check" size={24} strokeWidth={2.5} />
-          </span>
-          <p className={styles.successText}>{t('successMessage')}</p>
-          <button
-            className={styles.resetBtn}
-            type="button"
-            onClick={() => setStatus('idle')}
-          >
-            Send another
-          </button>
-        </div>
-      </section>
-    );
-  }
+  const fieldError = (name: keyof ContactPayload) =>
+    formik.touched[name] ? formik.errors[name] : undefined;
 
   return (
-    <section className={styles.root}>
-      <h2 className={styles.heading}>{t('heading')}</h2>
+    <section className={s.root}>
+      <h2 className={s.heading}>{t('heading')}</h2>
 
-      <form className={styles.form} noValidate onSubmit={handleSubmit}>
-        <div className={styles.row}>
-          <div className={styles.field}>
-            <label className={styles.label} htmlFor="contact-name">
+      <form className={s.form} noValidate onSubmit={formik.handleSubmit}>
+        <div className={s.row}>
+          <div className={s.field}>
+            <label className={s.label} htmlFor="contact-name">
               {t('nameLabel')}
             </label>
             <input
-              className={styles.input}
+              aria-describedby="contact-name-error"
+              aria-invalid={!!fieldError('name')}
+              className={clsx(s.input, fieldError('name') && s.inputError)}
               id="contact-name"
-              name="user-name"
+              name="name"
               placeholder={t('namePlaceholder')}
-              required
               type="text"
-              value={fields.name}
-              onChange={set('name')}
+              value={formik.values.name}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
             />
+            <span className={s.fieldError} id="contact-name-error" role="alert">
+              {fieldError('name')}
+            </span>
           </div>
 
-          <div className={styles.field}>
-            <label className={styles.label} htmlFor="contact-email">
+          <div className={s.field}>
+            <label className={s.label} htmlFor="contact-email">
               {t('emailLabel')}
             </label>
             <input
-              className={styles.input}
+              aria-describedby="contact-email-error"
+              aria-invalid={!!fieldError('email')}
+              className={clsx(s.input, fieldError('email') && s.inputError)}
               id="contact-email"
-              name="user-email"
+              name="email"
               placeholder={t('emailPlaceholder')}
-              required
               type="email"
-              value={fields.email}
-              onChange={set('email')}
+              value={formik.values.email}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
             />
+            <span className={s.fieldError} id="contact-email-error" role="alert">
+              {fieldError('email')}
+            </span>
           </div>
         </div>
 
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor="contact-subject">
+        <div className={s.field}>
+          <label className={s.label} htmlFor="contact-subject">
             {t('subjectLabel')}
           </label>
           <input
-            className={styles.input}
+            aria-describedby="contact-subject-error"
+            aria-invalid={!!fieldError('subject')}
+            className={clsx(s.input, fieldError('subject') && s.inputError)}
             id="contact-subject"
-            name="message-subject"
+            name="subject"
             placeholder={t('subjectPlaceholder')}
-            required
             type="text"
-            value={fields.subject}
-            onChange={set('subject')}
+            value={formik.values.subject}
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
           />
+          <span className={s.fieldError} id="contact-subject-error" role="alert">
+            {fieldError('subject')}
+          </span>
         </div>
 
-        <div className={styles.field}>
-          <label className={styles.label} htmlFor="contact-message">
+        <div className={s.field}>
+          <label className={s.label} htmlFor="contact-message">
             {t('messageLabel')}
           </label>
           <textarea
-            className={`${styles.input} ${styles.textarea}`}
+            aria-describedby="contact-message-error"
+            aria-invalid={!!fieldError('message')}
+            className={clsx(s.input, s.textarea, fieldError('message') && s.inputError)}
             id="contact-message"
-            name="message-text"
+            name="message"
             placeholder={t('messagePlaceholder')}
-            required
             rows={5}
-            value={fields.message}
-            onChange={set('message')}
+            value={formik.values.message}
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
           />
+          <span className={s.fieldError} id="contact-message-error" role="alert">
+            {fieldError('message')}
+          </span>
         </div>
 
-        <button
-          className={styles.submitBtn}
-          disabled={status === 'sending'}
-          type="submit"
-        >
-          {status === 'sending' ? (
-            <>
-              <span className={styles.spinner} />
-              {t('sendingLabel')}
-            </>
+        <div className={s.submitArea}>
+          {mutation.isSuccess ? (
+            <div className={s.successBanner} role="status">
+              <Icon name="check" size={14} strokeWidth={2.5} />
+              <span>{t('successMessage')}</span>
+              <button
+                className={s.resetBtn}
+                type="button"
+                onClick={() => mutation.reset()}
+              >
+                Send another
+              </button>
+            </div>
           ) : (
             <>
-              <Icon name="send" size={16} strokeWidth={2} />
-              {t('submitLabel')}
+              {mutation.isError && !(mutation.error instanceof ContactApiError && mutation.error.fields) && (
+                <p className={s.errorText} role="alert">
+                  {mutation.error.message}
+                </p>
+              )}
+              <button
+                className={s.submitBtn}
+                disabled={mutation.isPending}
+                type="submit"
+              >
+                {mutation.isPending ? (
+                  <>
+                    <span className={s.spinner} />
+                    {t('sendingLabel')}
+                  </>
+                ) : (
+                  <>
+                    <Icon name="send" size={16} strokeWidth={2} />
+                    {t('submitLabel')}
+                  </>
+                )}
+              </button>
             </>
           )}
-        </button>
+        </div>
       </form>
     </section>
   );

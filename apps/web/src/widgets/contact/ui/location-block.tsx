@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Icon } from '@/shared/ui/icon/icon';
-import styles from './location-block.module.scss';
+import s from './location-block.module.scss';
 
 const MAPS_EMBED_URL =
   'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d130117.5!2d24.6437!3d59.437!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4692949e9dc5cf49%3A0x4201b9c0ed2e770!2sTallinn%2C%20Estonia!5e0!3m2!1sen!2see!4v1700000000000!5m2!1sen!2see';
@@ -28,10 +28,10 @@ function TallinnClock({ label }: { label: string }) {
   if (!time) return null;
 
   return (
-    <div className={styles.timeRow}>
+    <div className={s.timeRow}>
       <Icon name="clock" size={15} strokeWidth={1.9} />
-      <span className={styles.timeLabel}>{label}</span>
-      <span className={styles.timeValue}>{time}</span>
+      <span className={s.timeLabel}>{label}</span>
+      <span className={s.timeValue}>{time}</span>
     </div>
   );
 }
@@ -40,14 +40,14 @@ export function LocationBlock() {
   const t = useTranslations('contactPage.location');
 
   return (
-    <section className={styles.root}>
-      <h2 className={styles.heading}>{t('heading')}</h2>
+    <section className={s.root}>
+      <h2 className={s.heading}>{t('heading')}</h2>
 
-      <div className={styles.body}>
-        <div className={styles.mapWrapper}>
+      <div className={s.body}>
+        <div className={s.mapWrapper}>
           <iframe
             allowFullScreen
-            className={styles.map}
+            className={s.map}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             src={MAPS_EMBED_URL}
@@ -55,15 +55,15 @@ export function LocationBlock() {
           />
         </div>
 
-        <div className={styles.meta}>
-          <div className={styles.cityRow}>
+        <div className={s.meta}>
+          <div className={s.cityRow}>
             <Icon name="mapPin" size={18} strokeWidth={1.9} />
-            <span className={styles.city}>{t('city')}</span>
+            <span className={s.city}>{t('city')}</span>
           </div>
 
           <TallinnClock label={t('localTimeLabel')} />
 
-          <p className={styles.status}>{t('status')}</p>
+          <p className={s.status}>{t('status')}</p>
         </div>
       </div>
     </section>

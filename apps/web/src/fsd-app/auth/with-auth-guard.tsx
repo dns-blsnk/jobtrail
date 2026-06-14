@@ -7,12 +7,10 @@ export interface AuthContext {
   session: Session;
 }
 
-export function withAuthGuard<P extends Record<string, unknown>>(
-  handler: (context: AuthContext & P) => Promise<ReactNode>
-) {
-  return async function ProtectedPage(props: P): Promise<ReactNode> {
+export function withAuthGuard(handler: (context: AuthContext) => Promise<ReactNode>) {
+  return async function ProtectedPage(): Promise<ReactNode> {
     const session = await auth();
     if (!session?.user) redirect('/auth');
-    return handler({ ...props, session: session as Session });
+    return handler({ session: session as Session });
   };
 }

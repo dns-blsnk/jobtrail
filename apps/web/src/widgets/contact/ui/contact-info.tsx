@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Icon } from '@/shared/ui/icon/icon';
-import styles from './contact-info.module.scss';
+import { clsx } from 'clsx';
+import s from './contact-info.module.scss';
 
 const SOCIAL_LINKS = [
   {
@@ -14,12 +15,12 @@ const SOCIAL_LINKS = [
   {
     key: 'linkedin' as const,
     icon: 'linkedin' as const,
-    href: 'https://linkedin.com/in/dns-blsnk',
+    href: 'https://linkedin.com/in/denys-bilousenko',
   },
   {
     key: 'telegram' as const,
     icon: 'send' as const,
-    href: 'https://t.me/dns_blsnk',
+    href: 'https://t.me/dmaat1',
   },
 ];
 
@@ -35,18 +36,18 @@ export function ContactInfo() {
   };
 
   return (
-    <section className={styles.root}>
-      <h2 className={styles.heading}>{t('heading')}</h2>
+    <section className={s.root}>
+      <h2 className={s.heading}>{t('heading')}</h2>
 
-      <div className={styles.emailBlock}>
-        <span className={styles.emailLabel}>{t('emailLabel')}</span>
-        <div className={styles.emailRow}>
-          <a className={styles.emailLink} href={`mailto:${t('email')}`}>
+      <div className={s.emailBlock}>
+        <span className={s.emailLabel}>{t('emailLabel')}</span>
+        <div className={s.emailRow}>
+          <a className={s.emailLink} href={`mailto:${t('email')}`}>
             {t('email')}
           </a>
           <button
             aria-label={copied ? t('copiedLabel') : t('copyLabel')}
-            className={`${styles.copyBtn} ${copied ? styles.copyBtnActive : ''}`}
+            className={clsx(s.copyBtn, copied && s.copyBtnActive)}
             type="button"
             onClick={handleCopy}
           >
@@ -56,12 +57,12 @@ export function ContactInfo() {
         </div>
       </div>
 
-      <div className={styles.socialList}>
+      <div className={s.socialList}>
         {SOCIAL_LINKS.map(({ key, icon, href }) => (
           <a
             key={key}
             aria-label={t(`${key}Label`)}
-            className={styles.socialLink}
+            className={s.socialLink}
             href={href}
             rel="noreferrer"
             target="_blank"

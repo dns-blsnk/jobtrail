@@ -1,6 +1,8 @@
 export const contactPage = {
   title: 'Contact',
   subtitle: "We'd love to hear from you",
+  description:
+    "Whether you have a question about job search strategies, want to collaborate on a project, or just want to say hello — I'm here. Drop me a message and I'll get back to you as soon as possible.",
   info: {
     heading: 'Get in touch',
     emailLabel: 'Email',
