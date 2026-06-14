@@ -1,10 +1,11 @@
 import type { IUser } from '@job-search-tracker/types';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { getMe } from '../../../entities/session/api/auth-api';
 import { useSessionStore } from '../../../entities/session/model/session-store';
 import { theme } from '../../../shared/config/theme';
+import { AppHeader } from '../../../widgets/header/ui/AppHeader';
 
 const HomeScreen = () => {
   const cachedUser = useSessionStore((state) => state.user);
@@ -24,23 +25,18 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar style="dark" />
-      <View style={styles.content}>
-        <View style={styles.brand}>
-          <Text style={styles.brandMark}>JT</Text>
-        </View>
+      <AppHeader
+        loggedIn
+        user={user ? { name: user.name, email: user.email } : null}
+        onLogout={clearSession}
+      />
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.card}>
           <Text style={styles.welcome}>Welcome back!</Text>
           <Text style={styles.email}>{user?.name ?? user?.email}</Text>
           {user?.name ? <Text style={styles.emailSub}>{user.email}</Text> : null}
         </View>
-        <Pressable
-          accessibilityRole="button"
-          style={({ pressed }) => [styles.logoutButton, pressed && styles.logoutButtonPressed]}
-          onPress={clearSession}
-        >
-          <Text style={styles.logoutText}>Log Out</Text>
-        </Pressable>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -53,35 +49,22 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.background,
   },
   content: {
-    flex: 1,
-    alignItems: 'center',
-    paddingTop: 48,
-    paddingHorizontal: 24,
-    gap: 24,
-  },
-  brand: {
-    width: 40,
-    height: 27,
-    borderRadius: 7,
-    backgroundColor: '#375DFB',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 6,
-  },
-  brandMark: {
-    color: theme.colors.white,
-    fontSize: 12,
-    fontWeight: '700',
-    letterSpacing: 0.5,
+    padding: theme.spacing.xl,
+    gap: theme.spacing.xl,
   },
   card: {
-    width: '100%',
     padding: 24,
     borderRadius: theme.radius.lg,
+    backgroundColor: theme.colors.surface,
     borderWidth: 1,
-    borderColor: theme.colors.borderSoft,
+    borderColor: theme.colors.border,
     alignItems: 'center',
     gap: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 2,
+    elevation: 1,
   },
   welcome: {
     fontSize: 20,
@@ -96,22 +79,5 @@ const styles = StyleSheet.create({
   emailSub: {
     fontSize: 13,
     color: theme.colors.mutedText,
-  },
-  logoutButton: {
-    width: '100%',
-    height: 48,
-    borderRadius: theme.radius.md,
-    borderWidth: 1,
-    borderColor: theme.colors.borderStrong,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logoutButtonPressed: {
-    opacity: 0.6,
-  },
-  logoutText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: theme.colors.text,
   },
 });

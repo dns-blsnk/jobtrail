@@ -14,8 +14,8 @@
     "@tanstack/react-query-devtools": "^5.80.7",
     "next": "^15.3.3",
     "next-auth": "5.0.0-beta.31",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
     "zod": "^3.25.64",
     "zustand": "^5.0.5"
   },

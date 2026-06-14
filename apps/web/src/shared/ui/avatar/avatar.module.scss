@@ -1,0 +1,14 @@
+.root {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  user-select: none;
+
+  &[data-variant='default'] {
+    background: var(--surface-3);
+    border: 1px solid var(--border-2);
+    color: var(--ink-3);
+  }
+}

@@ -1,7 +1,6 @@
 @use '@/shared/styles/variables' as v;
 
 .root {
-  min-height: 100vh;
   background: v.$color-background;
   padding: 48px 24px;
 }

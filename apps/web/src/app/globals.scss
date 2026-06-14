@@ -1,5 +1,53 @@
 @use '@/shared/styles/variables' as v;
 
+:root {
+  --bg:          oklch(0.985 0.005 95);
+  --surface:     oklch(1 0 0);
+  --surface-2:   oklch(0.975 0.006 95);
+  --surface-3:   oklch(0.955 0.007 95);
+  --border:      oklch(0.915 0.006 95);
+  --border-2:    oklch(0.86 0.008 95);
+
+  --ink:         oklch(0.24 0.02 265);
+  --ink-2:       oklch(0.46 0.018 265);
+  --ink-3:       oklch(0.62 0.015 265);
+
+  --accent:       #375dfb;
+  --accent-press: #2f4ed6;
+  --accent-ink:   #ffffff;
+  --accent-soft:  #eef1ff;
+  --accent-soft-2:#dce4ff;
+  --ring:         rgba(55, 93, 251, 0.35);
+
+  --success:      oklch(0.62 0.15 155);
+  --danger:       oklch(0.58 0.20 27);
+  --danger-soft:  oklch(0.955 0.04 27);
+
+  --deep:         oklch(0.20 0.018 270);
+  --deep-2:       oklch(0.26 0.02 270);
+  --deep-bd:      oklch(0.34 0.02 270);
+  --on-deep:      oklch(0.97 0.005 270);
+  --on-deep-2:    oklch(0.78 0.012 270);
+  --on-deep-3:    oklch(0.62 0.015 270);
+
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-ui:      'Manrope', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  --r-sm:   8px;
+  --r-md:   12px;
+  --r-lg:   16px;
+  --r-xl:   22px;
+  --r-pill: 999px;
+
+  --sh-sm:  0 1px 2px oklch(0.24 0.02 265 / 0.06), 0 1px 1px oklch(0.24 0.02 265 / 0.04);
+  --sh-md:  0 4px 14px oklch(0.24 0.02 265 / 0.08), 0 1px 3px oklch(0.24 0.02 265 / 0.05);
+  --sh-lg:  0 18px 48px oklch(0.24 0.02 265 / 0.16), 0 4px 12px oklch(0.24 0.02 265 / 0.08);
+  --sh-pop: 0 12px 34px oklch(0.24 0.02 265 / 0.16), 0 2px 8px oklch(0.24 0.02 265 / 0.08);
+  --sh-accent: 0 1px 2px rgba(55, 93, 251, 0.25);
+  --sh-accent-hover: 0 4px 12px rgba(55, 93, 251, 0.35);
+}
+
 *,
 *::before,
 *::after {
@@ -9,15 +57,21 @@
 }
 
 html {
-  font-family: v.$font-sans;
-  background-color: v.$color-background;
-  color: v.$color-text;
+  font-family: var(--font-ui);
+  background-color: var(--bg);
+  color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
 }
 
 a {
@@ -28,4 +82,18 @@ a {
 button,
 input {
   font-family: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
 }
