@@ -1,3 +1,5 @@
+import { API_BASE_URL } from '@/shared/config/api.config';
+
 export interface ContactPayload {
   name: string;
   email: string;
@@ -21,8 +23,6 @@ export class ContactApiError extends Error {
     this.fields = fields;
   }
 }
-
-import { API_BASE_URL } from '@/shared/config/api.config';
 
 export async function postContact(payload: ContactPayload): Promise<ContactResponse> {
   const res = await fetch(`${API_BASE_URL}/contact`, {
