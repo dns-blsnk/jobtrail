@@ -4,8 +4,6 @@ import { ContactForm } from '@/widgets/contact/ui/contact-form';
 import { LocationBlock } from '@/widgets/contact/ui/location-block';
 import s from './page.module.scss';
 
-export const dynamic = 'force-static';
-
 export default async function ContactRoute() {
   const t = await getTranslations('contactPage');
   return (

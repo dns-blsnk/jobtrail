@@ -1,8 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import s from './page.module.scss';
 
-export const dynamic = 'force-static';
-
 export default async function TermsRoute() {
   const t = await getTranslations('termsPage');
   return (

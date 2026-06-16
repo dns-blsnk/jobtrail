@@ -3,8 +3,6 @@ import { BLOG_POSTS } from '@/shared/data/blog-posts';
 import { BlogGrid } from '@/widgets/blog/ui/blog-grid';
 import s from './page.module.scss';
 
-export const dynamic = 'force-static';
-
 export default async function BlogRoute() {
   const t = await getTranslations('blogPage');
   return (
