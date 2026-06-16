@@ -12,14 +12,6 @@ export class ContactService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(dto: CreateContactMessageDto, meta?: RequestMeta) {
-    console.log({
-      name: dto.name,
-      email: dto.email,
-      subject: dto.subject,
-      message: dto.message,
-      ip: meta?.ip,
-      userAgent: meta?.userAgent,
-    })
     return this.prisma.contactMessage.create({
       data: {
         name: dto.name,
