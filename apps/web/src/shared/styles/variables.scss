@@ -1,17 +1,1 @@
-$color-primary: #375dfb;
-$color-primary-hover: #2f4ed6;
-$color-background: #ffffff;
-$color-heading: #0a0a0a;
-$color-text: #262626;
-$color-muted: #8c8c8c;
-$color-border-soft: #e5e5e5;
-$color-border-strong: #d4d4d4;
-$color-error: #e5484d;
-$color-link: #375dfb;
-$color-white: #ffffff;
-
-$radius-sm: 8px;
-$radius-md: 12px;
-$radius-lg: 16px;
-
-$font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+@forward '../../../../../packages/tokens/src/tokens';

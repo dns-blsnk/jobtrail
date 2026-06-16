@@ -2,15 +2,30 @@
 
 import { useFormik } from 'formik';
 import { useTranslations } from 'next-intl';
+import Alert from '@mui/material/Alert';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import Stack from '@mui/material/Stack';
+import { FormTextField } from '@/shared/ui/form-text-field/form-text-field';
+import Typography from '@mui/material/Typography';
 import { Icon } from '@/shared/ui/icon/icon';
 import { contactSchema } from '@/features/contact/model/contact-schema';
 import { useContactForm } from '@/features/contact/model/use-contact-form';
 import { ContactApiError } from '@/features/contact/api/contact-api';
 import type { ContactPayload } from '@/features/contact/api/contact-api';
-import { clsx } from 'clsx';
 import s from './contact-form.module.scss';
 
 const INITIAL_VALUES: ContactPayload = { name: '', email: '', subject: '', message: '' };
+
+const sxGrid = {
+  display: 'grid',
+  gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+  gap: 2,
+} as const;
+
+const sxSubmitBtn = { py: 1.25, fontWeight: 600 } as const;
+
 
 export function ContactForm() {
   const t = useTranslations('contactPage.form');
@@ -40,136 +55,110 @@ export function ContactForm() {
 
   return (
     <section className={s.root}>
-      <h2 className={s.heading}>{t('heading')}</h2>
+      <Typography component="h2" variant="h6" sx={{ letterSpacing: '-0.3px', fontWeight: 700, m: 0 }}>
+        {t('heading')}
+      </Typography>
 
-      <form className={s.form} noValidate onSubmit={formik.handleSubmit}>
-        <div className={s.row}>
-          <div className={s.field}>
-            <label className={s.label} htmlFor="contact-name">
-              {t('nameLabel')}
-            </label>
-            <input
-              aria-describedby="contact-name-error"
-              aria-invalid={!!fieldError('name')}
-              className={clsx(s.input, fieldError('name') && s.inputError)}
+      <Box component="form" noValidate onSubmit={formik.handleSubmit}>
+        <Stack spacing={1.5}>
+          <Box sx={sxGrid}>
+            <FormTextField
               id="contact-name"
               name="name"
+              label={t('nameLabel')}
               placeholder={t('namePlaceholder')}
-              type="text"
               value={formik.values.name}
-              onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-            />
-            <span className={s.fieldError} id="contact-name-error" role="alert">
-              {fieldError('name')}
-            </span>
-          </div>
+              onBlur={formik.handleBlur}
+              error={!!fieldError('name')}
+              helperText={fieldError('name')}
+              fullWidth
+              size="small"
 
-          <div className={s.field}>
-            <label className={s.label} htmlFor="contact-email">
-              {t('emailLabel')}
-            </label>
-            <input
-              aria-describedby="contact-email-error"
-              aria-invalid={!!fieldError('email')}
-              className={clsx(s.input, fieldError('email') && s.inputError)}
+            />
+            <FormTextField
               id="contact-email"
               name="email"
-              placeholder={t('emailPlaceholder')}
               type="email"
+              label={t('emailLabel')}
+              placeholder={t('emailPlaceholder')}
               value={formik.values.email}
-              onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-            />
-            <span className={s.fieldError} id="contact-email-error" role="alert">
-              {fieldError('email')}
-            </span>
-          </div>
-        </div>
+              onBlur={formik.handleBlur}
+              error={!!fieldError('email')}
+              helperText={fieldError('email')}
+              fullWidth
+              size="small"
 
-        <div className={s.field}>
-          <label className={s.label} htmlFor="contact-subject">
-            {t('subjectLabel')}
-          </label>
-          <input
-            aria-describedby="contact-subject-error"
-            aria-invalid={!!fieldError('subject')}
-            className={clsx(s.input, fieldError('subject') && s.inputError)}
+            />
+          </Box>
+
+          <FormTextField
             id="contact-subject"
             name="subject"
+            label={t('subjectLabel')}
             placeholder={t('subjectPlaceholder')}
-            type="text"
             value={formik.values.subject}
-            onBlur={formik.handleBlur}
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={!!fieldError('subject')}
+            helperText={fieldError('subject')}
+            fullWidth
+            size="small"
           />
-          <span className={s.fieldError} id="contact-subject-error" role="alert">
-            {fieldError('subject')}
-          </span>
-        </div>
 
-        <div className={s.field}>
-          <label className={s.label} htmlFor="contact-message">
-            {t('messageLabel')}
-          </label>
-          <textarea
-            aria-describedby="contact-message-error"
-            aria-invalid={!!fieldError('message')}
-            className={clsx(s.input, s.textarea, fieldError('message') && s.inputError)}
+          <FormTextField
             id="contact-message"
             name="message"
+            label={t('messageLabel')}
             placeholder={t('messagePlaceholder')}
-            rows={5}
             value={formik.values.message}
-            onBlur={formik.handleBlur}
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={!!fieldError('message')}
+            helperText={fieldError('message')}
+            fullWidth
+            multiline
+            rows={5}
           />
-          <span className={s.fieldError} id="contact-message-error" role="alert">
-            {fieldError('message')}
-          </span>
-        </div>
 
-        <div className={s.submitArea}>
           {mutation.isSuccess ? (
-            <div className={s.successBanner} role="status">
-              <Icon name="check" size={14} strokeWidth={2.5} />
-              <span>{t('successMessage')}</span>
-              <button
-                className={s.resetBtn}
-                type="button"
-                onClick={() => mutation.reset()}
-              >
-                Send another
-              </button>
-            </div>
+            <Alert
+              severity="success"
+              action={
+                <Button color="inherit" size="small" onClick={() => mutation.reset()}>
+                  Send another
+                </Button>
+              }
+            >
+              {t('successMessage')}
+            </Alert>
           ) : (
-            <>
-              {mutation.isError && !(mutation.error instanceof ContactApiError && mutation.error.fields) && (
-                <p className={s.errorText} role="alert">
-                  {mutation.error.message}
-                </p>
-              )}
-              <button
-                className={s.submitBtn}
-                disabled={mutation.isPending}
-                type="submit"
-              >
-                {mutation.isPending ? (
-                  <>
-                    <span className={s.spinner} />
-                    {t('sendingLabel')}
-                  </>
-                ) : (
-                  <>
-                    <Icon name="send" size={16} strokeWidth={2} />
-                    {t('submitLabel')}
-                  </>
+            <Stack spacing={1}>
+              {mutation.isError &&
+                !(mutation.error instanceof ContactApiError && mutation.error.fields) && (
+                  <Alert severity="error">{mutation.error.message}</Alert>
                 )}
-              </button>
-            </>
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={mutation.isPending}
+                fullWidth
+                startIcon={
+                  mutation.isPending ? (
+                    <CircularProgress size={16} color="inherit" />
+                  ) : (
+                    <Icon name="send" size={16} strokeWidth={2} />
+                  )
+                }
+                sx={sxSubmitBtn}
+              >
+                {mutation.isPending ? t('sendingLabel') : t('submitLabel')}
+              </Button>
+            </Stack>
           )}
-        </div>
-      </form>
+        </Stack>
+      </Box>
     </section>
   );
 }

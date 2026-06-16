@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SessionProvider } from 'next-auth/react';
 import { useState } from 'react';
+import { MuiThemeProvider } from '@/shared/ui/theme/MuiThemeProvider';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -25,7 +26,9 @@ export function Providers({ children, session }: ProvidersProps) {
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
-        {children}
+        <MuiThemeProvider>
+          {children}
+        </MuiThemeProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </SessionProvider>

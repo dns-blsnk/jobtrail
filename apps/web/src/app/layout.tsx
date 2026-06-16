@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import '@job-search-tracker/tokens/css';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import { auth } from '@/shared/auth/auth';
@@ -18,13 +20,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang={locale}>
       <body>
-        <NextIntlClientProvider messages={messages}>
-          <Providers session={session}>
-            <Header />
-            <main>{children}</main>
-            <Footer />
-          </Providers>
-        </NextIntlClientProvider>
+        <AppRouterCacheProvider>
+          <NextIntlClientProvider messages={messages}>
+            <Providers session={session}>
+              <Header />
+              <main>{children}</main>
+              <Footer />
+            </Providers>
+          </NextIntlClientProvider>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );

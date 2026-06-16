@@ -214,12 +214,18 @@ importers:
       '@emotion/styled':
         specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.1.17)(react@19.1.0))(@types/react@19.1.17)(react@19.1.0)
+      '@job-search-tracker/tokens':
+        specifier: workspace:*
+        version: link:../../packages/tokens
       '@job-search-tracker/types':
         specifier: workspace:*
         version: link:../../packages/types
       '@mui/material':
         specifier: ^9.1.1
         version: 9.1.1(@emotion/react@11.14.0(@types/react@19.1.17)(react@19.1.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.1.17)(react@19.1.0))(@types/react@19.1.17)(react@19.1.0))(@types/react@19.1.17)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@mui/material-nextjs':
+        specifier: ^9.1.1
+        version: 9.1.1(@emotion/cache@11.14.0)(@emotion/react@11.14.0(@types/react@19.1.17)(react@19.1.0))(@types/react@19.1.17)(next@15.5.19(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.100.0))(react@19.1.0)
       '@tanstack/react-query':
         specifier: ^5.80.7
         version: 5.101.0(react@19.1.0)
@@ -276,6 +282,12 @@ importers:
   packages/config: {}
 
   packages/shared: {}
+
+  packages/tokens:
+    devDependencies:
+      typescript:
+        specifier: ^5.8.0
+        version: 5.9.3
 
   packages/types: {}
 
@@ -1563,6 +1575,24 @@ packages:
 
   '@mui/core-downloads-tracker@9.1.1':
     resolution: {integrity: sha512-AupmMICbdJHqAh6FfOMaaiiIr7dfEgZJn5DFfiPuGNrbs+ZZy9cD1APwO0TSVBz5j08MJEEY6n7iC76/2wjMEA==}
+
+  '@mui/material-nextjs@9.1.1':
+    resolution: {integrity: sha512-OUM0a2GvzKXkkFxKBjs6O36pXv5/vhmgET+k6XNaKR+gG2B4wU1rlGuUkynddbvuVqgdF5ZjElIZAf2W7TRMZA==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      '@emotion/cache': ^11.11.0
+      '@emotion/react': ^11.11.4
+      '@emotion/server': ^11.11.0
+      '@types/react': ^17.0.0 || ^18.0.0 || ^19.0.0
+      next: ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+      react: ^17.0.0 || ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@emotion/cache':
+        optional: true
+      '@emotion/server':
+        optional: true
+      '@types/react':
+        optional: true
 
   '@mui/material@9.1.1':
     resolution: {integrity: sha512-Wv+gInjrpf99l1Q0oHe0eOWGTnlbkzs5nowClX65KCT/2fyPMwcbFEEkUsOHdpcHhB5UAbz/d7jlwt5ajWVvlA==}
@@ -8401,6 +8431,16 @@ snapshots:
   '@microsoft/tsdoc@0.16.0': {}
 
   '@mui/core-downloads-tracker@9.1.1': {}
+
+  '@mui/material-nextjs@9.1.1(@emotion/cache@11.14.0)(@emotion/react@11.14.0(@types/react@19.1.17)(react@19.1.0))(@types/react@19.1.17)(next@15.5.19(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.100.0))(react@19.1.0)':
+    dependencies:
+      '@babel/runtime': 7.29.2
+      '@emotion/react': 11.14.0(@types/react@19.1.17)(react@19.1.0)
+      next: 15.5.19(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.100.0)
+      react: 19.1.0
+    optionalDependencies:
+      '@emotion/cache': 11.14.0
+      '@types/react': 19.1.17
 
   '@mui/material@9.1.1(@emotion/react@11.14.0(@types/react@19.1.17)(react@19.1.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.1.17)(react@19.1.0))(@types/react@19.1.17)(react@19.1.0))(@types/react@19.1.17)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
