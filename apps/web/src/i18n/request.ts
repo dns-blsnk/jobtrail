@@ -13,7 +13,7 @@ export default getRequestConfig(async () => {
   const raw = cookieStore.get('NEXT_LOCALE')?.value ?? 'en';
   const locale: Locale = isSupportedLocale(raw) ? raw : 'en';
 
-  const messages = (await import(`@/fsd-app/intl/messages/${locale}`)).default as Record<string, unknown>;
+  const messages = (await import(`@/app/intl/messages/${locale}`)).default as Record<string, unknown>;
 
   return { locale, messages };
 });

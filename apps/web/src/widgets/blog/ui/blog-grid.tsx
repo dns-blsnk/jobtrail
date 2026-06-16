@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { clsx } from 'clsx';
-import type { BlogPost } from '@/shared/data/blog-posts';
+import type { BlogPost } from '@/entities/blog/model/blog-post.types';
 import s from './blog-grid.module.scss';
 
 interface BlogGridProps {
