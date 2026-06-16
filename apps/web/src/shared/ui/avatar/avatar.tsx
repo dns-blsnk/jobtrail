@@ -1,7 +1,7 @@
 'use client';
 
 import { Icon } from '@/shared/ui/icon/icon';
-import styles from './avatar.module.scss';
+import s from './avatar.module.scss';
 
 export interface AvatarUser {
   name: string | null;
@@ -38,7 +38,7 @@ export function Avatar({ user, loggedIn = false, avatarMode = 'photo', size = 38
 
   if (!loggedIn || !user) {
     return (
-      <span className={styles.root} style={style} data-variant="default">
+      <span className={s.root} style={style} data-variant="default">
         <Icon name="user" size={Math.round(size * 0.54)} strokeWidth={1.9} />
       </span>
     );
@@ -46,7 +46,7 @@ export function Avatar({ user, loggedIn = false, avatarMode = 'photo', size = 38
 
   if (avatarMode === 'photo' && user.photo) {
     return (
-      <span className={styles.root} style={style}>
+      <span className={s.root} style={style}>
         <img
           alt={user.name ?? user.email}
           src={user.photo}
@@ -59,7 +59,7 @@ export function Avatar({ user, loggedIn = false, avatarMode = 'photo', size = 38
 
   if (avatarMode === 'default') {
     return (
-      <span className={styles.root} style={style} data-variant="default">
+      <span className={s.root} style={style} data-variant="default">
         <Icon name="user" size={Math.round(size * 0.54)} strokeWidth={1.9} />
       </span>
     );
@@ -70,7 +70,7 @@ export function Avatar({ user, loggedIn = false, avatarMode = 'photo', size = 38
 
   return (
     <span
-      className={styles.root}
+      className={s.root}
       style={{
         ...style,
         background: `oklch(0.93 0.05 ${hue})`,

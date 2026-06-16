@@ -1,0 +1,102 @@
+@use '@/shared/styles/variables' as v;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 32px;
+  border: 1px solid v.$color-border-soft;
+  border-radius: v.$radius-lg;
+  background: v.$color-background;
+}
+
+.heading {
+  font-size: 18px;
+  font-weight: 700;
+  color: v.$color-heading;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.emailBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.emailLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: v.$color-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.emailRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.emailLink {
+  font-size: 15px;
+  font-weight: 500;
+  color: v.$color-link;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.copyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: v.$color-muted;
+  background: transparent;
+  border: 1px solid v.$color-border-soft;
+  border-radius: v.$radius-sm;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  white-space: nowrap;
+
+  &:hover {
+    color: v.$color-heading;
+    border-color: v.$color-border-strong;
+  }
+}
+
+.copyBtnActive {
+  color: #16a34a;
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+}
+
+.socialList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: v.$color-text;
+  text-decoration: none;
+  border-radius: v.$radius-sm;
+  transition: background 0.15s, color 0.15s;
+
+  &:hover {
+    background: #f5f5f5;
+    color: v.$color-heading;
+  }
+}

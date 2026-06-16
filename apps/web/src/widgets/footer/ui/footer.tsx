@@ -1,57 +1,57 @@
 'use client';
 
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { Icon } from '@/shared/ui/icon/icon';
 import { useMobile } from '@/shared/lib/hooks/use-mobile';
 import { LangSwitch } from './lang-switch';
-import styles from './footer.module.scss';
+import s from './footer.module.scss';
 
-const FOOTER_COLS = [
-  {
-    title: 'Product',
-    links: ['Features', 'Pricing', 'Job parsing', 'Analytics', 'Roadmap'],
-  },
-  {
-    title: 'Resources',
-    links: ['Blog', 'Job-search guides', 'Resume templates', 'Help'],
-  },
-  {
-    title: 'Company',
-    links: ['About', 'Contact', 'Privacy', 'Terms'],
-  },
+const SOCIAL_HREFS = [
+  { icon: 'linkedin' as const, key: 'linkedin' as const, href: 'https://linkedin.com/in/dns-blsnk' },
+  { icon: 'github' as const, key: 'github' as const, href: 'https://github.com/dns-blsnk' },
+  { icon: 'fileText' as const, key: 'blog' as const, href: '/blog' },
 ];
 
-const SOCIAL = [
-  { icon: 'linkedin' as const, label: 'LinkedIn', href: 'https://linkedin.com/in/dns-blsnk' },
-  { icon: 'github' as const, label: 'GitHub', href: 'https://github.com/dns-blsnk' },
-  { icon: 'fileText' as const, label: 'Blog', href: '#' },
-];
-
-const YEAR = 2026;
+const LINK_HREFS: Record<string, string> = {
+  Features: '/#features',
+  Pricing: '/#pricing',
+  'Job parsing': '/#job-parsing',
+  Analytics: '/#analytics',
+  Roadmap: '/#roadmap',
+  Blog: '/blog',
+  'Job-search guides': '/job-search-guides',
+  'Resume templates': '/resume-templates',
+  Help: '/help',
+  About: '/about',
+  Contact: '/contact',
+  Privacy: '/privacy',
+  Terms: '/terms',
+};
 
 export function Footer() {
+  const tf = useTranslations('footer');
+  const tc = useTranslations('common');
   const isMobile = useMobile();
 
   if (isMobile) {
     return (
-      <footer className={styles.footer}>
-        <div className={styles.mobileTop}>
-          <Logo />
-          <p className={styles.desc}>
-            Drop in job links — we parse them and gather the key details in one place.
-          </p>
-          <SocialRow />
+      <footer className={s.footer}>
+        <div className={s.mobileTop}>
+          <Logo tc={tc} />
+          <p className={s.desc}>{tf('descMobile')}</p>
+          <SocialRow tf={tf} />
         </div>
 
-        <div className={styles.accordion}>
-          {FOOTER_COLS.map((col) => (
-            <details key={col.title} className={styles.details}>
-              <summary className={styles.summary}>
-                {col.title}
-                <Icon className={styles.summaryIcon} name="chevronDown" size={18} />
+        <div className={s.accordion}>
+          {([0, 1, 2] as const).map((i) => (
+            <details key={tf(`columns.${i}.title`)} className={s.details}>
+              <summary className={s.summary}>
+                {tf(`columns.${i}.title`)}
+                <Icon className={s.summaryIcon} name="chevronDown" size={18} />
               </summary>
-              <div className={styles.colLinks}>
-                {col.links.map((l) => (
+              <div className={s.colLinks}>
+                {getColumnLinks(i).map((l) => (
                   <FootLink key={l} label={l} />
                 ))}
               </div>
@@ -59,30 +59,28 @@ export function Footer() {
           ))}
         </div>
 
-        <div className={styles.mobileBottom}>
+        <div className={s.mobileBottom}>
           <LangSwitch up />
-          <span className={styles.copyright}>© {YEAR} Jobtrail · Built by Denys</span>
+          <span className={s.copyright}>{tf('copyright')}</span>
         </div>
       </footer>
     );
   }
 
   return (
-    <footer className={styles.footer}>
-      <div className={styles.grid}>
-        <div className={styles.brand}>
-          <Logo />
-          <p className={styles.desc}>
-            Drop in job links — Jobtrail parses the description, extracts the key requirements, and keeps everything in one tracker.
-          </p>
-          <SocialRow />
+    <footer className={s.footer}>
+      <div className={s.grid}>
+        <div className={s.brand}>
+          <Logo tc={tc} />
+          <p className={s.desc}>{tf('descDesktop')}</p>
+          <SocialRow tf={tf} />
         </div>
 
-        {FOOTER_COLS.map((col) => (
-          <div key={col.title} className={styles.col}>
-            <h4 className={styles.colTitle}>{col.title}</h4>
-            <div className={styles.colLinks}>
-              {col.links.map((l) => (
+        {([0, 1, 2] as const).map((i) => (
+          <div key={tf(`columns.${i}.title`)} className={s.col}>
+            <h4 className={s.colTitle}>{tf(`columns.${i}.title`)}</h4>
+            <div className={s.colLinks}>
+              {getColumnLinks(i).map((l) => (
                 <FootLink key={l} label={l} />
               ))}
             </div>
@@ -90,38 +88,55 @@ export function Footer() {
         ))}
       </div>
 
-      <div className={styles.bottom}>
-        <span className={styles.copyright}>© {YEAR} Jobtrail · Built by Denys</span>
+      <div className={s.bottom}>
+        <span className={s.copyright}>{tf('copyright')}</span>
         <LangSwitch up />
       </div>
     </footer>
   );
 }
 
-function Logo() {
+function getColumnLinks(colIndex: 0 | 1 | 2): string[] {
+  const cols = [
+    ['Features', 'Pricing', 'Job parsing', 'Analytics', 'Roadmap'],
+    ['Blog', 'Job-search guides', 'Resume templates', 'Help'],
+    ['About', 'Contact', 'Privacy', 'Terms'],
+  ];
+  return cols[colIndex];
+}
+
+interface LogoProps {
+  tc: ReturnType<typeof useTranslations<'common'>>;
+}
+
+function Logo({ tc }: LogoProps) {
   return (
-    <Link aria-label="Jobtrail home" className={styles.logo} href="/">
-      <span className={styles.logoMark}>
+    <Link aria-label={tc('logoAriaLabel')} className={s.logo} href="/">
+      <span className={s.logoMark}>
         <Icon name="briefcase" size={18} strokeWidth={2.1} />
       </span>
-      <span className={styles.logoWord}>Jobtrail</span>
+      <span className={s.logoWord}>{tc('appName')}</span>
     </Link>
   );
 }
 
-function SocialRow() {
+interface SocialRowProps {
+  tf: ReturnType<typeof useTranslations<'footer'>>;
+}
+
+function SocialRow({ tf }: SocialRowProps) {
   return (
-    <div className={styles.social}>
-      {SOCIAL.map((s) => (
+    <div className={s.social}>
+      {SOCIAL_HREFS.map((link) => (
         <a
-          key={s.label}
-          aria-label={s.label}
-          className={styles.socialBtn}
-          href={s.href}
+          key={link.key}
+          aria-label={tf(`social.${link.key}`)}
+          className={s.socialBtn}
+          href={link.href}
           rel="noreferrer"
           target="_blank"
         >
-          <Icon name={s.icon} size={19} strokeWidth={1.9} />
+          <Icon name={link.icon} size={19} strokeWidth={1.9} />
         </a>
       ))}
     </div>
@@ -129,8 +144,9 @@ function SocialRow() {
 }
 
 function FootLink({ label }: { label: string }) {
+  const href = LINK_HREFS[label] ?? '#';
   return (
-    <Link className={styles.footLink} href="#">
+    <Link className={s.footLink} href={href}>
       {label}
     </Link>
   );

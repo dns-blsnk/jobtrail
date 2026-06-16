@@ -50,3 +50,14 @@ enum Provider {
   GITHUB
   LINKEDIN
 }
+
+model ContactMessage {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  ip        String?
+  userAgent String?
+  createdAt DateTime @default(now())
+}

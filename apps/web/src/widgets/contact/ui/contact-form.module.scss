@@ -1,0 +1,11 @@
+@use '@/shared/styles/variables' as v;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px;
+  border: 1px solid v.$color-border-soft;
+  border-radius: v.$radius-lg;
+  background: v.$color-background;
+}

@@ -1,14 +1,16 @@
 'use client';
 
 import { useCallback, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Icon } from '@/shared/ui/icon/icon';
 import { useDismiss } from '@/shared/lib/hooks/use-dismiss';
-import styles from './lang-switch.module.scss';
+import { clsx } from 'clsx';
+import s from './lang-switch.module.scss';
 
 const LANGS = [
-  { code: 'EN', name: 'English' },
-  { code: 'RU', name: 'Русский' },
-  { code: 'KZ', name: 'Қазақша' },
+  { code: 'en', label: 'EN', name: 'English' },
+  { code: 'ru', label: 'RU', name: 'Русский' },
+  { code: 'kz', label: 'KZ', name: 'Қазақша' },
 ] as const;
 
 type LangCode = (typeof LANGS)[number]['code'];
@@ -19,40 +21,48 @@ interface LangSwitchProps {
 }
 
 export function LangSwitch({ up = false, tone = 'light' }: LangSwitchProps) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [lang, setLang] = useState<LangCode>('EN');
+  const [lang, setLang] = useState<LangCode>('en');
   const ref = useDismiss(open, useCallback(() => setOpen(false), []));
   const deep = tone === 'deep';
 
   const current = LANGS.find((l) => l.code === lang)!;
 
+  const handleSelect = (code: LangCode) => {
+    setLang(code);
+    setOpen(false);
+    document.cookie = `NEXT_LOCALE=${code};path=/;max-age=31536000;SameSite=Lax`;
+    router.refresh();
+  };
+
   return (
-    <div ref={ref as React.RefObject<HTMLDivElement>} className={`${styles.root} ${deep ? styles.deep : ''}`}>
+    <div ref={ref as React.RefObject<HTMLDivElement>} className={clsx(s.root, deep && s.deep)}>
       <button
-        className={styles.trigger}
+        className={s.trigger}
         type="button"
         onClick={() => setOpen((v) => !v)}
       >
         <Icon name="globe" size={17} strokeWidth={1.9} />
         {current.name}
         <Icon
-          className={`${styles.caret} ${open ? styles.caretOpen : ''}`}
+          className={clsx(s.caret, open && s.caretOpen)}
           name="chevronDown"
           size={15}
         />
       </button>
 
-      <div className={`${styles.popover} ${open ? styles.popoverOpen : ''} ${up ? styles.up : ''}`}>
+      <div className={clsx(s.popover, open && s.popoverOpen, up && s.up)}>
         {LANGS.map((l) => (
           <button
             key={l.code}
-            className={`${styles.option} ${l.code === lang ? styles.optionActive : ''}`}
+            className={clsx(s.option, l.code === lang && s.optionActive)}
             type="button"
-            onClick={() => { setLang(l.code); setOpen(false); }}
+            onClick={() => handleSelect(l.code)}
           >
-            <span className={styles.optionCode}>{l.code}</span>
+            <span className={s.optionCode}>{l.label}</span>
             {l.name}
-            {l.code === lang && <Icon className={styles.check} name="check" size={16} />}
+            {l.code === lang && <Icon className={s.check} name="check" size={16} />}
           </button>
         ))}
       </div>

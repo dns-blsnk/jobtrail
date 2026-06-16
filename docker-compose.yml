@@ -29,6 +29,10 @@ services:
     restart: unless-stopped
     ports:
       - '${API_PORT:-4001}:${API_PORT:-4001}'
+    volumes:
+      - ./apps/api/src:/app/apps/api/src
+      - ./apps/api/prisma:/app/apps/api/prisma
+      - ./packages:/app/packages
     depends_on:
       postgres:
         condition: service_healthy

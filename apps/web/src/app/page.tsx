@@ -1,5 +1,7 @@
 import { redirect } from 'next/navigation';
+import { auth } from '@/shared/auth/auth';
 
-export default function RootPage() {
-  redirect('/auth');
+export default async function RootPage() {
+  const session = await auth();
+  redirect(session?.user ? '/dashboard' : '/auth');
 }
