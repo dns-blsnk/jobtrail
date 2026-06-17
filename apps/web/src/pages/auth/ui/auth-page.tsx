@@ -1,9 +1,10 @@
-import { getTranslations } from 'next-intl/server';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages, getTranslations } from 'next-intl/server';
 import { AuthFormSection } from '@/widgets/auth-form/ui/auth-form-section';
 import s from './auth-page.module.scss';
 
 export async function AuthPage() {
-  const t = await getTranslations('authPage');
+  const [t, messages] = await Promise.all([getTranslations('authPage'), getMessages()]);
   return (
     <main className={s.root}>
       <div className={s.inner}>
@@ -11,7 +12,9 @@ export async function AuthPage() {
           <div aria-hidden className={s.logoMark}>{t('logoMark')}</div>
           <span className={s.logoName}>{t('logoName')}</span>
         </div>
-        <AuthFormSection />
+        <NextIntlClientProvider messages={{ auth: messages.auth }}>
+          <AuthFormSection />
+        </NextIntlClientProvider>
       </div>
     </main>
   );
