@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import MuiAvatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -11,17 +10,16 @@ import MenuList from '@mui/material/MenuList';
 import Typography from '@mui/material/Typography';
 import { Icon } from '@/shared/ui/icon/icon';
 import { SegmentedControl } from '@/shared/ui/segmented-control/segmented-control';
-import { muiAvatarProps } from '@/shared/ui/avatar/avatar';
-import type { AvatarUser, AvatarMode } from '@/shared/ui/avatar/avatar';
+import { Avatar } from '@/shared/ui/avatar/avatar';
+import type { AvatarUser } from '@/shared/ui/avatar/avatar';
 
 interface UserMenuBodyProps {
   user: AvatarUser;
-  avatarMode?: AvatarMode;
   onClose: () => void;
   onLogout: () => void;
 }
 
-export function UserMenuBody({ user, avatarMode = 'photo', onClose, onLogout }: UserMenuBodyProps) {
+export function UserMenuBody({ user, onClose, onLogout }: UserMenuBodyProps) {
   const t = useTranslations('userMenu');
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
@@ -30,15 +28,10 @@ export function UserMenuBody({ user, avatarMode = 'photo', onClose, onLogout }: 
     { label: t('themeDark'), value: 'dark' as const },
   ];
 
-  const { sx: avatarSx, children: avatarInitials } = muiAvatarProps(user.email, user.name, 44);
-  const photoSrc = avatarMode === 'photo' ? (user.photo ?? undefined) : undefined;
-
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, px: 2, pt: 1.5, pb: 1.5, minWidth: 260 }}>
-        <MuiAvatar alt={user.name ?? user.email} src={photoSrc} sx={avatarSx}>
-          {avatarInitials}
-        </MuiAvatar>
+        <Avatar loggedIn size={44} user={user} />
         <Box sx={{ minWidth: 0 }}>
           <Typography noWrap sx={{ fontWeight: 600 }} variant="body2">
             {user.name ?? t('fallbackName')}

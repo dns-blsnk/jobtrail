@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useCallback, useState } from 'react';
 import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
+import Drawer from '@mui/material/Drawer';
 import Popover from '@mui/material/Popover';
 import { useProfile } from '@/entities/session/model/use-profile';
 import { Icon } from '@/shared/ui/icon/icon';
@@ -11,7 +12,6 @@ import { Avatar } from '@/shared/ui/avatar/avatar';
 import { IconButton } from '@/shared/ui/icon-button/icon-button';
 import { UserMenuBody } from '@/shared/ui/user-menu/user-menu-body';
 import { useMobile } from '@/shared/lib/hooks/use-mobile';
-import { BottomSheet } from './bottom-sheet';
 import { NavDrawer } from './nav-drawer';
 import { clsx } from 'clsx';
 import s from './header.module.scss';
@@ -68,7 +68,7 @@ export function Header() {
                   type="button"
                   onClick={(e) => setAnchorEl(e.currentTarget)}
                 >
-                  <Avatar avatarMode="initials" loggedIn={isLoggedIn} size={36} user={user} />
+                  <Avatar loggedIn={isLoggedIn} size={36} user={user} />
                 </button>
               </>
             ) : (
@@ -119,16 +119,22 @@ export function Header() {
           </div>
         </NavDrawer>
 
-        <BottomSheet label={th('drawer.userMenuLabel')} open={menuOpen} onClose={closeMenu}>
+        <Drawer
+          anchor="bottom"
+          open={menuOpen}
+          onClose={closeMenu}
+          slotProps={{
+            paper: { sx: { borderTopLeftRadius: 16, borderTopRightRadius: 16, maxHeight: '85vh' } },
+          }}
+        >
           {user && (
             <UserMenuBody
-              avatarMode="initials"
               user={user}
               onClose={closeMenu}
               onLogout={() => { closeMenu(); void signOut(); }}
             />
           )}
-        </BottomSheet>
+        </Drawer>
       </header>
     );
   }
@@ -164,7 +170,7 @@ export function Header() {
                   type="button"
                   onClick={(e) => setAnchorEl(e.currentTarget)}
                 >
-                  <Avatar avatarMode="initials" loggedIn={isLoggedIn} size={34} user={user} />
+                  <Avatar loggedIn={isLoggedIn} size={34} user={user} />
                   <Icon
                     className={clsx(s.chevron, menuOpen && s.chevronOpen)}
                     name="chevronDown"
@@ -181,7 +187,6 @@ export function Header() {
                 >
                   {user && (
                     <UserMenuBody
-                      avatarMode="initials"
                       user={user}
                       onClose={closeMenu}
                       onLogout={() => { closeMenu(); void signOut(); }}
