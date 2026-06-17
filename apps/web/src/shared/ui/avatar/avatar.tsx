@@ -1,7 +1,7 @@
 'use client';
 
 import MuiAvatar from '@mui/material/Avatar';
-import { Icon } from '@/shared/ui/icon/icon';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export interface AvatarUser {
   name: string | null;
@@ -21,7 +21,7 @@ export function Avatar({ user, loggedIn = false, size = 38 }: AvatarProps) {
 
   return (
     <MuiAvatar alt={user?.name ?? user?.email ?? undefined} src={photoSrc} sx={sx}>
-      <Icon name="userCircle" size={Math.round(size * 0.6)} strokeWidth={1.6} />
+      <AccountCircleIcon sx={{ width: '100%', height: '100%' }} />
     </MuiAvatar>
   );
 }
