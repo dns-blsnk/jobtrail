@@ -47,28 +47,14 @@ const en = {
     },
   },
   footer: {
-    descMobile: 'Drop in job links — we parse them and gather the key details in one place.',
-    descDesktop:
-      'Drop in job links — Jobtrail parses the description, extracts the key requirements, and keeps everything in one tracker.',
     copyright: '© 2026 Jobtrail · Built by Denys',
-    columns: [
-      {
-        title: 'Product',
-        links: ['Features', 'Pricing', 'Job parsing', 'Analytics', 'Roadmap'],
-      },
-      {
-        title: 'Resources',
-        links: ['Blog', 'Job-search guides', 'Resume templates', 'Help'],
-      },
-      {
-        title: 'Company',
-        links: ['About', 'Contact', 'Privacy', 'Terms'],
-      },
-    ],
-    social: {
-      linkedin: 'LinkedIn',
-      github: 'GitHub',
+    nav: {
       blog: 'Blog',
+      help: 'Help',
+      about: 'About',
+      contact: 'Contact',
+      privacy: 'Privacy',
+      terms: 'Terms',
     },
   },
   auth: {
