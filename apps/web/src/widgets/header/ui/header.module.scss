@@ -239,3 +239,34 @@
   border-top: 1px solid var(--border);
   @include flex-col($gap: 9px);
 }
+
+/* Updated Add Job button — desktop pill style */
+.addJobBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 38px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font: 600 14px/1 var(--font-ui);
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: var(--sh-accent);
+  @include transition(all);
+
+  &:hover {
+    background: var(--accent-press);
+    box-shadow: var(--sh-accent-hover);
+  }
+}
+
+/* Hide avatar button in header below 768px */
+.avatarHideXs {
+  @include below(768px) {
+    display: none;
+  }
+}
