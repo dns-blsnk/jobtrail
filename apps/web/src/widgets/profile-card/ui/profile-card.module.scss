@@ -1,14 +1,13 @@
 @use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
 
 .card {
   width: 100%;
   padding: 32px;
   border: 1px solid v.$color-border-soft;
   border-radius: v.$radius-lg;
-  display: flex;
-  flex-direction: column;
+  @include flex-col($gap: 8px);
   align-items: center;
-  gap: 8px;
 }
 
 .avatar {
@@ -16,9 +15,7 @@
   height: 64px;
   border-radius: 50%;
   background: v.$color-primary;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include grid-center;
   color: v.$color-white;
   font-size: 24px;
   font-weight: 700;
@@ -47,7 +44,7 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.15s ease;
+  @include transition(opacity);
 
   &:hover {
     opacity: 0.7;

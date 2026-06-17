@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [{ protocol: 'https', hostname: 'picsum.photos' }],
   },
+  sassOptions: {
+    includePaths: [
+      path.join(__dirname, '../../packages/scss-utils/src'),
+    ],
+  },
 };
 
 export default withNextIntl(nextConfig);

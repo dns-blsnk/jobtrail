@@ -1,22 +1,21 @@
 @use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+@use 'containers' as *;
+@use 'variables' as su;
 
 .root {
-  padding: 40px 24px 80px;
-  min-height: calc(100vh - 120px);
+  @include page-root($pt: 40px, $pb: 80px);
+  padding-inline: 24px;
 }
 
 .inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
+  max-width: su.$container-full;
+  margin-inline: auto;
+  @include flex-col($gap: 40px);
 }
 
 .pageHeader {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  @include flex-col($gap: 6px);
 }
 
 .title {
@@ -38,15 +37,13 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 
-  @media (max-width: 600px) {
+  @include breakpoint(sm) {
     grid-template-columns: 1fr;
   }
 }
 
 .statCard {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  @include flex-col($gap: 6px);
   padding: 20px 24px;
   border: 1px solid v.$color-border-soft;
   border-radius: v.$radius-md;
@@ -68,9 +65,7 @@
 }
 
 .section {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  @include flex-col($gap: 16px);
 }
 
 .sectionTitle {

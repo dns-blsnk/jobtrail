@@ -1,18 +1,18 @@
+@use 'mixins' as *;
+@use 'containers' as *;
+@use 'variables' as su;
+
 .footer {
   background: var(--surface);
   border-top: 1px solid var(--border);
 }
 
 .inner {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 20px 40px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  @include container($max: su.$container-wide, $px: 40px, $px-mob: 18px);
+  padding-block: 20px 24px;
+  @include flex-col($gap: 16px);
 
-  @media (max-width: 640px) {
-    padding: 18px 18px 24px;
+  @include breakpoint(sm) {
     gap: 18px;
   }
 }
@@ -23,7 +23,7 @@
   align-items: center;
   gap: 4px 24px;
 
-  @media (max-width: 640px) {
+  @include breakpoint(sm) {
     gap: 8px 20px;
   }
 }
@@ -33,11 +33,9 @@
   text-decoration: none;
   color: var(--ink-2);
   padding: 4px 0;
-  transition: color 0.14s;
+  @include transition(color);
 
-  &:hover {
-    color: var(--accent);
-  }
+  &:hover { color: var(--accent); }
 }
 
 .linkActive {
@@ -58,12 +56,10 @@
 }
 
 .bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include flex-between;
   gap: 12px;
 
-  @media (max-width: 480px) {
+  @include breakpoint(xs) {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;

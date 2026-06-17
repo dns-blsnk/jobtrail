@@ -1,15 +1,15 @@
 @use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+@use 'variables' as su;
 
 .root {
   padding: 64px 24px 96px;
 }
 
 .inner {
-  max-width: 720px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  max-width: su.$container-prose;
+  margin-inline: auto;
+  @include flex-col($gap: 24px);
 }
 
 .title {

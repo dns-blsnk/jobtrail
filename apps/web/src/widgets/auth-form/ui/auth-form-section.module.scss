@@ -1,17 +1,14 @@
 @use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
 
 .container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  @include flex-col($gap: 20px);
   width: 100%;
 }
 
 .headline {
-  display: flex;
-  flex-direction: column;
+  @include flex-col($gap: 10px);
   align-items: center;
-  gap: 10px;
 }
 
 .title {
@@ -31,14 +28,11 @@
 }
 
 .fields {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  @include flex-col($gap: 4px);
 }
 
 .actions {
-  display: flex;
-  flex-direction: column;
+  @include flex-col;
 }
 
 .submitErrorSlot {

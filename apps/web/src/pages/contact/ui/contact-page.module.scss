@@ -1,4 +1,5 @@
 @use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
 
 .root {
   padding: 64px 24px 96px;
@@ -6,16 +7,12 @@
 
 .inner {
   max-width: 780px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
+  margin-inline: auto;
+  @include flex-col($gap: 40px);
 }
 
 .hero {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  @include flex-col($gap: 12px);
 }
 
 .title {

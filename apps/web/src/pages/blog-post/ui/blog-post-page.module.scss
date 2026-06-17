@@ -1,15 +1,15 @@
 @use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+@use 'variables' as su;
 
 .root {
   padding: 40px 24px 96px;
 }
 
 .inner {
-  max-width: 760px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
+  max-width: su.$container-narrow;
+  margin-inline: auto;
+  @include flex-col($gap: 48px);
 }
 
 .back-link {
@@ -17,7 +17,7 @@
   font-weight: 500;
   color: v.$color-muted;
   text-decoration: none;
-  transition: color 0.15s;
+  @include transition(color);
 
   &:hover {
     color: v.$color-text;
@@ -25,15 +25,11 @@
 }
 
 .article {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+  @include flex-col($gap: 32px);
 }
 
 .article-header {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  @include flex-col($gap: 12px);
 }
 
 .category {
@@ -52,16 +48,14 @@
   margin: 0;
   line-height: 1.15;
 
-  @media (max-width: 600px) {
+  @include breakpoint(sm) {
     font-size: 28px;
     letter-spacing: -0.8px;
   }
 }
 
 .meta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  @include flex-center($gap: 8px);
   font-size: 13px;
   color: v.$color-muted;
 }
@@ -73,7 +67,7 @@
   border-radius: v.$radius-lg;
   overflow: hidden;
 
-  @media (max-width: 600px) {
+  @include breakpoint(sm) {
     aspect-ratio: 4 / 3;
     border-radius: v.$radius-md;
   }
@@ -84,14 +78,12 @@
 }
 
 .prose {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  @include flex-col($gap: 20px);
   font-size: 16px;
   line-height: 1.8;
   color: v.$color-text;
 
-  @media (max-width: 600px) {
+  @include breakpoint(sm) {
     font-size: 15px;
   }
 }
@@ -105,7 +97,7 @@
   padding-left: 16px;
   margin: 0;
 
-  @media (max-width: 600px) {
+  @include breakpoint(sm) {
     font-size: 16px;
   }
 }

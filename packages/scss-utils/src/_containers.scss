@@ -1,0 +1,22 @@
+@use 'variables' as v;
+@use 'mixins' as *;
+
+/// Centered content wrapper.
+/// $max     — max-width (default: 1180px)
+/// $px      — horizontal padding on desktop
+/// $px-mob  — horizontal padding on mobile (< $bp-sm)
+@mixin container($max: v.$container-wide, $px: 40px, $px-mob: 18px) {
+  max-width: $max;
+  margin-inline: auto;
+  padding-inline: $px;
+
+  @include mobile {
+    padding-inline: $px-mob;
+  }
+}
+
+/// Standard page root with vertical rhythm.
+@mixin page-root($pt: 40px, $pb: 80px) {
+  padding-block: $pt $pb;
+  min-height: calc(100vh - 120px);
+}

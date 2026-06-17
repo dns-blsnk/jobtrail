@@ -1,22 +1,20 @@
 @use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+@use 'containers' as *;
 
 .root {
-  padding: 40px 24px 80px;
-  min-height: calc(100vh - 120px);
+  @include page-root($pt: 40px, $pb: 80px);
+  padding-inline: 24px;
 }
 
 .inner {
   max-width: 560px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+  margin-inline: auto;
+  @include flex-col($gap: 32px);
 }
 
 .pageHeader {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  @include flex-col($gap: 6px);
 }
 
 .title {

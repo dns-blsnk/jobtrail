@@ -1,4 +1,5 @@
 @use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
 
 .root {
   min-height: 100vh;
@@ -12,17 +13,13 @@
 .inner {
   width: 100%;
   max-width: 400px;
-  display: flex;
-  flex-direction: column;
+  @include flex-col($gap: 32px);
   align-items: center;
-  gap: 32px;
 }
 
 .logo {
-  display: flex;
-  flex-direction: column;
+  @include flex-col($gap: 10px);
   align-items: center;
-  gap: 10px;
 }
 
 .logoMark {
@@ -30,9 +27,7 @@
   height: 40px;
   border-radius: 10px;
   background: v.$color-primary;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include grid-center;
   color: v.$color-white;
   font-size: 13px;
   font-weight: 800;
