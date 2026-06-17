@@ -1,3 +1,5 @@
+@use 'mixins' as *;
+
 .root {
   position: relative;
 }
@@ -14,13 +16,13 @@
   border: 1px solid var(--border-2);
   background: var(--surface);
   color: var(--ink-2);
-  transition: all 0.15s ease;
+  @include transition(all);
 
   &:hover { background: var(--surface-2); }
 }
 
 .caret {
-  transition: transform 0.2s ease;
+  @include transition(transform, 0.2s);
 
   &.caretOpen { transform: rotate(180deg); }
 }
@@ -36,10 +38,12 @@
   border-radius: var(--r-md);
   box-shadow: var(--sh-pop);
   padding: 6px;
+  margin: 0;
+  list-style: none;
   opacity: 0;
   transform: translateY(-6px);
   pointer-events: none;
-  transition: all 0.16s ease;
+  transition: opacity 0.16s ease, transform 0.16s ease;
 
   &.popoverOpen {
     opacity: 1;
@@ -57,9 +61,7 @@
 }
 
 .option {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  @include flex-center($gap: 8px);
   width: 100%;
   padding: 9px 10px;
   border: none;
@@ -69,7 +71,7 @@
   text-align: left;
   font: 500 14px/1 var(--font-ui);
   color: var(--ink);
-  transition: background 0.12s ease;
+  @include transition(background, 0.12s);
 
   &:hover { background: var(--surface-2); }
 }

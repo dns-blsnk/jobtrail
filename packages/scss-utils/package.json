@@ -1,0 +1,11 @@
+{
+  "name": "@job-search-tracker/scss-utils",
+  "version": "0.0.1",
+  "private": true,
+  "exports": {
+    "./variables": "./src/_variables.scss",
+    "./functions": "./src/_functions.scss",
+    "./mixins": "./src/_mixins.scss",
+    "./containers": "./src/_containers.scss"
+  }
+}

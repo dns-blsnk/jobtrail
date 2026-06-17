@@ -10,10 +10,10 @@ import Stack from '@mui/material/Stack';
 import { FormTextField } from '@/shared/ui/form-text-field/form-text-field';
 import Typography from '@mui/material/Typography';
 import { Icon } from '@/shared/ui/icon/icon';
+import { useContactForm } from '@job-search-tracker/api-client/contact/hooks';
+import { ContactApiError } from '@job-search-tracker/api-client/contact';
+import type { ContactPayload } from '@job-search-tracker/api-client/contact';
 import { contactSchema } from '@/features/contact/model/contact-schema';
-import { useContactForm } from '@/features/contact/model/use-contact-form';
-import { ContactApiError } from '@/features/contact/api/contact-api';
-import type { ContactPayload } from '@/features/contact/api/contact-api';
 import s from './contact-form.module.scss';
 
 const INITIAL_VALUES: ContactPayload = { name: '', email: '', subject: '', message: '' };

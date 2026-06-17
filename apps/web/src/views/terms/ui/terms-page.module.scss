@@ -1,0 +1,55 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+@use 'variables' as su;
+
+.root {
+  padding: 64px 24px 96px;
+}
+
+.inner {
+  max-width: su.$container-prose;
+  margin-inline: auto;
+  @include flex-col($gap: 48px);
+}
+
+.hero {
+  @include flex-col($gap: 10px);
+  padding-bottom: 32px;
+  border-bottom: 1px solid v.$color-border-soft;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 800;
+  color: v.$color-heading;
+  letter-spacing: -1.5px;
+  margin: 0;
+
+  @include breakpoint(sm) {
+    font-size: 30px;
+  }
+}
+
+.last-updated {
+  font-size: 13px;
+  color: v.$color-muted;
+  margin: 0;
+}
+
+.section {
+  @include flex-col($gap: 12px);
+}
+
+.section-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: v.$color-heading;
+  margin: 0;
+}
+
+.body {
+  font-size: 15px;
+  line-height: 1.8;
+  color: v.$color-text;
+  margin: 0;
+}

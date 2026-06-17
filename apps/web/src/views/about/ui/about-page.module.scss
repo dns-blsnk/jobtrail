@@ -1,0 +1,87 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+@use 'variables' as su;
+
+.root {
+  padding: 64px 24px 96px;
+}
+
+.inner {
+  max-width: su.$container-narrow;
+  margin-inline: auto;
+  @include flex-col($gap: 56px);
+}
+
+.hero {
+  @include flex-col($gap: 14px);
+}
+
+.title {
+  font-size: 42px;
+  font-weight: 800;
+  color: v.$color-heading;
+  letter-spacing: -1.5px;
+  margin: 0;
+
+  @include breakpoint(sm) {
+    font-size: 32px;
+  }
+}
+
+.subtitle {
+  font-size: 18px;
+  line-height: 1.5;
+  color: v.$color-muted;
+  margin: 0;
+}
+
+.section {
+  @include flex-col($gap: 16px);
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: v.$color-heading;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.body {
+  font-size: 15px;
+  line-height: 1.8;
+  color: v.$color-text;
+  margin: 0;
+}
+
+.goal-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @include breakpoint(sm, up) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.goal-card {
+  @include flex-col($gap: 8px);
+  padding: 20px;
+  border: 1px solid v.$color-border-soft;
+  border-radius: v.$radius-md;
+  background: #fafafa;
+}
+
+.goal-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: v.$color-heading;
+  margin: 0;
+}
+
+.goal-body {
+  font-size: 13px;
+  line-height: 1.7;
+  color: v.$color-muted;
+  margin: 0;
+}

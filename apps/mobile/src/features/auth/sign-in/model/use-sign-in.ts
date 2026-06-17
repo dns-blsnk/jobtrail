@@ -1,6 +1,6 @@
 import type { LoginDto } from '@job-search-tracker/types';
 import { useState } from 'react';
-import { signIn } from '../../../../entities/session/api/auth-api';
+import { signIn } from '@job-search-tracker/api-client/auth';
 import { useSessionStore } from '../../../../entities/session/model/session-store';
 
 export function useSignIn() {

@@ -1,4 +1,4 @@
-import { AuthPage } from '@/pages/auth/ui/auth-page';
+import { AuthPage } from '@/views/auth/ui/auth-page';
 
 export default function AuthRoute() {
   return <AuthPage />;

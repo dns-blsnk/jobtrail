@@ -1,0 +1,112 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+@use 'variables' as su;
+
+.root {
+  padding: 40px 24px 96px;
+}
+
+.inner {
+  max-width: su.$container-narrow;
+  margin-inline: auto;
+  @include flex-col($gap: 48px);
+}
+
+.back-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: v.$color-muted;
+  text-decoration: none;
+  @include transition(color);
+
+  &:hover {
+    color: v.$color-text;
+  }
+}
+
+.article {
+  @include flex-col($gap: 32px);
+}
+
+.article-header {
+  @include flex-col($gap: 12px);
+}
+
+.category {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: v.$color-primary;
+}
+
+.title {
+  font-size: 38px;
+  font-weight: 800;
+  color: v.$color-heading;
+  letter-spacing: -1.2px;
+  margin: 0;
+  line-height: 1.15;
+
+  @include breakpoint(sm) {
+    font-size: 28px;
+    letter-spacing: -0.8px;
+  }
+}
+
+.meta {
+  @include flex-center($gap: 8px);
+  font-size: 13px;
+  color: v.$color-muted;
+}
+
+.cover-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: v.$radius-lg;
+  overflow: hidden;
+
+  @include breakpoint(sm) {
+    aspect-ratio: 4 / 3;
+    border-radius: v.$radius-md;
+  }
+}
+
+.cover-img {
+  object-fit: cover;
+}
+
+.prose {
+  @include flex-col($gap: 20px);
+  font-size: 16px;
+  line-height: 1.8;
+  color: v.$color-text;
+
+  @include breakpoint(sm) {
+    font-size: 15px;
+  }
+}
+
+.lead {
+  font-size: 18px;
+  line-height: 1.7;
+  color: v.$color-heading;
+  font-weight: 500;
+  border-left: 3px solid v.$color-primary;
+  padding-left: 16px;
+  margin: 0;
+
+  @include breakpoint(sm) {
+    font-size: 16px;
+  }
+}
+
+.prose p {
+  margin: 0;
+}
+
+.divider {
+  height: 1px;
+  background: v.$color-border-soft;
+}

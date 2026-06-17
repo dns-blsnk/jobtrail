@@ -1,5 +1,5 @@
 import { BLOG_POSTS } from '@/entities/blog/model/blog-posts.data';
-import { BlogPostPage } from '@/pages/blog-post/ui/blog-post-page';
+import { BlogPostPage } from '@/views/blog-post/ui/blog-post-page';
 
 export function generateStaticParams() {
   return BLOG_POSTS.map((post) => ({ slug: post.slug }));

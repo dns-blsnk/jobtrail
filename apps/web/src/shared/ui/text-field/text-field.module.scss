@@ -1,9 +1,8 @@
 @use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
 
 .wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  @include flex-col($gap: 4px);
 }
 
 .label {
@@ -15,8 +14,7 @@
 
 .inputRow {
   position: relative;
-  display: flex;
-  align-items: center;
+  @include flex-center;
 }
 
 .input {
@@ -29,7 +27,7 @@
   color: v.$color-text;
   font-size: 14px;
   outline: none;
-  transition: border-color 0.15s ease;
+  @include transition(border-color);
 
   &::placeholder {
     color: v.$color-muted;

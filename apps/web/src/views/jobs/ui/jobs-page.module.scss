@@ -1,0 +1,57 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+@use 'containers' as *;
+@use 'variables' as su;
+
+.root {
+  @include page-root($pt: 40px, $pb: 80px);
+  padding-inline: 24px;
+}
+
+.inner {
+  max-width: su.$container-full;
+  margin-inline: auto;
+  @include flex-col($gap: 32px);
+}
+
+.pageHeader {
+  @include flex-col($gap: 6px);
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  color: v.$color-heading;
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: v.$color-muted;
+  margin: 0;
+}
+
+.emptyState {
+  @include flex-col($gap: 12px);
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  border: 1px dashed v.$color-border-strong;
+  border-radius: v.$radius-lg;
+  text-align: center;
+}
+
+.emptyTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: v.$color-text;
+  margin: 0;
+}
+
+.emptyHint {
+  font-size: 14px;
+  color: v.$color-muted;
+  margin: 0;
+  max-width: 300px;
+}

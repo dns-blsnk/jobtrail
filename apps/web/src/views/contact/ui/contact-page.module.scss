@@ -1,0 +1,39 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+
+.root {
+  padding: 64px 24px 96px;
+}
+
+.inner {
+  max-width: 780px;
+  margin-inline: auto;
+  @include flex-col($gap: 40px);
+}
+
+.hero {
+  @include flex-col($gap: 12px);
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 800;
+  color: v.$color-heading;
+  letter-spacing: -1.5px;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: v.$color-heading;
+  margin: 0;
+}
+
+.description {
+  font-size: 16px;
+  line-height: 1.7;
+  color: v.$color-muted;
+  margin: 0;
+  max-width: 640px;
+}

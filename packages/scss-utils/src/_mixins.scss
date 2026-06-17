@@ -1,0 +1,101 @@
+@use 'sass:map';
+@use 'variables' as v;
+
+// ─── Layout ──────────────────────────────────────────────────────────────────
+
+@mixin flex-center($gap: null) {
+  display: flex;
+  align-items: center;
+  @if $gap { gap: $gap; }
+}
+
+@mixin flex-between($gap: null) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @if $gap { gap: $gap; }
+}
+
+@mixin flex-col($gap: null) {
+  display: flex;
+  flex-direction: column;
+  @if $gap { gap: $gap; }
+}
+
+@mixin grid-center {
+  display: grid;
+  place-items: center;
+}
+
+// ─── Typography ───────────────────────────────────────────────────────────────
+
+/// Single-line text truncation.
+@mixin truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/// Multi-line text truncation via -webkit-line-clamp.
+@mixin line-clamp($lines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// ─── Interaction ─────────────────────────────────────────────────────────────
+
+@mixin transition($props: all, $dur: v.$duration-base, $ease: v.$ease-default) {
+  transition: $props $dur $ease;
+}
+
+@mixin interactive-bg($hover-bg, $dur: v.$duration-fast) {
+  background: transparent;
+  transition: background $dur v.$ease-default;
+  &:hover { background: $hover-bg; }
+}
+
+// ─── Accessibility ────────────────────────────────────────────────────────────
+
+@mixin focus-ring($color: currentColor, $offset: 3px, $width: 2px) {
+  &:focus-visible {
+    outline: $width solid $color;
+    outline-offset: $offset;
+  }
+}
+
+// ─── Scrollbar ────────────────────────────────────────────────────────────────
+
+@mixin hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+// ─── Responsive ───────────────────────────────────────────────────────────────
+
+/// Named breakpoint mixin. Direction: down (max-width) or up (min-width).
+/// Keys: xs | sm | md | lg | xl
+///
+/// Usage:
+///   @include breakpoint(sm)       { … }  → max-width: 640px
+///   @include breakpoint(md, up)   { … }  → min-width: 768px
+@mixin breakpoint($name, $direction: down) {
+  $bp: map.get(v.$breakpoints, $name);
+  @if not $bp {
+    @error 'Unknown breakpoint "#{$name}". Available: #{map.keys(v.$breakpoints)}';
+  }
+  @if $direction == down or $direction == max {
+    @media (max-width: #{$bp}) { @content; }
+  } @else if $direction == up or $direction == min {
+    @media (min-width: #{$bp}) { @content; }
+  } @else {
+    @error 'Unknown direction "#{$direction}". Use down or up.';
+  }
+}
+
+/// Shortcuts for common breakpoints (all default to max-width / down)
+@mixin mobile  { @include breakpoint(sm)       { @content; } }
+@mixin tablet  { @include breakpoint(md)       { @content; } }
+@mixin desktop { @include breakpoint(lg, up)   { @content; } }

@@ -1,0 +1,32 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+@use 'containers' as *;
+
+.root {
+  @include page-root($pt: 40px, $pb: 80px);
+  padding-inline: 24px;
+}
+
+.inner {
+  max-width: 560px;
+  margin-inline: auto;
+  @include flex-col($gap: 32px);
+}
+
+.pageHeader {
+  @include flex-col($gap: 6px);
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  color: v.$color-heading;
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: v.$color-muted;
+  margin: 0;
+}

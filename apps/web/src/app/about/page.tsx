@@ -1,4 +1,4 @@
-import { AboutPage } from '@/pages/about/ui/about-page';
+import { AboutPage } from '@/views/about/ui/about-page';
 
 export default function AboutRoute() {
   return <AboutPage />;

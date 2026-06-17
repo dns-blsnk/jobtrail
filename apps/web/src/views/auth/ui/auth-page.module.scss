@@ -1,0 +1,42 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+
+.root {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background: v.$color-background;
+  padding: 64px 24px 40px;
+}
+
+.inner {
+  width: 100%;
+  max-width: 400px;
+  @include flex-col($gap: 32px);
+  align-items: center;
+}
+
+.logo {
+  @include flex-col($gap: 10px);
+  align-items: center;
+}
+
+.logoMark {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: v.$color-primary;
+  @include grid-center;
+  color: v.$color-white;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.logoName {
+  font-size: 15px;
+  font-weight: 700;
+  color: v.$color-heading;
+  letter-spacing: -0.2px;
+}

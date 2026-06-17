@@ -12,7 +12,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@job-search-tracker/api-client": "workspace:*",
     "@job-search-tracker/types": "workspace:*",
+    "@tanstack/react-query": "^5.80.7",
     "expo": "~54.0.33",
     "expo-secure-store": "^56.0.4",
     "expo-status-bar": "~3.0.9",

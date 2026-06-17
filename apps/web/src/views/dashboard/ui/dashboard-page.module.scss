@@ -1,0 +1,94 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+@use 'containers' as *;
+@use 'variables' as su;
+
+.root {
+  @include page-root($pt: 40px, $pb: 80px);
+  padding-inline: 24px;
+}
+
+.inner {
+  max-width: su.$container-full;
+  margin-inline: auto;
+  @include flex-col($gap: 40px);
+}
+
+.pageHeader {
+  @include flex-col($gap: 6px);
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  color: v.$color-heading;
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: v.$color-muted;
+  margin: 0;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+
+  @include breakpoint(sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.statCard {
+  @include flex-col($gap: 6px);
+  padding: 20px 24px;
+  border: 1px solid v.$color-border-soft;
+  border-radius: v.$radius-md;
+  background: v.$color-background;
+}
+
+.statValue {
+  font-size: 32px;
+  font-weight: 800;
+  color: v.$color-heading;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 13px;
+  color: v.$color-muted;
+  font-weight: 500;
+}
+
+.section {
+  @include flex-col($gap: 16px);
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: v.$color-heading;
+  margin: 0;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 48px 24px;
+  border: 1px dashed v.$color-border-strong;
+  border-radius: v.$radius-md;
+  text-align: center;
+}
+
+.emptyText {
+  font-size: 14px;
+  color: v.$color-muted;
+  margin: 0;
+}

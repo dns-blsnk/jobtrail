@@ -1,16 +1,16 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useId, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { setCookie } from 'cookies-next/client';
 import { Icon } from '@/shared/ui/icon/icon';
-import { useDismiss } from '@/shared/lib/hooks/use-dismiss';
 import { clsx } from 'clsx';
 import s from './lang-switch.module.scss';
 
 const LANGS = [
   { code: 'en', label: 'EN', name: 'English' },
-  { code: 'ru', label: 'RU', name: 'Русский' },
-  { code: 'kz', label: 'KZ', name: 'Қазақша' },
+  // { code: 'ua', label: 'UA', name: 'Українська' },
+  // { code: 'ru', label: 'RU', name: 'Русский' },
 ] as const;
 
 type LangCode = (typeof LANGS)[number]['code'];
@@ -21,10 +21,10 @@ interface LangSwitchProps {
 }
 
 export function LangSwitch({ up = false, tone = 'light' }: LangSwitchProps) {
+  const listboxId = useId();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [lang, setLang] = useState<LangCode>('en');
-  const ref = useDismiss(open, useCallback(() => setOpen(false), []));
   const deep = tone === 'deep';
 
   const current = LANGS.find((l) => l.code === lang)!;
@@ -32,13 +32,28 @@ export function LangSwitch({ up = false, tone = 'light' }: LangSwitchProps) {
   const handleSelect = (code: LangCode) => {
     setLang(code);
     setOpen(false);
-    document.cookie = `NEXT_LOCALE=${code};path=/;max-age=31536000;SameSite=Lax`;
+    setCookie('NEXT_LOCALE', code, { path: '/', maxAge: 60 * 60 * 24 * 365, sameSite: 'lax' });
     router.refresh();
   };
 
+  const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') setOpen(false);
+  };
+
   return (
-    <div ref={ref as React.RefObject<HTMLDivElement>} className={clsx(s.root, deep && s.deep)}>
+    <div
+      className={clsx(s.root, deep && s.deep)}
+      onBlur={handleBlur}
+      onKeyDown={handleKeyDown}
+    >
       <button
+        aria-controls={listboxId}
+        aria-expanded={open}
+        aria-haspopup="listbox"
         className={s.trigger}
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -52,20 +67,26 @@ export function LangSwitch({ up = false, tone = 'light' }: LangSwitchProps) {
         />
       </button>
 
-      <div className={clsx(s.popover, open && s.popoverOpen, up && s.up)}>
+      <ul
+        id={listboxId}
+        aria-label="Language"
+        className={clsx(s.popover, open && s.popoverOpen, up && s.up)}
+        role="listbox"
+      >
         {LANGS.map((l) => (
-          <button
-            key={l.code}
-            className={clsx(s.option, l.code === lang && s.optionActive)}
-            type="button"
-            onClick={() => handleSelect(l.code)}
-          >
-            <span className={s.optionCode}>{l.label}</span>
-            {l.name}
-            {l.code === lang && <Icon className={s.check} name="check" size={16} />}
-          </button>
+          <li key={l.code} role="option" aria-selected={l.code === lang}>
+            <button
+              className={clsx(s.option, l.code === lang && s.optionActive)}
+              type="button"
+              onClick={() => handleSelect(l.code)}
+            >
+              <span className={s.optionCode}>{l.label}</span>
+              {l.name}
+              {l.code === lang && <Icon className={s.check} name="check" size={16} />}
+            </button>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }

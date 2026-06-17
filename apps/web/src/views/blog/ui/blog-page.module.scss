@@ -1,0 +1,35 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+@use 'variables' as su;
+
+.root {
+  padding: 64px 24px 96px;
+}
+
+.inner {
+  max-width: su.$container-default;
+  margin-inline: auto;
+  @include flex-col($gap: 48px);
+}
+
+.hero {
+  @include flex-col($gap: 12px);
+}
+
+.title {
+  font-size: 42px;
+  font-weight: 800;
+  color: v.$color-heading;
+  letter-spacing: -1.5px;
+  margin: 0;
+
+  @include breakpoint(sm) {
+    font-size: 32px;
+  }
+}
+
+.subtitle {
+  font-size: 16px;
+  color: v.$color-muted;
+  margin: 0;
+}

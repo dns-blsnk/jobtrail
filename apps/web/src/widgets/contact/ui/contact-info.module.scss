@@ -1,9 +1,8 @@
 @use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
 
 .root {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
+  @include flex-col($gap: 28px);
   padding: 32px;
   border: 1px solid v.$color-border-soft;
   border-radius: v.$radius-lg;
@@ -19,9 +18,7 @@
 }
 
 .emailBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  @include flex-col($gap: 8px);
 }
 
 .emailLabel {
@@ -78,15 +75,11 @@
 }
 
 .socialList {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  @include flex-col($gap: 4px);
 }
 
 .socialLink {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  @include flex-center($gap: 12px);
   padding: 10px 12px;
   font-size: 14px;
   font-weight: 500;

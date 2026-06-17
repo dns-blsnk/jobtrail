@@ -1,10 +1,11 @@
+@use 'mixins' as *;
+
 .root {
   position: relative;
   width: 40px;
   height: 40px;
   border-radius: var(--r-sm);
-  display: grid;
-  place-items: center;
+  @include grid-center;
   border: 1px solid transparent;
   background: transparent;
   color: var(--ink-2);
