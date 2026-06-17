@@ -36,10 +36,12 @@
   border-radius: var(--r-md);
   box-shadow: var(--sh-pop);
   padding: 6px;
+  margin: 0;
+  list-style: none;
   opacity: 0;
   transform: translateY(-6px);
   pointer-events: none;
-  transition: all 0.16s ease;
+  transition: opacity 0.16s ease, transform 0.16s ease;
 
   &.popoverOpen {
     opacity: 1;
