@@ -1,6 +1,6 @@
 import type { RegisterDto } from '@job-search-tracker/types';
 import { useState } from 'react';
-import { signUp } from '../../../../entities/session/api/auth-api';
+import { signUp } from '@job-search-tracker/api-client/auth';
 import { useSessionStore } from '../../../../entities/session/model/session-store';
 
 export function useSignUp() {

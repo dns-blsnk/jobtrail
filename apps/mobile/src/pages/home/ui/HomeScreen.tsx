@@ -2,7 +2,7 @@ import type { IUser } from '@job-search-tracker/types';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { getMe } from '../../../entities/session/api/auth-api';
+import { getMe } from '@job-search-tracker/api-client/auth';
 import { useSessionStore } from '../../../entities/session/model/session-store';
 import { theme } from '../../../shared/config/theme';
 import { AppHeader } from '../../../widgets/header/ui/AppHeader';

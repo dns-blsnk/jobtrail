@@ -1,4 +1,4 @@
-import { API_BASE_URL } from '@/shared/config/api.config';
+import { getBaseUrl } from '../lib/http-client';
 
 export interface ContactPayload {
   name: string;
@@ -25,7 +25,7 @@ export class ContactApiError extends Error {
 }
 
 export async function postContact(payload: ContactPayload): Promise<ContactResponse> {
-  const res = await fetch(`${API_BASE_URL}/contact`, {
+  const res = await fetch(`${getBaseUrl()}/contact`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
@@ -34,12 +34,10 @@ export async function postContact(payload: ContactPayload): Promise<ContactRespo
   if (!res.ok) {
     const body = (await res.json().catch(() => ({}))) as Record<string, unknown>;
     const message =
-      typeof body.message === 'string'
-        ? body.message
-        : 'Failed to send message';
+      typeof body['message'] === 'string' ? body['message'] : 'Failed to send message';
     const fields =
-      body.fields != null && typeof body.fields === 'object'
-        ? (body.fields as ContactFieldErrors)
+      body['fields'] != null && typeof body['fields'] === 'object'
+        ? (body['fields'] as ContactFieldErrors)
         : undefined;
     throw new ContactApiError(message, fields);
   }

@@ -11,6 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@job-search-tracker/api-client": "workspace:*",
     "@job-search-tracker/tokens": "workspace:*",
     "@job-search-tracker/types": "workspace:*",
     "@mui/material": "^9.1.1",
