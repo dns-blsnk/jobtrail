@@ -1,18 +1,17 @@
 'use client';
 
 import Link from 'next/link';
-import { type RefObject, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
+import Popover from '@mui/material/Popover';
 import { useProfile } from '@/entities/session/model/use-profile';
 import { Icon } from '@/shared/ui/icon/icon';
 import { Avatar } from '@/shared/ui/avatar/avatar';
 import { IconButton } from '@/shared/ui/icon-button/icon-button';
 import { UserMenuBody } from '@/shared/ui/user-menu/user-menu-body';
-import { useDismiss } from '@/shared/lib/hooks/use-dismiss';
 import { useMobile } from '@/shared/lib/hooks/use-mobile';
 import { BottomSheet } from './bottom-sheet';
-import { Dropdown } from './dropdown';
 import { NavDrawer } from './nav-drawer';
 import { clsx } from 'clsx';
 import s from './header.module.scss';
@@ -22,13 +21,12 @@ export function Header() {
   const th = useTranslations('header');
   const { user: profileUser, isLoggedIn } = useProfile();
   const isMobile = useMobile();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const closeMenu = useCallback(() => setMenuOpen(false), []);
+  const menuOpen = Boolean(anchorEl);
+  const closeMenu = useCallback(() => setAnchorEl(null), []);
   const closeDrawer = useCallback(() => setDrawerOpen(false), []);
-
-  const avatarWrapRef = useDismiss(menuOpen, closeMenu);
 
   const user = profileUser
     ? { name: profileUser.name ?? null, email: profileUser.email }
@@ -68,7 +66,7 @@ export function Header() {
                   aria-label={th('aria.userMenu')}
                   className={s.avatarTrigger}
                   type="button"
-                  onClick={() => setMenuOpen(true)}
+                  onClick={(e) => setAnchorEl(e.currentTarget)}
                 >
                   <Avatar avatarMode="initials" loggedIn={isLoggedIn} size={36} user={user} />
                 </button>
@@ -157,13 +155,14 @@ export function Header() {
                 <Icon name="plus" size={18} strokeWidth={2} />
                 {tc('addJob')}
               </button>
-              <div ref={avatarWrapRef as RefObject<HTMLDivElement>} className={s.avatarWrap}>
+              <>
                 <button
                   aria-expanded={menuOpen}
+                  aria-haspopup="true"
                   aria-label={th('aria.userMenu')}
                   className={clsx(s.avatarTrigger, menuOpen && s.avatarTriggerOpen)}
                   type="button"
-                  onClick={() => setMenuOpen((v) => !v)}
+                  onClick={(e) => setAnchorEl(e.currentTarget)}
                 >
                   <Avatar avatarMode="initials" loggedIn={isLoggedIn} size={34} user={user} />
                   <Icon
@@ -172,7 +171,14 @@ export function Header() {
                     size={16}
                   />
                 </button>
-                <Dropdown open={menuOpen}>
+                <Popover
+                  anchorEl={anchorEl}
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  open={menuOpen}
+                  transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                  slotProps={{ paper: { sx: { width: 288, mt: 1.25, borderRadius: 2 } } }}
+                  onClose={closeMenu}
+                >
                   {user && (
                     <UserMenuBody
                       avatarMode="initials"
@@ -181,8 +187,8 @@ export function Header() {
                       onLogout={() => { closeMenu(); void signOut(); }}
                     />
                   )}
-                </Dropdown>
-              </div>
+                </Popover>
+              </>
             </>
           ) : (
             <>
