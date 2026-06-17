@@ -16,12 +16,15 @@ interface AvatarProps {
 }
 
 export function Avatar({ user, loggedIn = false, size = 38 }: AvatarProps) {
-  const sx = { width: size, height: size };
   const photoSrc = loggedIn && user?.photo ? user.photo : undefined;
 
   return (
-    <MuiAvatar alt={user?.name ?? user?.email ?? undefined} src={photoSrc} sx={sx}>
-      <AccountCircleIcon sx={{ width: '100%', height: '100%' }} />
+    <MuiAvatar
+      alt={user?.name ?? user?.email ?? undefined}
+      src={photoSrc}
+      sx={{ width: size, height: size, bgcolor: 'grey.300', color: 'common.white' }}
+    >
+      <AccountCircleIcon sx={{ width: '80%', height: '80%' }} />
     </MuiAvatar>
   );
 }
