@@ -53,34 +53,36 @@ export function MobileHeader() {
     : null;
 
   return (
-    <header className={s.header}>
-      <div className={clsx(s.inner, s.innerMobile)}>
-        <div className={s.left}>
-          <IconButton icon="menu" label={th('aria.openMenu')} onClick={() => setDrawerOpen(true)} />
-          <Logo />
+    <>
+      <header className={s.header}>
+        <div className={clsx(s.inner, s.innerMobile)}>
+          <div className={s.left}>
+            <IconButton icon="menu" label={th('aria.openMenu')} onClick={() => setDrawerOpen(true)} />
+            <Logo />
+          </div>
+          <div className={s.right}>
+            {isLoggedIn ? (
+              <>
+                <button type="button" className={s.addBtn} aria-label={tc('addJob')}>
+                  <Icon name="plus" size={18} strokeWidth={2.2} />
+                </button>
+                <button
+                  type="button"
+                  aria-label={th('aria.userMenu')}
+                  className={clsx(s.avatarTrigger, s.avatarHideXs)}
+                  onClick={openUserMenu}
+                >
+                  <Avatar loggedIn={isLoggedIn} size={34} user={user} />
+                </button>
+              </>
+            ) : (
+              <Link href="/auth" prefetch={false} className={s.outlineBtn}>
+                {tc('logIn')}
+              </Link>
+            )}
+          </div>
         </div>
-        <div className={s.right}>
-          {isLoggedIn ? (
-            <>
-              <button type="button" className={s.addBtn} aria-label={tc('addJob')}>
-                <Icon name="plus" size={18} strokeWidth={2.2} />
-              </button>
-              <button
-                type="button"
-                aria-label={th('aria.userMenu')}
-                className={clsx(s.avatarTrigger, s.avatarHideXs)}
-                onClick={openUserMenu}
-              >
-                <Avatar loggedIn={isLoggedIn} size={34} user={user} />
-              </button>
-            </>
-          ) : (
-            <Link href="/auth" prefetch={false} className={s.outlineBtn}>
-              {tc('logIn')}
-            </Link>
-          )}
-        </div>
-      </div>
+      </header>
 
       <NavDrawer
         isLoggedIn={isLoggedIn}
@@ -99,6 +101,6 @@ export function MobileHeader() {
           onLogout={() => { closeMenu(); void signOut(); }}
         />
       )}
-    </header>
+    </>
   );
 }

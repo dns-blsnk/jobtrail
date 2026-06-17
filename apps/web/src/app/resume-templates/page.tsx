@@ -1,4 +1,4 @@
-import { ResumeTemplatesPage } from '@/pages/resume-templates/ui/resume-templates-page';
+import { ResumeTemplatesPage } from '@/views/resume-templates/ui/resume-templates-page';
 
 export default function ResumeTemplatesRoute() {
   return <ResumeTemplatesPage />;

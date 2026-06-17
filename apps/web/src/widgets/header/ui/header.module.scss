@@ -266,7 +266,7 @@
 
 /* Hide avatar button in header below 768px */
 .avatarHideXs {
-  @include below(768px) {
+  @include breakpoint(md) {
     display: none;
   }
 }

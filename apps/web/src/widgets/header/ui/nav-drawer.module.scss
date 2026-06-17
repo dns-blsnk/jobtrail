@@ -58,7 +58,7 @@
 .avatarSection {
   display: none;
 
-  @include below(768px) {
+  @include breakpoint(md) {
     display: flex;
     align-items: center;
     gap: 12px;

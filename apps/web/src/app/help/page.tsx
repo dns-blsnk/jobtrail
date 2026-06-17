@@ -1,4 +1,4 @@
-import { HelpPage } from '@/pages/help/ui/help-page';
+import { HelpPage } from '@/views/help/ui/help-page';
 
 export default function HelpRoute() {
   return <HelpPage />;

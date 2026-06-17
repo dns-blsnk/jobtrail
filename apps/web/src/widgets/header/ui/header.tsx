@@ -1,4 +1,5 @@
 import { headers } from 'next/headers';
+import { HeaderClient } from './header-client';
 
 function isMobileUA(ua: string): boolean {
   return /android|iphone|ipad|ipod|blackberry|opera mini|iemobile|windows phone/i.test(ua);
@@ -6,10 +7,5 @@ function isMobileUA(ua: string): boolean {
 
 export async function Header() {
   const ua = (await headers()).get('user-agent') ?? '';
-  if (isMobileUA(ua)) {
-    const { MobileHeader } = await import('./mobile-header');
-    return <MobileHeader />;
-  }
-  const { DesktopHeader } = await import('./desktop-header');
-  return <DesktopHeader />;
+  return <HeaderClient initialMobile={isMobileUA(ua)} />;
 }
