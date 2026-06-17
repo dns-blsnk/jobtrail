@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { setCookie } from 'cookies-next/client';
 import { Icon } from '@/shared/ui/icon/icon';
 import { useDismiss } from '@/shared/lib/hooks/use-dismiss';
 import { clsx } from 'clsx';
@@ -9,8 +10,8 @@ import s from './lang-switch.module.scss';
 
 const LANGS = [
   { code: 'en', label: 'EN', name: 'English' },
-  { code: 'ru', label: 'RU', name: 'Русский' },
-  { code: 'kz', label: 'KZ', name: 'Қазақша' },
+  // { code: 'ua', label: 'UA', name: 'Українська' },
+  // { code: 'ru', label: 'RU', name: 'Русский' },
 ] as const;
 
 type LangCode = (typeof LANGS)[number]['code'];
@@ -32,7 +33,7 @@ export function LangSwitch({ up = false, tone = 'light' }: LangSwitchProps) {
   const handleSelect = (code: LangCode) => {
     setLang(code);
     setOpen(false);
-    document.cookie = `NEXT_LOCALE=${code};path=/;max-age=31536000;SameSite=Lax`;
+    setCookie('NEXT_LOCALE', code, { path: '/', maxAge: 60 * 60 * 24 * 365, sameSite: 'lax' });
     router.refresh();
   };
 
