@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -173,6 +173,7 @@ function row(children: React.ReactNode) {
 
 function HeaderForm({ formik }: { formik: HeaderFormik }) {
   const { values, handleChange, handleBlur, setFieldValue } = formik;
+  const photoInputRef = useRef<HTMLInputElement>(null);
 
   function handlePhoto(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -182,21 +183,78 @@ function HeaderForm({ formik }: { formik: HeaderFormik }) {
       void setFieldValue('data.photoUrl', evt.target?.result as string);
     };
     reader.readAsDataURL(file);
+    e.target.value = '';
   }
 
   return (
     <Box>
-      <Box sx={{ mb: 2 }}>
-        <InputLabel sx={{ mb: 1, fontSize: 13 }}>Profile Photo</InputLabel>
-        {values.data.photoUrl && (
+      <Box sx={{ mb: 2.5 }}>
+        <InputLabel sx={{ mb: 1.5, fontSize: 13 }}>Profile Photo</InputLabel>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          {/* Circular avatar preview */}
           <Box
-            component="img"
-            src={values.data.photoUrl}
-            alt="Profile"
-            sx={{ width: 72, height: 72, borderRadius: '50%', objectFit: 'cover', mb: 1, display: 'block' }}
-          />
-        )}
-        <input type="file" accept="image/*" onChange={handlePhoto} style={{ fontSize: 13 }} />
+            onClick={() => !values.data.photoUrl && photoInputRef.current?.click()}
+            sx={{
+              width: 80,
+              height: 80,
+              borderRadius: '50%',
+              border: '2px dashed',
+              borderColor: values.data.photoUrl ? 'var(--border)' : 'var(--border-2)',
+              overflow: 'hidden',
+              flexShrink: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'var(--surface-2)',
+              cursor: values.data.photoUrl ? 'default' : 'pointer',
+              transition: 'border-color 0.15s ease',
+              '&:hover': values.data.photoUrl ? {} : { borderColor: 'var(--accent)' },
+            }}
+          >
+            {values.data.photoUrl ? (
+              <Box
+                component="img"
+                src={values.data.photoUrl}
+                alt="Profile"
+                sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            ) : (
+              <Icon name="user" size={28} strokeWidth={1.5} style={{ color: 'var(--ink-3)' }} />
+            )}
+          </Box>
+          {/* Action buttons */}
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => photoInputRef.current?.click()}
+              startIcon={<Icon name="upload" size={14} strokeWidth={1.9} />}
+              sx={{ fontSize: 12, textTransform: 'none', minHeight: 36 }}
+            >
+              {values.data.photoUrl ? 'Change photo' : 'Upload photo'}
+            </Button>
+            {values.data.photoUrl && (
+              <Button
+                variant="text"
+                size="small"
+                color="error"
+                onClick={() => void setFieldValue('data.photoUrl', undefined)}
+                startIcon={<Icon name="trash" size={14} strokeWidth={1.9} />}
+                sx={{ fontSize: 12, textTransform: 'none', minHeight: 36 }}
+              >
+                Remove photo
+              </Button>
+            )}
+          </Box>
+        </Box>
+        <input
+          ref={photoInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handlePhoto}
+          style={{ display: 'none' }}
+          aria-hidden="true"
+        />
       </Box>
       {row(
         <>
@@ -311,14 +369,14 @@ function ExperienceForm({ formik }: { formik: ExperienceFormik }) {
         <Box key={item.id} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, mb: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
             <Box sx={{ fontWeight: 600, fontSize: 14 }}>{item.role || item.company || `Position ${index + 1}`}</Box>
-            <Box sx={{ display: 'flex', gap: 0.5 }}>
-              <IconButton size="small" onClick={() => moveUp(index)} disabled={index === 0} aria-label="Move up">
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <IconButton onClick={() => moveUp(index)} disabled={index === 0} aria-label="Move up">
                 <Icon name="moveUp" size={14} />
               </IconButton>
-              <IconButton size="small" onClick={() => moveDown(index)} disabled={index === values.data.items.length - 1} aria-label="Move down">
+              <IconButton onClick={() => moveDown(index)} disabled={index === values.data.items.length - 1} aria-label="Move down">
                 <Icon name="moveDown" size={14} />
               </IconButton>
-              <IconButton size="small" onClick={() => removeItem(index)} aria-label="Remove position">
+              <IconButton onClick={() => removeItem(index)} aria-label="Remove position">
                 <Icon name="trash" size={14} />
               </IconButton>
             </Box>
@@ -435,14 +493,14 @@ function EducationForm({ formik }: { formik: EducationFormik }) {
         <Box key={item.id} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, mb: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
             <Box sx={{ fontWeight: 600, fontSize: 14 }}>{item.institution || `Institution ${index + 1}`}</Box>
-            <Box sx={{ display: 'flex', gap: 0.5 }}>
-              <IconButton size="small" onClick={() => moveUp(index)} disabled={index === 0} aria-label="Move up">
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <IconButton onClick={() => moveUp(index)} disabled={index === 0} aria-label="Move up">
                 <Icon name="moveUp" size={14} />
               </IconButton>
-              <IconButton size="small" onClick={() => moveDown(index)} disabled={index === values.data.items.length - 1} aria-label="Move down">
+              <IconButton onClick={() => moveDown(index)} disabled={index === values.data.items.length - 1} aria-label="Move down">
                 <Icon name="moveDown" size={14} />
               </IconButton>
-              <IconButton size="small" onClick={() => removeItem(index)} aria-label="Remove">
+              <IconButton onClick={() => removeItem(index)} aria-label="Remove">
                 <Icon name="trash" size={14} />
               </IconButton>
             </Box>
@@ -546,7 +604,7 @@ function SkillsForm({ formik }: { formik: SkillsFormik }) {
               helperText={getIn(formik.touched, `data.groups[${index}].name`) && getIn(formik.errors, `data.groups[${index}].name`)}
               sx={{ flex: 1 }}
             />
-            <IconButton size="small" onClick={() => removeGroup(index)} aria-label="Remove group">
+            <IconButton onClick={() => removeGroup(index)} aria-label="Remove group">
               <Icon name="trash" size={14} />
             </IconButton>
           </Box>
@@ -631,14 +689,14 @@ function ProjectsForm({ formik }: { formik: ProjectsFormik }) {
         <Box key={item.id} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, mb: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
             <Box sx={{ fontWeight: 600, fontSize: 14 }}>{item.name || `Project ${index + 1}`}</Box>
-            <Box sx={{ display: 'flex', gap: 0.5 }}>
-              <IconButton size="small" onClick={() => moveUp(index)} disabled={index === 0} aria-label="Move up">
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <IconButton onClick={() => moveUp(index)} disabled={index === 0} aria-label="Move up">
                 <Icon name="moveUp" size={14} />
               </IconButton>
-              <IconButton size="small" onClick={() => moveDown(index)} disabled={index === values.data.items.length - 1} aria-label="Move down">
+              <IconButton onClick={() => moveDown(index)} disabled={index === values.data.items.length - 1} aria-label="Move down">
                 <Icon name="moveDown" size={14} />
               </IconButton>
-              <IconButton size="small" onClick={() => removeItem(index)} aria-label="Remove">
+              <IconButton onClick={() => removeItem(index)} aria-label="Remove">
                 <Icon name="trash" size={14} />
               </IconButton>
             </Box>
@@ -737,7 +795,7 @@ function LanguagesForm({ formik }: { formik: LanguagesFormik }) {
               ))}
             </Select>
           </FormControl>
-          <IconButton size="small" onClick={() => removeItem(index)} aria-label="Remove">
+          <IconButton onClick={() => removeItem(index)} aria-label="Remove">
             <Icon name="trash" size={14} />
           </IconButton>
         </Box>
@@ -788,14 +846,14 @@ function CertificationsForm({ formik }: { formik: CertificationsFormik }) {
         <Box key={item.id} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, mb: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
             <Box sx={{ fontWeight: 600, fontSize: 14 }}>{item.name || `Certification ${index + 1}`}</Box>
-            <Box sx={{ display: 'flex', gap: 0.5 }}>
-              <IconButton size="small" onClick={() => moveUp(index)} disabled={index === 0} aria-label="Move up">
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <IconButton onClick={() => moveUp(index)} disabled={index === 0} aria-label="Move up">
                 <Icon name="moveUp" size={14} />
               </IconButton>
-              <IconButton size="small" onClick={() => moveDown(index)} disabled={index === values.data.items.length - 1} aria-label="Move down">
+              <IconButton onClick={() => moveDown(index)} disabled={index === values.data.items.length - 1} aria-label="Move down">
                 <Icon name="moveDown" size={14} />
               </IconButton>
-              <IconButton size="small" onClick={() => removeItem(index)} aria-label="Remove">
+              <IconButton onClick={() => removeItem(index)} aria-label="Remove">
                 <Icon name="trash" size={14} />
               </IconButton>
             </Box>
@@ -890,7 +948,7 @@ function SocialLinksForm({ formik }: { formik: SocialLinksFormik }) {
             error={getIn(formik.touched, `data.items[${index}].url`) && Boolean(getIn(formik.errors, `data.items[${index}].url`))}
             helperText={getIn(formik.touched, `data.items[${index}].url`) && getIn(formik.errors, `data.items[${index}].url`)}
           />
-          <IconButton size="small" onClick={() => removeItem(index)} aria-label="Remove">
+          <IconButton onClick={() => removeItem(index)} aria-label="Remove">
             <Icon name="trash" size={14} />
           </IconButton>
         </Box>
@@ -939,14 +997,14 @@ function AwardsForm({ formik }: { formik: AwardsFormik }) {
         <Box key={item.id} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, mb: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
             <Box sx={{ fontWeight: 600, fontSize: 14 }}>{item.title || `Award ${index + 1}`}</Box>
-            <Box sx={{ display: 'flex', gap: 0.5 }}>
-              <IconButton size="small" onClick={() => moveUp(index)} disabled={index === 0} aria-label="Move up">
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <IconButton onClick={() => moveUp(index)} disabled={index === 0} aria-label="Move up">
                 <Icon name="moveUp" size={14} />
               </IconButton>
-              <IconButton size="small" onClick={() => moveDown(index)} disabled={index === values.data.items.length - 1} aria-label="Move down">
+              <IconButton onClick={() => moveDown(index)} disabled={index === values.data.items.length - 1} aria-label="Move down">
                 <Icon name="moveDown" size={14} />
               </IconButton>
-              <IconButton size="small" onClick={() => removeItem(index)} aria-label="Remove">
+              <IconButton onClick={() => removeItem(index)} aria-label="Remove">
                 <Icon name="trash" size={14} />
               </IconButton>
             </Box>

@@ -54,12 +54,15 @@ export function DraftActionsMenu({ draftId, onRenameStart }: DraftActionsMenuPro
           background: 'none',
           border: 'none',
           cursor: 'pointer',
-          padding: '4px',
-          borderRadius: '4px',
+          padding: '0',
+          borderRadius: '6px',
           display: 'flex',
           alignItems: 'center',
+          justifyContent: 'center',
           color: 'var(--ink-3)',
           flexShrink: 0,
+          minWidth: '40px',
+          height: '40px',
         }}
       >
         <Icon name="moreVertical" size={16} strokeWidth={2} />
@@ -79,19 +82,19 @@ export function DraftActionsMenu({ draftId, onRenameStart }: DraftActionsMenuPro
           },
         }}
       >
-        <MenuItem onClick={handleRename} dense>
+        <MenuItem onClick={handleRename}>
           <ListItemIcon sx={{ minWidth: 32 }}>
             <Icon name="pencil" size={14} strokeWidth={1.9} />
           </ListItemIcon>
           <ListItemText primary="Rename" />
         </MenuItem>
-        <MenuItem onClick={handleDuplicate} dense>
+        <MenuItem onClick={handleDuplicate}>
           <ListItemIcon sx={{ minWidth: 32 }}>
             <Icon name="copy" size={14} strokeWidth={1.9} />
           </ListItemIcon>
           <ListItemText primary="Duplicate" />
         </MenuItem>
-        <MenuItem onClick={handleDelete} dense sx={{ color: 'error.main' }}>
+        <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
           <ListItemIcon sx={{ minWidth: 32, color: 'error.main' }}>
             <Icon name="trash" size={14} strokeWidth={1.9} />
           </ListItemIcon>

@@ -73,6 +73,26 @@
   &::-webkit-scrollbar { display: none; }
 }
 
+// ─── Touch / Click targets ────────────────────────────────────────────────────
+
+/// Ensures an interactive element has a minimum accessible hit area.
+/// Desktop: 40 × 40 px   Mobile: 48 × 48 px (WCAG 2.5.5 / Apple HIG)
+@mixin tap-target {
+  min-height: 40px;
+  min-width: 40px;
+}
+
+/// Same as tap-target but also applies the larger mobile size.
+@mixin tap-target-responsive {
+  min-height: 40px;
+  min-width: 40px;
+
+  @include mobile {
+    min-height: 48px;
+    min-width: 48px;
+  }
+}
+
 // ─── Responsive ───────────────────────────────────────────────────────────────
 
 /// Named breakpoint mixin. Direction: down (max-width) or up (min-width).

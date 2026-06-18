@@ -3,6 +3,7 @@
 
 .btn {
   @include flex-center($gap: 6px);
+  @include tap-target-responsive;
   width: 100%;
   padding: 8px 12px;
   border-radius: 6px;

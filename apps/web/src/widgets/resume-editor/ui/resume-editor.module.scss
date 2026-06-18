@@ -92,6 +92,7 @@
 
 .templateCard {
   @include flex-col($gap: 4px);
+  @include tap-target-responsive;
   align-items: center;
   padding: 8px 12px;
   border-radius: 8px;

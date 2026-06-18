@@ -61,6 +61,7 @@
   right: 8px;
   opacity: 0;
   @include flex-center($gap: 4px);
+  @include tap-target-responsive;
   padding: 4px 10px;
   border-radius: 5px;
   border: 1px solid var(--border);
@@ -123,6 +124,7 @@
 
 .emptyStateBtn {
   margin-top: 4px;
+  @include tap-target-responsive;
   padding: 5px 16px;
   border-radius: 5px;
   border: 1px solid var(--accent);
@@ -197,6 +199,7 @@
 // Add block button
 .addBlockBtn {
   @include flex-center($gap: 6px);
+  @include tap-target-responsive;
   width: 100%;
   padding: 10px 16px;
   border-radius: 8px;
