@@ -1,0 +1,144 @@
+@use 'mixins' as *;
+@use 'variables' as su;
+
+.editor {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  background: var(--surface-2);
+}
+
+.canvas {
+  max-width: 860px;
+  margin: 0 auto;
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: var(--sh-lg);
+}
+
+// Template variations
+.template_classic {
+  // Default — no additional overrides
+}
+
+.template_modern {
+  h2,
+  h1 {
+    color: var(--accent);
+  }
+}
+
+.template_minimal {
+  padding: 48px 40px;
+
+  h2 {
+    color: var(--ink-3);
+    border-bottom-color: var(--border);
+  }
+
+  & > * + * {
+    margin-top: 24px;
+  }
+}
+
+// Preview mode hides all block controls
+.previewMode {
+  :global(.blockControls) {
+    display: none;
+  }
+}
+
+// Empty state when no draft active
+.emptyState {
+  @include flex-col($gap: 12px);
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 400px;
+}
+
+.emptyStateText {
+  font-size: 15px;
+  color: var(--ink-3);
+  text-align: center;
+}
+
+// Template picker
+.templatePicker {
+  @include flex-center($gap: 10px);
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.templatePickerLabel {
+  font-size: 13px;
+  color: var(--ink-3);
+  font-weight: 500;
+}
+
+.templateCard {
+  @include flex-col($gap: 4px);
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  @include transition(all, 0.15s, ease);
+
+  &:hover {
+    border-color: var(--accent);
+  }
+}
+
+.templateCardActive {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  box-shadow: 0 0 0 2px var(--sh-accent);
+}
+
+.templateCardLabel {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+.templateThumbnail {
+  @include flex-col($gap: 3px);
+  width: 48px;
+  height: 36px;
+  border-radius: 3px;
+  padding: 5px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.templateThumbnail_classic {
+  .templateThumbnailLine {
+    background: var(--ink-3);
+    border-radius: 2px;
+  }
+}
+
+.templateThumbnail_modern {
+  .templateThumbnailLine {
+    background: var(--accent);
+    border-radius: 2px;
+
+    &:last-child {
+      background: var(--ink-3);
+    }
+  }
+}
+
+.templateThumbnail_minimal {
+  .templateThumbnailLine {
+    background: var(--border-2);
+    border-radius: 2px;
+  }
+}
+
+.templateThumbnailLine {
+  border-radius: 2px;
+}

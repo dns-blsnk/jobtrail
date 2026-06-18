@@ -1,4 +1,5 @@
 import { aboutPage } from './en/about-page';
+import { resumeBuilderPage } from './en/resume-builder-page';
 import { analyticsPage } from './en/analytics-page';
 import { applicationsPage } from './en/applications-page';
 import { authPage } from './en/auth-page';
@@ -102,6 +103,7 @@ const en = {
   jobsPage,
   privacyPage,
   profilePage,
+  resumeBuilderPage,
   resumeTemplatesPage,
   termsPage,
 } as const;

@@ -1,0 +1,217 @@
+@use 'mixins' as *;
+@use 'variables' as su;
+
+// Header block
+.header {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--border-2);
+}
+
+.headerPhoto {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.headerInfo {
+  @include flex-col($gap: 4px);
+  flex: 1;
+}
+
+.headerName {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.1;
+}
+
+.headerJobTitle {
+  font-size: 16px;
+  color: var(--accent);
+  font-weight: 500;
+  margin: 0;
+}
+
+.headerContacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  font-size: 13px;
+  color: var(--ink-3);
+  margin-top: 4px;
+}
+
+.headerLink {
+  color: var(--accent);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Generic section
+.section {
+  @include flex-col($gap: 12px);
+}
+
+.sectionTitle {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--ink-2);
+  margin: 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+// Items
+.item {
+  @include flex-col($gap: 6px);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+.itemHeader {
+  @include flex-between($gap: 8px);
+  align-items: flex-start;
+}
+
+.itemTitle {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.itemSubtitle {
+  font-size: 13px;
+  color: var(--ink-2);
+  margin-top: 2px;
+}
+
+.itemDate {
+  font-size: 12px;
+  color: var(--ink-3);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.itemDescription {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.itemLink {
+  color: var(--accent);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Summary
+.summaryText {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.7;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+// Skills
+.skillGroup {
+  @include flex-col($gap: 6px);
+  margin-bottom: 8px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.skillGroupName {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--ink-2);
+}
+
+// Languages
+.languageGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.languageItem {
+  @include flex-center($gap: 6px);
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.languageName {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.languageLevel {
+  font-size: 11px;
+  color: var(--ink-3);
+  background: var(--border);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+// Social links
+.socialList {
+  @include flex-col($gap: 8px);
+}
+
+.socialItem {
+  @include flex-center($gap: 8px);
+  font-size: 13px;
+  color: var(--ink-2);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--accent);
+  }
+}

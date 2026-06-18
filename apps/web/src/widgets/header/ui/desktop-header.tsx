@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl';
 import { clsx } from 'clsx';
 import { useProfile } from '@/entities/session/model/use-profile';
 import { Icon } from '@/shared/ui/icon/icon';
+import type { IconName } from '@/shared/ui/icon/icon';
 import { Avatar } from '@/shared/ui/avatar/avatar';
 import { IconButton } from '@/shared/ui/icon-button/icon-button';
 import s from './header.module.scss';
@@ -20,7 +21,7 @@ const UserMenuPopover = dynamic(
 interface NavItem {
   label: string;
   href: string;
-  icon?: 'layoutDashboard' | 'briefcase' | 'fileText' | 'barChart';
+  icon?: IconName;
 }
 
 function Logo() {
@@ -65,6 +66,7 @@ export function DesktopHeader() {
     { label: th('nav.dashboard'), icon: 'layoutDashboard', href: '/dashboard' },
     { label: th('nav.jobs'), icon: 'briefcase', href: '/jobs' },
     { label: th('nav.applications'), icon: 'fileText', href: '/applications' },
+    { label: 'Resume', icon: 'fileText', href: '/resume' },
     { label: th('nav.analytics'), icon: 'barChart', href: '/analytics' },
   ];
 

@@ -1,0 +1,32 @@
+export const resumeBuilderPage = {
+  title: 'Resume Builder',
+  newDraft: 'New draft',
+  uploadResume: 'Upload resume',
+  downloadPdf: 'Download PDF',
+  preview: 'Preview',
+  aiFill: 'AI Fill',
+  addBlock: 'Add section',
+  noActiveDraft: 'Create your first draft to get started',
+  untitledDraft: 'Untitled Resume',
+  uploadedDraftToast: 'Resume uploaded — parsing is coming soon. A blank draft was created.',
+  pdfComingSoon: 'PDF export coming soon',
+  aiComingSoon: 'AI-powered resume filling coming soon',
+  templateClassic: 'Classic',
+  templateModern: 'Modern',
+  templateMinimal: 'Minimal',
+  blockTypes: {
+    header: 'Header',
+    summary: 'Summary',
+    experience: 'Experience',
+    education: 'Education',
+    skills: 'Skills',
+    projects: 'Projects',
+    languages: 'Languages',
+    certifications: 'Certifications',
+    'social-links': 'Social Links',
+    awards: 'Awards',
+    custom: 'Custom',
+  },
+} as const;
+
+export type ResumeBuilderPageMessages = typeof resumeBuilderPage;

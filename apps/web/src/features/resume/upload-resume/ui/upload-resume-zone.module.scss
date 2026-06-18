@@ -1,0 +1,20 @@
+@use 'mixins' as *;
+@use 'variables' as su;
+
+.btn {
+  @include flex-center($gap: 6px);
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--ink-2);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  @include transition(background, 0.15s, ease);
+
+  &:hover {
+    background: var(--surface-2);
+    color: var(--ink);
+  }
+}

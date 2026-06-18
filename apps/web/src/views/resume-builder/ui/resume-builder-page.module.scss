@@ -1,0 +1,92 @@
+@use 'mixins' as *;
+@use 'variables' as su;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.topBar {
+  @include flex-between($gap: 12px);
+  height: 56px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  padding: 0 24px;
+  flex-shrink: 0;
+}
+
+.topBarLeft {
+  @include flex-center($gap: 12px);
+}
+
+.topBarRight {
+  @include flex-center($gap: 8px);
+}
+
+.topBarTitle {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+}
+
+.topBarBtn {
+  @include flex-center($gap: 6px);
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--ink-2);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  @include transition(background, 0.15s, ease);
+
+  &:hover {
+    background: var(--surface-2);
+    color: var(--ink);
+  }
+}
+
+.topBarBtnActive {
+  @include flex-center($gap: 6px);
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  @include transition(background, 0.15s, ease);
+
+  &:hover {
+    background: var(--accent-soft);
+  }
+}
+
+.topBarBtnAccent {
+  @include flex-center($gap: 6px);
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: none;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  @include transition(background, 0.15s, ease);
+
+  &:hover {
+    background: var(--accent-press);
+  }
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}

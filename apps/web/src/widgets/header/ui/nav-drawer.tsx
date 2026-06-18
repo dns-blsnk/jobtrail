@@ -78,6 +78,7 @@ export function NavDrawer({ open, isLoggedIn, user, onClose, onLinkClick, onAvat
               <DrawerLink href="/dashboard" icon="layoutDashboard" label={th('nav.dashboard')} onClick={onLinkClick} />
               <DrawerLink href="/jobs" icon="briefcase" label={th('nav.jobs')} onClick={onLinkClick} />
               <DrawerLink href="/applications" icon="fileText" label={th('nav.applications')} onClick={onLinkClick} />
+              <DrawerLink href="/resume" icon="fileText" label="Resume" onClick={onLinkClick} />
               <DrawerLink href="/analytics" icon="barChart" label={th('nav.analytics')} onClick={onLinkClick} />
             </>
           ) : (
