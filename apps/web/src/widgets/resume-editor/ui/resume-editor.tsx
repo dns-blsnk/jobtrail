@@ -124,8 +124,12 @@ export function ResumeEditor({ isPreview }: ResumeEditorProps) {
     );
   }
 
-  const headerBlock = activeDraft.blocks[0] ?? null;
-  const sortableBlocks = activeDraft.blocks.slice(1);
+  const headerBlock  = activeDraft.blocks.find((b) => b.blockData.type === 'header') ?? null;
+  const summaryBlock = activeDraft.blocks.find((b) => b.blockData.type === 'summary') ?? null;
+
+  const sortableBlocks = activeDraft.blocks.filter(
+    (b) => b.blockData.type !== 'header' && b.blockData.type !== 'summary'
+  );
   const sortableIds = sortableBlocks.map((b) => b.id);
 
   const activeDragBlock = activeDragId
@@ -142,14 +146,18 @@ export function ResumeEditor({ isPreview }: ResumeEditorProps) {
     if (!over || active.id === over.id) return;
 
     const oldIndex = sortableIds.indexOf(active.id as string);
-    const newIndex = sortableIds.indexOf(over.id as string);
+    const newIndex  = sortableIds.indexOf(over.id as string);
     if (oldIndex === -1 || newIndex === -1) return;
 
     const newSortable = [...sortableIds];
     newSortable.splice(oldIndex, 1);
     newSortable.splice(newIndex, 0, active.id as string);
 
-    const newOrder = headerBlock ? [headerBlock.id, ...newSortable] : newSortable;
+    const newOrder = [
+      ...(headerBlock  ? [headerBlock.id]  : []),
+      ...(summaryBlock ? [summaryBlock.id] : []),
+      ...newSortable,
+    ];
     reorderBlocks(newOrder);
   }
 
@@ -167,6 +175,7 @@ export function ResumeEditor({ isPreview }: ResumeEditorProps) {
           isPreview && s.previewMode
         )}
       >
+        {/* Header — always first, no DnD */}
         {headerBlock && (
           <BlockWrapper
             id={headerBlock.id}
@@ -179,6 +188,20 @@ export function ResumeEditor({ isPreview }: ResumeEditorProps) {
           </BlockWrapper>
         )}
 
+        {/* Profile / Summary — always second, no DnD */}
+        {summaryBlock && (
+          <BlockWrapper
+            id={summaryBlock.id}
+            isHeader
+            isPreview={isPreview}
+            isEmpty={isBlockEmpty(summaryBlock)}
+            blockType={summaryBlock.blockData.type}
+          >
+            {renderBlockContent(summaryBlock)}
+          </BlockWrapper>
+        )}
+
+        {/* Remaining blocks — sortable */}
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}

@@ -34,14 +34,11 @@ function createDefaultBlockData(type: BlockType): BlockData {
           lastName: '',
           jobTitle: '',
           email: '',
-          phone: '',
-          location: '',
-          website: '',
-          photoUrl: '',
+          photoShape: 'circle',
         },
       };
     case 'summary':
-      return { type: 'summary', data: { text: '' } };
+      return { type: 'summary', data: { sectionTitle: '', text: '' } };
     case 'experience':
       return { type: 'experience', data: { items: [] } };
     case 'education':

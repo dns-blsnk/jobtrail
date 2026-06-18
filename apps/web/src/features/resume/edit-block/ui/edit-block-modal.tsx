@@ -45,7 +45,7 @@ interface EditBlockModalProps {
 function getModalTitle(type: BlockType): string {
   const titles: Record<BlockType, string> = {
     header: 'Edit Header',
-    summary: 'Edit Summary',
+    summary: 'Edit Profile',
     experience: 'Edit Experience',
     education: 'Edit Education',
     skills: 'Edit Skills',
@@ -165,7 +165,7 @@ type CustomFormik = ReturnType<typeof useFormik<Extract<BlockData, { type: 'cust
 
 function row(children: React.ReactNode) {
   return (
-    <Box sx={{ display: 'flex', gap: 2, mb: 2, flexWrap: 'wrap', '& > *': { flex: '1 1 200px' } }}>
+    <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', '& > *': { flex: '1 1 200px' } }}>
       {children}
     </Box>
   );
@@ -186,18 +186,45 @@ function HeaderForm({ formik }: { formik: HeaderFormik }) {
     e.target.value = '';
   }
 
+  const shape = values.data.photoShape ?? 'circle';
+  const shapeBorderRadius: Record<typeof shape, string> = {
+    circle:  '50%',
+    square:  '0',
+    rounded: '10px',
+  };
+  const shapeOptions: Array<{ value: typeof shape; label: string }> = [
+    { value: 'circle',  label: 'Circle'  },
+    { value: 'square',  label: 'Square'  },
+    { value: 'rounded', label: 'Rounded' },
+  ];
+
+  const links = values.data.links ?? [];
+  const platforms: SocialLinkItem['platform'][] = ['LinkedIn', 'GitHub', 'Portfolio', 'Twitter', 'Other'];
+
+  function addLink() {
+    void setFieldValue('data.links', [
+      ...links,
+      { id: crypto.randomUUID(), platform: 'LinkedIn', url: '' } satisfies SocialLinkItem,
+    ]);
+  }
+
+  function removeLink(index: number) {
+    void setFieldValue('data.links', links.filter((_, i) => i !== index));
+  }
+
   return (
-    <Box>
-      <Box sx={{ mb: 2.5 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+
+      {/* Photo upload */}
+      <Box>
         <InputLabel sx={{ mb: 1.5, fontSize: 13 }}>Profile Photo</InputLabel>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          {/* Circular avatar preview */}
           <Box
             onClick={() => !values.data.photoUrl && photoInputRef.current?.click()}
             sx={{
               width: 80,
               height: 80,
-              borderRadius: '50%',
+              borderRadius: shapeBorderRadius[shape],
               border: '2px dashed',
               borderColor: values.data.photoUrl ? 'var(--border)' : 'var(--border-2)',
               overflow: 'hidden',
@@ -207,7 +234,7 @@ function HeaderForm({ formik }: { formik: HeaderFormik }) {
               justifyContent: 'center',
               background: 'var(--surface-2)',
               cursor: values.data.photoUrl ? 'default' : 'pointer',
-              transition: 'border-color 0.15s ease',
+              transition: 'border-color 0.15s ease, border-radius 0.15s ease',
               '&:hover': values.data.photoUrl ? {} : { borderColor: 'var(--accent)' },
             }}
           >
@@ -222,14 +249,13 @@ function HeaderForm({ formik }: { formik: HeaderFormik }) {
               <Icon name="user" size={28} strokeWidth={1.5} style={{ color: 'var(--ink-3)' }} />
             )}
           </Box>
-          {/* Action buttons */}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
             <Button
               variant="outlined"
               size="small"
               onClick={() => photoInputRef.current?.click()}
               startIcon={<Icon name="upload" size={14} strokeWidth={1.9} />}
-              sx={{ fontSize: 12, textTransform: 'none', minHeight: 36 }}
+              sx={{ fontSize: 12, textTransform: 'none' }}
             >
               {values.data.photoUrl ? 'Change photo' : 'Upload photo'}
             </Button>
@@ -240,7 +266,7 @@ function HeaderForm({ formik }: { formik: HeaderFormik }) {
                 color="error"
                 onClick={() => void setFieldValue('data.photoUrl', undefined)}
                 startIcon={<Icon name="trash" size={14} strokeWidth={1.9} />}
-                sx={{ fontSize: 12, textTransform: 'none', minHeight: 36 }}
+                sx={{ fontSize: 12, textTransform: 'none' }}
               >
                 Remove photo
               </Button>
@@ -256,75 +282,163 @@ function HeaderForm({ formik }: { formik: HeaderFormik }) {
           aria-hidden="true"
         />
       </Box>
-      {row(
-        <>
-          <TextField
-            label="First Name" size="small" name="data.firstName"
-            value={values.data.firstName} onChange={handleChange} onBlur={handleBlur}
-            error={!!getIn(formik.touched, 'data.firstName') && !!getIn(formik.errors, 'data.firstName')}
-            helperText={getIn(formik.touched, 'data.firstName') && getIn(formik.errors, 'data.firstName')}
-          />
-          <TextField
-            label="Last Name" size="small" name="data.lastName"
-            value={values.data.lastName} onChange={handleChange} onBlur={handleBlur}
-            error={!!getIn(formik.touched, 'data.lastName') && !!getIn(formik.errors, 'data.lastName')}
-            helperText={getIn(formik.touched, 'data.lastName') && getIn(formik.errors, 'data.lastName')}
-          />
-        </>
-      )}
-      <Box sx={{ mb: 2 }}>
+
+      {/* Photo shape */}
+      <Box>
+        <InputLabel sx={{ mb: 1, fontSize: 13 }}>Photo shape</InputLabel>
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          {shapeOptions.map(({ value, label }) => (
+            <Button
+              key={value}
+              variant={shape === value ? 'contained' : 'outlined'}
+              size="small"
+              onClick={() => void setFieldValue('data.photoShape', value)}
+              sx={{ fontSize: 12, textTransform: 'none', flex: 1 }}
+            >
+              {label}
+            </Button>
+          ))}
+        </Box>
+      </Box>
+
+      {/* Name */}
+      <Box sx={{ display: 'flex', gap: 2 }}>
         <TextField
-          fullWidth label="Job Title" size="small" name="data.jobTitle"
-          value={values.data.jobTitle} onChange={handleChange} onBlur={handleBlur}
-          error={!!getIn(formik.touched, 'data.jobTitle') && !!getIn(formik.errors, 'data.jobTitle')}
-          helperText={getIn(formik.touched, 'data.jobTitle') && getIn(formik.errors, 'data.jobTitle')}
+          label="First Name" size="small" name="data.firstName" sx={{ flex: 1 }}
+          value={values.data.firstName} onChange={handleChange} onBlur={handleBlur}
+          error={!!getIn(formik.touched, 'data.firstName') && !!getIn(formik.errors, 'data.firstName')}
+          helperText={getIn(formik.touched, 'data.firstName') && getIn(formik.errors, 'data.firstName')}
+        />
+        <TextField
+          label="Last Name" size="small" name="data.lastName" sx={{ flex: 1 }}
+          value={values.data.lastName} onChange={handleChange} onBlur={handleBlur}
+          error={!!getIn(formik.touched, 'data.lastName') && !!getIn(formik.errors, 'data.lastName')}
+          helperText={getIn(formik.touched, 'data.lastName') && getIn(formik.errors, 'data.lastName')}
         />
       </Box>
-      {row(
-        <>
-          <TextField
-            label="Email" size="small" type="email" name="data.email"
-            value={values.data.email} onChange={handleChange} onBlur={handleBlur}
-            error={!!getIn(formik.touched, 'data.email') && !!getIn(formik.errors, 'data.email')}
-            helperText={getIn(formik.touched, 'data.email') && getIn(formik.errors, 'data.email')}
-          />
-          <TextField
-            label="Phone" size="small" name="data.phone"
-            value={values.data.phone} onChange={handleChange} onBlur={handleBlur}
-            error={!!getIn(formik.touched, 'data.phone') && !!getIn(formik.errors, 'data.phone')}
-            helperText={getIn(formik.touched, 'data.phone') && getIn(formik.errors, 'data.phone')}
-          />
-        </>
-      )}
-      {row(
-        <>
-          <TextField label="Location" size="small" name="data.location" value={values.data.location} onChange={handleChange} onBlur={handleBlur} />
-          <TextField
-            label="Website" size="small" name="data.website"
-            value={values.data.website ?? ''} onChange={handleChange} onBlur={handleBlur}
-            error={!!getIn(formik.touched, 'data.website') && !!getIn(formik.errors, 'data.website')}
-            helperText={getIn(formik.touched, 'data.website') && getIn(formik.errors, 'data.website')}
-          />
-        </>
-      )}
+
+      {/* Job title */}
+      <TextField
+        fullWidth label="Job Title" size="small" name="data.jobTitle"
+        value={values.data.jobTitle} onChange={handleChange} onBlur={handleBlur}
+        error={!!getIn(formik.touched, 'data.jobTitle') && !!getIn(formik.errors, 'data.jobTitle')}
+        helperText={getIn(formik.touched, 'data.jobTitle') && getIn(formik.errors, 'data.jobTitle')}
+      />
+
+      {/* Email + Phone (optional) */}
+      <Box sx={{ display: 'flex', gap: 2 }}>
+        <TextField
+          label="Email" size="small" type="email" name="data.email" sx={{ flex: 1 }}
+          value={values.data.email} onChange={handleChange} onBlur={handleBlur}
+          error={!!getIn(formik.touched, 'data.email') && !!getIn(formik.errors, 'data.email')}
+          helperText={getIn(formik.touched, 'data.email') && getIn(formik.errors, 'data.email')}
+        />
+        <TextField
+          label="Phone (optional)" size="small" name="data.phone" sx={{ flex: 1 }}
+          value={values.data.phone ?? ''}
+          onChange={handleChange} onBlur={handleBlur}
+          error={!!getIn(formik.touched, 'data.phone') && !!getIn(formik.errors, 'data.phone')}
+          helperText={getIn(formik.touched, 'data.phone') && getIn(formik.errors, 'data.phone')}
+        />
+      </Box>
+
+      {/* Location (optional) + Website */}
+      <Box sx={{ display: 'flex', gap: 2 }}>
+        <TextField
+          label="Location (optional)" size="small" name="data.location" sx={{ flex: 1 }}
+          value={values.data.location ?? ''} onChange={handleChange} onBlur={handleBlur}
+        />
+        <TextField
+          label="Website" size="small" name="data.website" sx={{ flex: 1 }}
+          value={values.data.website ?? ''} onChange={handleChange} onBlur={handleBlur}
+          error={!!getIn(formik.touched, 'data.website') && !!getIn(formik.errors, 'data.website')}
+          helperText={getIn(formik.touched, 'data.website') && getIn(formik.errors, 'data.website')}
+        />
+      </Box>
+
+      {/* Social links */}
+      <Box>
+        <InputLabel sx={{ mb: 1.5, fontSize: 13 }}>Social Links</InputLabel>
+        {links.map((link, index) => (
+          <Box key={link.id} sx={{ display: 'flex', gap: 1.5, alignItems: 'flex-start', mb: 1.5 }}>
+            <FormControl size="small" sx={{ minWidth: 140, flexShrink: 0 }}>
+              <InputLabel>Platform</InputLabel>
+              <Select
+                label="Platform"
+                value={link.platform}
+                onChange={(e) => void setFieldValue(`data.links[${index}].platform`, e.target.value)}
+              >
+                {platforms.map((p) => (
+                  <MenuItem key={p} value={p}>{p}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <TextField
+              label="URL"
+              size="small"
+              sx={{ flex: 1 }}
+              value={link.url}
+              onChange={(e) => void setFieldValue(`data.links[${index}].url`, e.target.value)}
+              onBlur={() => void formik.setFieldTouched(`data.links[${index}].url`, true)}
+              error={
+                getIn(formik.touched, `data.links[${index}].url`) &&
+                Boolean(getIn(formik.errors, `data.links[${index}].url`))
+              }
+              helperText={
+                getIn(formik.touched, `data.links[${index}].url`) &&
+                getIn(formik.errors, `data.links[${index}].url`)
+              }
+            />
+            <IconButton
+              onClick={() => removeLink(index)}
+              aria-label="Remove link"
+              sx={{ mt: 0.5 }}
+            >
+              <Icon name="trash" size={14} strokeWidth={1.9} />
+            </IconButton>
+          </Box>
+        ))}
+        <Button
+          startIcon={<Icon name="plus" size={14} strokeWidth={1.9} />}
+          onClick={addLink}
+          variant="outlined"
+          size="small"
+          sx={{ textTransform: 'none' }}
+        >
+          Add link
+        </Button>
+      </Box>
+
     </Box>
   );
 }
 
 function SummaryForm({ formik }: { formik: SummaryFormik }) {
   return (
-    <TextField
-      fullWidth
-      multiline
-      rows={6}
-      label="Summary"
-      name="data.text"
-      value={formik.values.data.text}
-      onChange={formik.handleChange}
-      onBlur={formik.handleBlur}
-      error={!!getIn(formik.touched, 'data.text') && !!getIn(formik.errors, 'data.text')}
-      helperText={getIn(formik.touched, 'data.text') && getIn(formik.errors, 'data.text')}
-    />
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <TextField
+        fullWidth
+        label="Section title (optional)"
+        size="small"
+        name="data.sectionTitle"
+        placeholder="Profile"
+        value={formik.values.data.sectionTitle ?? ''}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+      />
+      <TextField
+        fullWidth
+        multiline
+        rows={6}
+        label="Content"
+        name="data.text"
+        value={formik.values.data.text}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={!!getIn(formik.touched, 'data.text') && !!getIn(formik.errors, 'data.text')}
+        helperText={getIn(formik.touched, 'data.text') && getIn(formik.errors, 'data.text')}
+      />
+    </Box>
   );
 }
 

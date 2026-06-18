@@ -15,20 +15,34 @@ function urlField(label: string, required = false) {
 const headerSchema = Yup.object({
   type: Yup.string(),
   data: Yup.object({
-    firstName: Yup.string().required('First name is required'),
-    lastName:  Yup.string().required('Last name is required'),
-    jobTitle:  Yup.string().required('Job title is required'),
-    email:     Yup.string().matches(EMAIL_REGEX, 'Enter a valid email').required('Email is required'),
-    phone:     Yup.string().matches(PHONE_REGEX, 'Enter a valid phone number (7–20 digits)').required('Phone is required'),
-    location:  Yup.string().required('Location is required'),
-    website:   urlField('Website'),
-    photoUrl:  Yup.string().optional(),
+    firstName:  Yup.string().required('First name is required'),
+    lastName:   Yup.string().required('Last name is required'),
+    jobTitle:   Yup.string().required('Job title is required'),
+    email:      Yup.string().matches(EMAIL_REGEX, 'Enter a valid email').required('Email is required'),
+    phone:      Yup.string()
+      .matches(PHONE_REGEX, 'Enter a valid phone number (7–20 digits)')
+      .nullable()
+      .optional(),
+    location:   Yup.string().nullable().optional(),
+    website:    urlField('Website'),
+    photoUrl:   Yup.string().optional(),
+    photoShape: Yup.string().oneOf(['circle', 'square', 'rounded']).optional(),
+    links: Yup.array()
+      .of(Yup.object({
+        id:       Yup.string(),
+        platform: Yup.string().required(),
+        url:      Yup.string()
+          .matches(URL_REGEX, 'Enter a valid URL (https://...)')
+          .required('URL is required'),
+      }))
+      .optional(),
   }),
 });
 
 const summarySchema = Yup.object({
   type: Yup.string(),
   data: Yup.object({
+    sectionTitle: Yup.string().optional(),
     text: Yup.string().min(20, 'Summary should be at least 20 characters').required('Summary is required'),
   }),
 });

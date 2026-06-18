@@ -8,7 +8,7 @@ interface BlockSummaryProps {
 export function BlockSummary({ data }: BlockSummaryProps) {
   return (
     <div className={s.section}>
-      <h2 className={s.sectionTitle}>Summary</h2>
+      <h2 className={s.sectionTitle}>{data.sectionTitle || 'Profile'}</h2>
       <p className={s.summaryText}>{data.text}</p>
     </div>
   );

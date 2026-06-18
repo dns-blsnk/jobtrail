@@ -13,18 +13,30 @@ export type BlockType =
   | 'awards'
   | 'custom';
 
+export type SocialPlatform = 'LinkedIn' | 'GitHub' | 'Portfolio' | 'Twitter' | 'Other';
+export interface SocialLinkItem {
+  id: string;
+  platform: SocialPlatform;
+  url: string;
+}
+
+export type PhotoShape = 'circle' | 'square' | 'rounded';
+
 export interface HeaderData {
   photoUrl?: string;
+  photoShape?: PhotoShape;
   firstName: string;
   lastName: string;
   jobTitle: string;
   email: string;
-  phone: string;
-  location: string;
+  phone?: string;
+  location?: string;
   website?: string;
+  links?: SocialLinkItem[];
 }
 
 export interface SummaryData {
+  sectionTitle?: string;
   text: string;
 }
 
@@ -76,13 +88,6 @@ export interface CertificationItem {
   issueDate: string;
   expiryDate?: string;
   url?: string;
-}
-
-export type SocialPlatform = 'LinkedIn' | 'GitHub' | 'Portfolio' | 'Twitter' | 'Other';
-export interface SocialLinkItem {
-  id: string;
-  platform: SocialPlatform;
-  url: string;
 }
 
 export interface AwardItem {
