@@ -20,7 +20,7 @@ export interface SocialLinkItem {
   url: string;
 }
 
-export type PhotoShape = 'circle' | 'square' | 'rounded';
+export type PhotoShape = 'circle' | 'square' | 'portrait';
 
 export interface HeaderData {
   photoUrl?: string;

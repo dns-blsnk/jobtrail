@@ -30,8 +30,8 @@ export function BlockHeader({ data }: BlockHeaderProps) {
             className={clsx(
               s.headerPhoto,
               shape === 'circle'  && s.headerPhotoCircle,
-              shape === 'square'  && s.headerPhotoSquare,
-              shape === 'rounded' && s.headerPhotoRounded,
+              shape === 'square'   && s.headerPhotoSquare,
+              shape === 'portrait' && s.headerPhotoPortrait,
             )}
           />
         </div>

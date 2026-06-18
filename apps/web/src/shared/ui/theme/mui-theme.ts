@@ -29,6 +29,15 @@ export const globalTheme = createTheme({
       },
     },
 
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          minHeight: '1.25em',
+          marginTop: 3,
+        },
+      },
+    },
+
     MuiIconButton: {
       styleOverrides: {
         root: {

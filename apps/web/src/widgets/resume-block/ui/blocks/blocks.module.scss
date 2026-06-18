@@ -22,8 +22,8 @@
 }
 
 .headerPhotoCircle  { border-radius: 50%; }
-.headerPhotoSquare  { border-radius: 0; }
-.headerPhotoRounded { border-radius: 10px; }
+.headerPhotoSquare  { border-radius: 12px; }
+.headerPhotoPortrait { width: 80px; height: 110px; border-radius: 8px; }
 
 .headerInfo {
   @include flex-col($gap: 4px);

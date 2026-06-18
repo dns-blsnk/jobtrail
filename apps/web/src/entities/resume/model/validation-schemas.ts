@@ -6,7 +6,11 @@ const EMAIL_REGEX = /^[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,}$/i;
 const PHONE_REGEX = /^\+?[0-9\s\-().]{7,20}$/;
 
 function urlField(label: string, required = false) {
-  const base = Yup.string().matches(URL_REGEX, `${label} must be a valid URL (https://...)`);
+  const base = Yup.string().test(
+    'url-or-empty',
+    `${label} must be a valid URL (https://...)`,
+    (value) => !value || URL_REGEX.test(value),
+  );
   return required
     ? base.required(`${label} is required`)
     : base.nullable().optional();
@@ -26,7 +30,7 @@ const headerSchema = Yup.object({
     location:   Yup.string().nullable().optional(),
     website:    urlField('Website'),
     photoUrl:   Yup.string().optional(),
-    photoShape: Yup.string().oneOf(['circle', 'square', 'rounded']).optional(),
+    photoShape: Yup.string().oneOf(['circle', 'square', 'portrait']).optional(),
     links: Yup.array()
       .of(Yup.object({
         id:       Yup.string(),
