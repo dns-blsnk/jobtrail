@@ -27,6 +27,19 @@ export const resumeBuilderPage = {
     awards: 'Awards',
     custom: 'Custom',
   },
+  editBlockTitles: {
+    header: 'Edit Header',
+    summary: 'Edit Profile',
+    experience: 'Edit Experience',
+    education: 'Edit Education',
+    skills: 'Edit Skills',
+    projects: 'Edit Projects',
+    languages: 'Edit Languages',
+    certifications: 'Edit Certifications',
+    'social-links': 'Edit Social Links',
+    awards: 'Edit Awards',
+    custom: 'Edit Custom Section',
+  },
 } as const;
 
 export type ResumeBuilderPageMessages = typeof resumeBuilderPage;
