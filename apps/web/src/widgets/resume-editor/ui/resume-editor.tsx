@@ -5,6 +5,8 @@ import { clsx } from 'clsx';
 import {
   DndContext,
   PointerSensor,
+  TouchSensor,
+  KeyboardSensor,
   useSensor,
   useSensors,
   closestCenter,
@@ -15,6 +17,7 @@ import type { DragStartEvent, DragEndEvent, DropAnimation } from '@dnd-kit/core'
 import {
   SortableContext,
   verticalListSortingStrategy,
+  sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
 import { useResumeStore } from '@/entities/resume/model/resume-store';
 import { BlockWrapper } from '@/widgets/resume-block/ui/block-wrapper';
@@ -106,7 +109,9 @@ export function ResumeEditor({ isPreview }: ResumeEditorProps) {
   const [activeDragId, setActiveDragId] = useState<string | null>(null);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 8 } })
+    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 5 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
   );
 
   if (!activeDraft) {

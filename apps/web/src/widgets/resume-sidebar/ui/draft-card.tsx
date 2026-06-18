@@ -11,6 +11,7 @@ import s from './resume-sidebar.module.scss';
 interface DraftCardProps {
   draft: Draft;
   isActive: boolean;
+  onSelect: (id: string) => void;
 }
 
 const TEMPLATE_LABELS: Record<Draft['templateId'], string> = {
@@ -31,7 +32,7 @@ function formatDate(iso: string): string {
   }
 }
 
-export function DraftCard({ draft, isActive }: DraftCardProps) {
+export function DraftCard({ draft, isActive, onSelect }: DraftCardProps) {
   const setActiveDraft = useResumeStore((state) => state.setActiveDraft);
   const actions = useDraftActions(draft.id);
   const [renameMode, setRenameMode] = useState(false);
@@ -64,11 +65,11 @@ export function DraftCard({ draft, isActive }: DraftCardProps) {
   return (
     <div
       className={clsx(s.draftCard, isActive && s.draftCardActive)}
-      onClick={() => setActiveDraft(draft.id)}
+      onClick={() => { setActiveDraft(draft.id); onSelect(draft.id); }}
       role="button"
       tabIndex={0}
       aria-pressed={isActive}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setActiveDraft(draft.id); }}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { setActiveDraft(draft.id); onSelect(draft.id); } }}
     >
       <div className={s.draftCardMain}>
         {renameMode ? (

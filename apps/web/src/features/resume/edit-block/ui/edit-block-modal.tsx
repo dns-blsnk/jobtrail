@@ -1,6 +1,8 @@
 'use client';
 
 import { useCallback } from 'react';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -62,6 +64,8 @@ function getInitialValues(blockData: BlockData): BlockData {
 }
 
 export function EditBlockModal({ open, blockId, isNew, onClose }: EditBlockModalProps) {
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const { drafts, activeDraftId, updateBlock, removeBlock } = useResumeStore();
 
   const activeDraft = drafts.find((d) => d.id === activeDraftId) ?? null;
@@ -96,6 +100,7 @@ export function EditBlockModal({ open, blockId, isNew, onClose }: EditBlockModal
       onClose={handleClose}
       maxWidth="md"
       fullWidth
+      fullScreen={fullScreen}
       aria-labelledby="edit-block-title"
     >
       <DialogTitle id="edit-block-title">{getModalTitle(blockType)}</DialogTitle>

@@ -1,6 +1,7 @@
 'use client';
 
 import type { CSSProperties } from 'react';
+import { clsx } from 'clsx';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Icon } from '@/shared/ui/icon/icon';
@@ -38,6 +39,8 @@ export function BlockWrapper({ id, isHeader, isPreview, isEmpty, blockType, chil
     position: 'relative',
   };
 
+  const wrapperClass = clsx(s.blockWrapper, isDragging && s.blockWrapperDragging);
+
   function handleAddClick() {
     openEdit(id, false);
   }
@@ -72,11 +75,12 @@ export function BlockWrapper({ id, isHeader, isPreview, isEmpty, blockType, chil
   }
 
   return (
-    <div ref={setNodeRef} style={style} className={s.blockWrapper}>
+    <div ref={setNodeRef} style={style} className={wrapperClass}>
       {!isPreview && (
         <div
           className={s.dragHandle}
           aria-label="Drag to reorder"
+          style={{ touchAction: 'none' }}
           {...attributes}
           {...listeners}
         >

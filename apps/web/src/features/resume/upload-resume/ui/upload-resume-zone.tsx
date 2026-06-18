@@ -39,7 +39,7 @@ export function UploadResumeZone({ activeDraftId }: UploadResumeZoneProps) {
         aria-label="Upload resume"
       >
         <Icon name="upload" size={16} strokeWidth={1.9} />
-        Upload resume
+        <span className={s.label}>Upload resume</span>
       </button>
     </>
   );

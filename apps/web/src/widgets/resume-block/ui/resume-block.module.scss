@@ -17,6 +17,13 @@
       opacity: 1;
     }
   }
+
+  @include mobile { padding: 12px 8px; }
+}
+
+.blockWrapperDragging {
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 // Drag handle
@@ -37,6 +44,13 @@
 
   &:active {
     cursor: grabbing;
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    opacity: 1;
+    left: -24px;
+    width: 24px;
+    height: 44px;
   }
 }
 
@@ -61,6 +75,12 @@
     background: var(--surface-2);
     color: var(--ink);
   }
+
+  @media (hover: none) and (pointer: coarse) {
+    opacity: 1;
+    padding: 6px 12px;
+    min-height: 36px;
+  }
 }
 
 // Empty state
@@ -76,6 +96,11 @@
   @include transition(all, 0.15s, ease);
 
   &:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  &:active {
     border-color: var(--accent);
     background: var(--accent-soft);
   }
@@ -145,6 +170,17 @@
       color: var(--accent);
     }
   }
+
+  &:active {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+
+    .blockTypeCardIcon {
+      color: var(--accent);
+    }
+  }
+
+  @include mobile { padding: 14px 10px; }
 }
 
 .blockTypeCardIcon {
@@ -178,4 +214,12 @@
     color: var(--accent);
     background: var(--accent-soft);
   }
+
+  &:active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  @include mobile { padding: 14px 16px; }
 }
