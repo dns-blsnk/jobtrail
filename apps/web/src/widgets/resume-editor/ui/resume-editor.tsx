@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { clsx } from 'clsx';
 import {
   DndContext,
@@ -7,8 +8,10 @@ import {
   useSensor,
   useSensors,
   closestCenter,
+  DragOverlay,
+  defaultDropAnimationSideEffects,
 } from '@dnd-kit/core';
-import type { DragEndEvent } from '@dnd-kit/core';
+import type { DragStartEvent, DragEndEvent, DropAnimation } from '@dnd-kit/core';
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -34,6 +37,12 @@ import s from './resume-editor.module.scss';
 interface ResumeEditorProps {
   isPreview: boolean;
 }
+
+const dropAnimation: DropAnimation = {
+  sideEffects: defaultDropAnimationSideEffects({
+    styles: { active: { opacity: '0.4' } },
+  }),
+};
 
 function isBlockEmpty(block: ResumeBlock): boolean {
   const bd = block.blockData;
@@ -94,6 +103,7 @@ function renderBlockContent(block: ResumeBlock): React.ReactNode {
 export function ResumeEditor({ isPreview }: ResumeEditorProps) {
   const { drafts, activeDraftId, reorderBlocks } = useResumeStore();
   const activeDraft = drafts.find((d) => d.id === activeDraftId) ?? null;
+  const [activeDragId, setActiveDragId] = useState<string | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } })
@@ -113,7 +123,16 @@ export function ResumeEditor({ isPreview }: ResumeEditorProps) {
   const sortableBlocks = activeDraft.blocks.slice(1);
   const sortableIds = sortableBlocks.map((b) => b.id);
 
+  const activeDragBlock = activeDragId
+    ? activeDraft.blocks.find((b) => b.id === activeDragId) ?? null
+    : null;
+
+  function handleDragStart(event: DragStartEvent) {
+    setActiveDragId(event.active.id as string);
+  }
+
   function handleDragEnd(event: DragEndEvent) {
+    setActiveDragId(null);
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
@@ -125,10 +144,12 @@ export function ResumeEditor({ isPreview }: ResumeEditorProps) {
     newSortable.splice(oldIndex, 1);
     newSortable.splice(newIndex, 0, active.id as string);
 
-    const newOrder = headerBlock
-      ? [headerBlock.id, ...newSortable]
-      : newSortable;
+    const newOrder = headerBlock ? [headerBlock.id, ...newSortable] : newSortable;
     reorderBlocks(newOrder);
+  }
+
+  function handleDragCancel() {
+    setActiveDragId(null);
   }
 
   return (
@@ -153,7 +174,13 @@ export function ResumeEditor({ isPreview }: ResumeEditorProps) {
           </BlockWrapper>
         )}
 
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+          onDragCancel={handleDragCancel}
+        >
           <SortableContext items={sortableIds} strategy={verticalListSortingStrategy}>
             {sortableBlocks.map((block) => (
               <BlockWrapper
@@ -168,6 +195,14 @@ export function ResumeEditor({ isPreview }: ResumeEditorProps) {
               </BlockWrapper>
             ))}
           </SortableContext>
+
+          <DragOverlay dropAnimation={dropAnimation}>
+            {activeDragBlock ? (
+              <div className={s.dragOverlay}>
+                {renderBlockContent(activeDragBlock)}
+              </div>
+            ) : null}
+          </DragOverlay>
         </DndContext>
 
         {!isPreview && <AddBlockButton />}

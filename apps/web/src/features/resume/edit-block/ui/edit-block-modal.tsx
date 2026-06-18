@@ -16,8 +16,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
-import { useFormik } from 'formik';
+import { useFormik, getIn } from 'formik';
 import { useResumeStore } from '@/entities/resume/model/resume-store';
+import { getValidationSchema } from '@/entities/resume/model/validation-schemas';
 import { Icon } from '@/shared/ui/icon/icon';
 import type {
   BlockData,
@@ -76,6 +77,7 @@ export function EditBlockModal({ open, blockId, isNew, onClose }: EditBlockModal
   const formik = useFormik<BlockData>({
     initialValues: block?.blockData ?? { type: 'summary', data: { text: '' } },
     enableReinitialize: true,
+    validationSchema: block ? getValidationSchema(block.blockData.type) : undefined,
     onSubmit: (values) => {
       if (blockId) {
         updateBlock(blockId, values);
@@ -136,7 +138,7 @@ export function EditBlockModal({ open, blockId, isNew, onClose }: EditBlockModal
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="inherit">Cancel</Button>
-        <Button type="submit" form="edit-block-form" variant="contained">Save</Button>
+        <Button type="submit" form="edit-block-form" variant="contained" disabled={formik.isSubmitting}>Save</Button>
       </DialogActions>
     </Dialog>
   );
@@ -193,23 +195,53 @@ function HeaderForm({ formik }: { formik: HeaderFormik }) {
       </Box>
       {row(
         <>
-          <TextField label="First Name" size="small" name="data.firstName" value={values.data.firstName} onChange={handleChange} onBlur={handleBlur} />
-          <TextField label="Last Name" size="small" name="data.lastName" value={values.data.lastName} onChange={handleChange} onBlur={handleBlur} />
+          <TextField
+            label="First Name" size="small" name="data.firstName"
+            value={values.data.firstName} onChange={handleChange} onBlur={handleBlur}
+            error={!!getIn(formik.touched, 'data.firstName') && !!getIn(formik.errors, 'data.firstName')}
+            helperText={getIn(formik.touched, 'data.firstName') && getIn(formik.errors, 'data.firstName')}
+          />
+          <TextField
+            label="Last Name" size="small" name="data.lastName"
+            value={values.data.lastName} onChange={handleChange} onBlur={handleBlur}
+            error={!!getIn(formik.touched, 'data.lastName') && !!getIn(formik.errors, 'data.lastName')}
+            helperText={getIn(formik.touched, 'data.lastName') && getIn(formik.errors, 'data.lastName')}
+          />
         </>
       )}
       <Box sx={{ mb: 2 }}>
-        <TextField fullWidth label="Job Title" size="small" name="data.jobTitle" value={values.data.jobTitle} onChange={handleChange} onBlur={handleBlur} />
+        <TextField
+          fullWidth label="Job Title" size="small" name="data.jobTitle"
+          value={values.data.jobTitle} onChange={handleChange} onBlur={handleBlur}
+          error={!!getIn(formik.touched, 'data.jobTitle') && !!getIn(formik.errors, 'data.jobTitle')}
+          helperText={getIn(formik.touched, 'data.jobTitle') && getIn(formik.errors, 'data.jobTitle')}
+        />
       </Box>
       {row(
         <>
-          <TextField label="Email" size="small" type="email" name="data.email" value={values.data.email} onChange={handleChange} onBlur={handleBlur} />
-          <TextField label="Phone" size="small" name="data.phone" value={values.data.phone} onChange={handleChange} onBlur={handleBlur} />
+          <TextField
+            label="Email" size="small" type="email" name="data.email"
+            value={values.data.email} onChange={handleChange} onBlur={handleBlur}
+            error={!!getIn(formik.touched, 'data.email') && !!getIn(formik.errors, 'data.email')}
+            helperText={getIn(formik.touched, 'data.email') && getIn(formik.errors, 'data.email')}
+          />
+          <TextField
+            label="Phone" size="small" name="data.phone"
+            value={values.data.phone} onChange={handleChange} onBlur={handleBlur}
+            error={!!getIn(formik.touched, 'data.phone') && !!getIn(formik.errors, 'data.phone')}
+            helperText={getIn(formik.touched, 'data.phone') && getIn(formik.errors, 'data.phone')}
+          />
         </>
       )}
       {row(
         <>
           <TextField label="Location" size="small" name="data.location" value={values.data.location} onChange={handleChange} onBlur={handleBlur} />
-          <TextField label="Website" size="small" name="data.website" value={values.data.website ?? ''} onChange={handleChange} onBlur={handleBlur} />
+          <TextField
+            label="Website" size="small" name="data.website"
+            value={values.data.website ?? ''} onChange={handleChange} onBlur={handleBlur}
+            error={!!getIn(formik.touched, 'data.website') && !!getIn(formik.errors, 'data.website')}
+            helperText={getIn(formik.touched, 'data.website') && getIn(formik.errors, 'data.website')}
+          />
         </>
       )}
     </Box>
@@ -227,6 +259,8 @@ function SummaryForm({ formik }: { formik: SummaryFormik }) {
       value={formik.values.data.text}
       onChange={formik.handleChange}
       onBlur={formik.handleBlur}
+      error={!!getIn(formik.touched, 'data.text') && !!getIn(formik.errors, 'data.text')}
+      helperText={getIn(formik.touched, 'data.text') && getIn(formik.errors, 'data.text')}
     />
   );
 }
@@ -286,14 +320,39 @@ function ExperienceForm({ formik }: { formik: ExperienceFormik }) {
           </Box>
           {row(
             <>
-              <TextField label="Company" size="small" value={item.company} onChange={(e) => void setFieldValue(`data.items[${index}].company`, e.target.value)} />
-              <TextField label="Role" size="small" value={item.role} onChange={(e) => void setFieldValue(`data.items[${index}].role`, e.target.value)} />
+              <TextField
+                label="Company" size="small" value={item.company}
+                onChange={(e) => void setFieldValue(`data.items[${index}].company`, e.target.value)}
+                onBlur={() => void formik.setFieldTouched(`data.items[${index}].company`, true)}
+                error={getIn(formik.touched, `data.items[${index}].company`) && Boolean(getIn(formik.errors, `data.items[${index}].company`))}
+                helperText={getIn(formik.touched, `data.items[${index}].company`) && getIn(formik.errors, `data.items[${index}].company`)}
+              />
+              <TextField
+                label="Role" size="small" value={item.role}
+                onChange={(e) => void setFieldValue(`data.items[${index}].role`, e.target.value)}
+                onBlur={() => void formik.setFieldTouched(`data.items[${index}].role`, true)}
+                error={getIn(formik.touched, `data.items[${index}].role`) && Boolean(getIn(formik.errors, `data.items[${index}].role`))}
+                helperText={getIn(formik.touched, `data.items[${index}].role`) && getIn(formik.errors, `data.items[${index}].role`)}
+              />
             </>
           )}
           {row(
             <>
-              <TextField label="Start Date" size="small" placeholder="Jan 2022" value={item.startDate} onChange={(e) => void setFieldValue(`data.items[${index}].startDate`, e.target.value)} />
-              <TextField label="End Date" size="small" placeholder="Dec 2023" value={item.endDate} disabled={item.present} onChange={(e) => void setFieldValue(`data.items[${index}].endDate`, e.target.value)} />
+              <TextField
+                label="Start Date" size="small" placeholder="Jan 2022" value={item.startDate}
+                onChange={(e) => void setFieldValue(`data.items[${index}].startDate`, e.target.value)}
+                onBlur={() => void formik.setFieldTouched(`data.items[${index}].startDate`, true)}
+                error={getIn(formik.touched, `data.items[${index}].startDate`) && Boolean(getIn(formik.errors, `data.items[${index}].startDate`))}
+                helperText={getIn(formik.touched, `data.items[${index}].startDate`) && getIn(formik.errors, `data.items[${index}].startDate`)}
+              />
+              <TextField
+                label="End Date" size="small" placeholder="Dec 2023" value={item.endDate}
+                disabled={item.present}
+                onChange={(e) => void setFieldValue(`data.items[${index}].endDate`, e.target.value)}
+                onBlur={() => void formik.setFieldTouched(`data.items[${index}].endDate`, true)}
+                error={getIn(formik.touched, `data.items[${index}].endDate`) && Boolean(getIn(formik.errors, `data.items[${index}].endDate`))}
+                helperText={getIn(formik.touched, `data.items[${index}].endDate`) && getIn(formik.errors, `data.items[${index}].endDate`)}
+              />
             </>
           )}
           {row(
@@ -384,17 +443,41 @@ function EducationForm({ formik }: { formik: EducationFormik }) {
             </Box>
           </Box>
           <Box sx={{ mb: 2 }}>
-            <TextField fullWidth label="Institution" size="small" value={item.institution} onChange={(e) => void setFieldValue(`data.items[${index}].institution`, e.target.value)} />
+            <TextField
+              fullWidth label="Institution" size="small" value={item.institution}
+              onChange={(e) => void setFieldValue(`data.items[${index}].institution`, e.target.value)}
+              onBlur={() => void formik.setFieldTouched(`data.items[${index}].institution`, true)}
+              error={getIn(formik.touched, `data.items[${index}].institution`) && Boolean(getIn(formik.errors, `data.items[${index}].institution`))}
+              helperText={getIn(formik.touched, `data.items[${index}].institution`) && getIn(formik.errors, `data.items[${index}].institution`)}
+            />
           </Box>
           {row(
             <>
-              <TextField label="Degree" size="small" value={item.degree} onChange={(e) => void setFieldValue(`data.items[${index}].degree`, e.target.value)} />
-              <TextField label="Field of Study" size="small" value={item.field} onChange={(e) => void setFieldValue(`data.items[${index}].field`, e.target.value)} />
+              <TextField
+                label="Degree" size="small" value={item.degree}
+                onChange={(e) => void setFieldValue(`data.items[${index}].degree`, e.target.value)}
+                onBlur={() => void formik.setFieldTouched(`data.items[${index}].degree`, true)}
+                error={getIn(formik.touched, `data.items[${index}].degree`) && Boolean(getIn(formik.errors, `data.items[${index}].degree`))}
+                helperText={getIn(formik.touched, `data.items[${index}].degree`) && getIn(formik.errors, `data.items[${index}].degree`)}
+              />
+              <TextField
+                label="Field of Study" size="small" value={item.field}
+                onChange={(e) => void setFieldValue(`data.items[${index}].field`, e.target.value)}
+                onBlur={() => void formik.setFieldTouched(`data.items[${index}].field`, true)}
+                error={getIn(formik.touched, `data.items[${index}].field`) && Boolean(getIn(formik.errors, `data.items[${index}].field`))}
+                helperText={getIn(formik.touched, `data.items[${index}].field`) && getIn(formik.errors, `data.items[${index}].field`)}
+              />
             </>
           )}
           {row(
             <>
-              <TextField label="Start Date" size="small" placeholder="Sep 2018" value={item.startDate} onChange={(e) => void setFieldValue(`data.items[${index}].startDate`, e.target.value)} />
+              <TextField
+                label="Start Date" size="small" placeholder="Sep 2018" value={item.startDate}
+                onChange={(e) => void setFieldValue(`data.items[${index}].startDate`, e.target.value)}
+                onBlur={() => void formik.setFieldTouched(`data.items[${index}].startDate`, true)}
+                error={getIn(formik.touched, `data.items[${index}].startDate`) && Boolean(getIn(formik.errors, `data.items[${index}].startDate`))}
+                helperText={getIn(formik.touched, `data.items[${index}].startDate`) && getIn(formik.errors, `data.items[${index}].startDate`)}
+              />
               <TextField label="End Date" size="small" placeholder="Jun 2022" value={item.endDate} onChange={(e) => void setFieldValue(`data.items[${index}].endDate`, e.target.value)} />
               <TextField label="GPA" size="small" value={item.gpa ?? ''} onChange={(e) => void setFieldValue(`data.items[${index}].gpa`, e.target.value)} />
             </>
@@ -453,6 +536,9 @@ function SkillsForm({ formik }: { formik: SkillsFormik }) {
               size="small"
               value={group.name}
               onChange={(e) => void setFieldValue(`data.groups[${index}].name`, e.target.value)}
+              onBlur={() => void formik.setFieldTouched(`data.groups[${index}].name`, true)}
+              error={getIn(formik.touched, `data.groups[${index}].name`) && Boolean(getIn(formik.errors, `data.groups[${index}].name`))}
+              helperText={getIn(formik.touched, `data.groups[${index}].name`) && getIn(formik.errors, `data.groups[${index}].name`)}
               sx={{ flex: 1 }}
             />
             <IconButton size="small" onClick={() => removeGroup(index)} aria-label="Remove group">
@@ -469,6 +555,8 @@ function SkillsForm({ formik }: { formik: SkillsFormik }) {
             placeholder="Type skill and press Enter"
             onKeyDown={(e) => handleTagKeyDown(e as React.KeyboardEvent<HTMLInputElement>, index)}
             fullWidth
+            error={getIn(formik.touched, `data.groups[${index}].tags`) && Boolean(getIn(formik.errors, `data.groups[${index}].tags`))}
+            helperText={getIn(formik.touched, `data.groups[${index}].tags`) && getIn(formik.errors, `data.groups[${index}].tags`)}
           />
         </Box>
       ))}
@@ -552,8 +640,20 @@ function ProjectsForm({ formik }: { formik: ProjectsFormik }) {
           </Box>
           {row(
             <>
-              <TextField label="Project Name" size="small" value={item.name} onChange={(e) => void setFieldValue(`data.items[${index}].name`, e.target.value)} />
-              <TextField label="URL" size="small" value={item.url ?? ''} onChange={(e) => void setFieldValue(`data.items[${index}].url`, e.target.value)} />
+              <TextField
+                label="Project Name" size="small" value={item.name}
+                onChange={(e) => void setFieldValue(`data.items[${index}].name`, e.target.value)}
+                onBlur={() => void formik.setFieldTouched(`data.items[${index}].name`, true)}
+                error={getIn(formik.touched, `data.items[${index}].name`) && Boolean(getIn(formik.errors, `data.items[${index}].name`))}
+                helperText={getIn(formik.touched, `data.items[${index}].name`) && getIn(formik.errors, `data.items[${index}].name`)}
+              />
+              <TextField
+                label="URL" size="small" value={item.url ?? ''}
+                onChange={(e) => void setFieldValue(`data.items[${index}].url`, e.target.value)}
+                onBlur={() => void formik.setFieldTouched(`data.items[${index}].url`, true)}
+                error={getIn(formik.touched, `data.items[${index}].url`) && Boolean(getIn(formik.errors, `data.items[${index}].url`))}
+                helperText={getIn(formik.touched, `data.items[${index}].url`) && getIn(formik.errors, `data.items[${index}].url`)}
+              />
             </>
           )}
           {row(
@@ -697,15 +797,39 @@ function CertificationsForm({ formik }: { formik: CertificationsFormik }) {
           </Box>
           {row(
             <>
-              <TextField label="Name" size="small" value={item.name} onChange={(e) => void setFieldValue(`data.items[${index}].name`, e.target.value)} />
-              <TextField label="Issuer" size="small" value={item.issuer} onChange={(e) => void setFieldValue(`data.items[${index}].issuer`, e.target.value)} />
+              <TextField
+                label="Name" size="small" value={item.name}
+                onChange={(e) => void setFieldValue(`data.items[${index}].name`, e.target.value)}
+                onBlur={() => void formik.setFieldTouched(`data.items[${index}].name`, true)}
+                error={getIn(formik.touched, `data.items[${index}].name`) && Boolean(getIn(formik.errors, `data.items[${index}].name`))}
+                helperText={getIn(formik.touched, `data.items[${index}].name`) && getIn(formik.errors, `data.items[${index}].name`)}
+              />
+              <TextField
+                label="Issuer" size="small" value={item.issuer}
+                onChange={(e) => void setFieldValue(`data.items[${index}].issuer`, e.target.value)}
+                onBlur={() => void formik.setFieldTouched(`data.items[${index}].issuer`, true)}
+                error={getIn(formik.touched, `data.items[${index}].issuer`) && Boolean(getIn(formik.errors, `data.items[${index}].issuer`))}
+                helperText={getIn(formik.touched, `data.items[${index}].issuer`) && getIn(formik.errors, `data.items[${index}].issuer`)}
+              />
             </>
           )}
           {row(
             <>
-              <TextField label="Issue Date" size="small" value={item.issueDate} onChange={(e) => void setFieldValue(`data.items[${index}].issueDate`, e.target.value)} />
+              <TextField
+                label="Issue Date" size="small" value={item.issueDate}
+                onChange={(e) => void setFieldValue(`data.items[${index}].issueDate`, e.target.value)}
+                onBlur={() => void formik.setFieldTouched(`data.items[${index}].issueDate`, true)}
+                error={getIn(formik.touched, `data.items[${index}].issueDate`) && Boolean(getIn(formik.errors, `data.items[${index}].issueDate`))}
+                helperText={getIn(formik.touched, `data.items[${index}].issueDate`) && getIn(formik.errors, `data.items[${index}].issueDate`)}
+              />
               <TextField label="Expiry Date" size="small" value={item.expiryDate ?? ''} onChange={(e) => void setFieldValue(`data.items[${index}].expiryDate`, e.target.value)} />
-              <TextField label="URL" size="small" value={item.url ?? ''} onChange={(e) => void setFieldValue(`data.items[${index}].url`, e.target.value)} />
+              <TextField
+                label="URL" size="small" value={item.url ?? ''}
+                onChange={(e) => void setFieldValue(`data.items[${index}].url`, e.target.value)}
+                onBlur={() => void formik.setFieldTouched(`data.items[${index}].url`, true)}
+                error={getIn(formik.touched, `data.items[${index}].url`) && Boolean(getIn(formik.errors, `data.items[${index}].url`))}
+                helperText={getIn(formik.touched, `data.items[${index}].url`) && getIn(formik.errors, `data.items[${index}].url`)}
+              />
             </>
           )}
         </Box>
@@ -757,6 +881,9 @@ function SocialLinksForm({ formik }: { formik: SocialLinksFormik }) {
             sx={{ flex: 1 }}
             value={item.url}
             onChange={(e) => void setFieldValue(`data.items[${index}].url`, e.target.value)}
+            onBlur={() => void formik.setFieldTouched(`data.items[${index}].url`, true)}
+            error={getIn(formik.touched, `data.items[${index}].url`) && Boolean(getIn(formik.errors, `data.items[${index}].url`))}
+            helperText={getIn(formik.touched, `data.items[${index}].url`) && getIn(formik.errors, `data.items[${index}].url`)}
           />
           <IconButton size="small" onClick={() => removeItem(index)} aria-label="Remove">
             <Icon name="trash" size={14} />
@@ -821,7 +948,13 @@ function AwardsForm({ formik }: { formik: AwardsFormik }) {
           </Box>
           {row(
             <>
-              <TextField label="Title" size="small" value={item.title} onChange={(e) => void setFieldValue(`data.items[${index}].title`, e.target.value)} />
+              <TextField
+                label="Title" size="small" value={item.title}
+                onChange={(e) => void setFieldValue(`data.items[${index}].title`, e.target.value)}
+                onBlur={() => void formik.setFieldTouched(`data.items[${index}].title`, true)}
+                error={getIn(formik.touched, `data.items[${index}].title`) && Boolean(getIn(formik.errors, `data.items[${index}].title`))}
+                helperText={getIn(formik.touched, `data.items[${index}].title`) && getIn(formik.errors, `data.items[${index}].title`)}
+              />
               <TextField label="Date" size="small" value={item.date} onChange={(e) => void setFieldValue(`data.items[${index}].date`, e.target.value)} />
             </>
           )}
@@ -843,7 +976,7 @@ function AwardsForm({ formik }: { formik: AwardsFormik }) {
 }
 
 function CustomForm({ formik }: { formik: CustomFormik }) {
-  const { values, handleChange, handleBlur } = formik;
+  const { values, handleChange, handleBlur, touched, errors } = formik;
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       <TextField
@@ -853,6 +986,8 @@ function CustomForm({ formik }: { formik: CustomFormik }) {
         value={values.data.sectionTitle}
         onChange={handleChange}
         onBlur={handleBlur}
+        error={!!getIn(touched, 'data.sectionTitle') && !!getIn(errors, 'data.sectionTitle')}
+        helperText={getIn(touched, 'data.sectionTitle') && getIn(errors, 'data.sectionTitle')}
       />
       <TextField
         fullWidth

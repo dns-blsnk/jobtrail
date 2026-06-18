@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import { Icon } from '@/shared/ui/icon/icon';
+import { useResumeStore } from '@/entities/resume/model/resume-store';
 import { ResumeSidebar } from '@/widgets/resume-sidebar/ui/resume-sidebar';
 import { ResumeEditor } from '@/widgets/resume-editor/ui/resume-editor';
 import { UploadResumeZone } from '@/features/resume/upload-resume/ui/upload-resume-zone';
 import s from './resume-builder-page.module.scss';
 
 export function ResumeBuilderPage() {
+  const activeDraftId = useResumeStore((s) => s.activeDraftId);
   const [isPreview, setIsPreview] = useState(false);
 
   function handleDownloadPdf() {
@@ -26,7 +28,7 @@ export function ResumeBuilderPage() {
           <h1 className={s.topBarTitle}>Resume Builder</h1>
         </div>
         <div className={s.topBarRight}>
-          <UploadResumeZone />
+          <UploadResumeZone activeDraftId={activeDraftId} />
           <button
             type="button"
             className={s.topBarBtn}

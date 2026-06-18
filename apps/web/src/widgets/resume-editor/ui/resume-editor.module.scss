@@ -142,3 +142,16 @@
 .templateThumbnailLine {
   border-radius: 2px;
 }
+
+.dragOverlay {
+  background: var(--surface);
+  border-radius: 8px;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.08);
+  opacity: 0.95;
+  cursor: grabbing;
+  pointer-events: none;
+  padding: 16px;
+  border: 1px solid var(--border);
+}
