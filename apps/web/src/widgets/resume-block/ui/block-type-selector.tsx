@@ -1,5 +1,6 @@
 'use client';
 
+import { clsx } from 'clsx';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -35,9 +36,12 @@ const BLOCK_OPTIONS: BlockTypeOption[] = [
 ];
 
 export function BlockTypeSelector({ open, onClose, onBlockAdded }: BlockTypeSelectorProps) {
-  const addBlock = useResumeStore((s) => s.addBlock);
+  const { drafts, activeDraftId, addBlock } = useResumeStore();
+  const activeDraft = drafts.find((d) => d.id === activeDraftId);
+  const usedTypes = new Set(activeDraft?.blocks.map((b) => b.blockData.type) ?? []);
 
   function handleSelect(type: BlockType) {
+    if (usedTypes.has(type)) return;
     const blockId = addBlock(type);
     onClose();
     if (blockId) {
@@ -50,17 +54,23 @@ export function BlockTypeSelector({ open, onClose, onBlockAdded }: BlockTypeSele
       <DialogTitle id="block-type-selector-title">Add section</DialogTitle>
       <DialogContent>
         <div className={s.blockTypeGrid}>
-          {BLOCK_OPTIONS.map((option) => (
-            <button
-              key={option.type}
-              type="button"
-              className={s.blockTypeCard}
-              onClick={() => handleSelect(option.type)}
-            >
-              <Icon name={option.icon} size={22} strokeWidth={1.7} className={s.blockTypeCardIcon} />
-              <span className={s.blockTypeCardLabel}>{option.label}</span>
-            </button>
-          ))}
+          {BLOCK_OPTIONS.map((option) => {
+            const isUsed = usedTypes.has(option.type);
+            return (
+              <button
+                key={option.type}
+                type="button"
+                className={clsx(s.blockTypeCard, isUsed && s.blockTypeCardDisabled)}
+                onClick={() => handleSelect(option.type)}
+                disabled={isUsed}
+                aria-disabled={isUsed}
+              >
+                <Icon name={option.icon} size={22} strokeWidth={1.7} className={s.blockTypeCardIcon} />
+                <span className={s.blockTypeCardLabel}>{option.label}</span>
+                {isUsed && <span className={s.blockTypeCardBadge}>Added</span>}
+              </button>
+            );
+          })}
         </div>
       </DialogContent>
     </Dialog>

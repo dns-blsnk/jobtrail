@@ -80,7 +80,12 @@ export function BlockHeader({ data }: BlockHeaderProps) {
                 strokeWidth={1.9}
                 className={s.headerContactIcon}
               />
-              <span>{link.platform === 'Other' ? link.url.replace(/^https?:\/\/(www\.)?/, '') : link.platform}</span>
+              <span>
+                {link.title ||
+                  (link.platform === 'Other'
+                    ? link.url.replace(/^https?:\/\/(www\.)?/, '')
+                    : link.platform)}
+              </span>
             </a>
           ))}
         </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -13,6 +13,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Chip from '@mui/material/Chip';
@@ -22,6 +23,7 @@ import { useFormik, getIn } from 'formik';
 import { useResumeStore } from '@/entities/resume/model/resume-store';
 import { getValidationSchema } from '@/entities/resume/model/validation-schemas';
 import { Icon } from '@/shared/ui/icon/icon';
+import { PhotoCropDialog } from '@/features/resume/edit-block/ui/photo-crop-dialog';
 import type {
   BlockData,
   BlockType,
@@ -171,26 +173,42 @@ function row(children: React.ReactNode) {
   );
 }
 
+const MAX_HEADER_LINKS = 4;
+
 function HeaderForm({ formik }: { formik: HeaderFormik }) {
   const { values, handleChange, handleBlur, setFieldValue } = formik;
   const photoInputRef = useRef<HTMLInputElement>(null);
+  const [cropSrc, setCropSrc] = useState<string | null>(null);
+  const [cropOpen, setCropOpen] = useState(false);
 
   function handlePhoto(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
     reader.onload = (evt) => {
-      void setFieldValue('data.photoUrl', evt.target?.result as string);
+      setCropSrc(evt.target?.result as string);
+      setCropOpen(true);
     };
     reader.readAsDataURL(file);
     e.target.value = '';
+  }
+
+  function handleCropConfirm(croppedUrl: string) {
+    void setFieldValue('data.photoUrl', croppedUrl);
+    setCropOpen(false);
+    setCropSrc(null);
+  }
+
+  function handleCropCancel() {
+    setCropOpen(false);
+    setCropSrc(null);
   }
 
   const shape = values.data.photoShape ?? 'circle';
   const shapePreview: Record<typeof shape, { borderRadius: string; width: number; height: number }> = {
     circle:   { borderRadius: '50%',  width: 80, height: 80  },
     square:   { borderRadius: '12px', width: 80, height: 80  },
-    portrait: { borderRadius: '8px',  width: 60, height: 84  },
+    portrait: { borderRadius: '8px',  width: 80, height: 112 },
   };
   const shapeOptions: Array<{ value: typeof shape; label: string }> = [
     { value: 'circle',   label: 'Circle'   },
@@ -202,9 +220,10 @@ function HeaderForm({ formik }: { formik: HeaderFormik }) {
   const platforms: SocialLinkItem['platform'][] = ['LinkedIn', 'GitHub', 'Portfolio', 'Twitter', 'Other'];
 
   function addLink() {
+    if (links.length >= MAX_HEADER_LINKS) return;
     void setFieldValue('data.links', [
       ...links,
-      { id: crypto.randomUUID(), platform: 'LinkedIn', url: '' } satisfies SocialLinkItem,
+      { id: crypto.randomUUID(), platform: 'LinkedIn', title: '', url: '' } satisfies SocialLinkItem,
     ]);
   }
 
@@ -216,89 +235,80 @@ function HeaderForm({ formik }: { formik: HeaderFormik }) {
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
 
       {/* Photo upload */}
-      <Box>
-        <InputLabel sx={{ mb: 1.5, fontSize: 13 }}>Profile Photo</InputLabel>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Box
-            onClick={() => !values.data.photoUrl && photoInputRef.current?.click()}
-            sx={{
-              width:        shapePreview[shape].width,
-              height:       shapePreview[shape].height,
-              borderRadius: shapePreview[shape].borderRadius,
-              border: '2px dashed',
-              borderColor: values.data.photoUrl ? 'var(--border)' : 'var(--border-2)',
-              overflow: 'hidden',
-              flexShrink: 0,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              background: 'var(--surface-2)',
-              cursor: values.data.photoUrl ? 'default' : 'pointer',
-              transition: 'border-color 0.15s ease, border-radius 0.15s ease, width 0.15s ease, height 0.15s ease',
-              '&:hover': values.data.photoUrl ? {} : { borderColor: 'var(--accent)' },
-            }}
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 2 }}>
+        {/* Left: photo preview */}
+        <Box
+          onClick={() => photoInputRef.current?.click()}
+          sx={{
+            width:        shapePreview[shape].width,
+            height:       shapePreview[shape].height,
+            borderRadius: shapePreview[shape].borderRadius,
+            border: '2px dashed',
+            borderColor: values.data.photoUrl ? 'var(--border)' : 'var(--border-2)',
+            overflow: 'hidden',
+            flexShrink: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'var(--surface-2)',
+            cursor: 'pointer',
+            transition: 'border-color 0.15s ease, border-radius 0.15s ease, width 0.15s ease, height 0.15s ease',
+            '&:hover': { borderColor: 'var(--accent)' },
+          }}
+        >
+          {values.data.photoUrl ? (
+            <Box component="img" src={values.data.photoUrl} alt="Profile"
+              sx={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          ) : (
+            <Icon name="user" size={32} strokeWidth={1.4} style={{ color: 'var(--ink-3)' }} />
+          )}
+        </Box>
+
+        {/* Middle: upload / remove */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => photoInputRef.current?.click()}
+            startIcon={<Icon name="upload" size={14} strokeWidth={1.9} />}
+            sx={{ fontSize: 12, textTransform: 'none' }}
           >
-            {values.data.photoUrl ? (
-              <Box
-                component="img"
-                src={values.data.photoUrl}
-                alt="Profile"
-                sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-            ) : (
-              <Icon name="user" size={28} strokeWidth={1.5} style={{ color: 'var(--ink-3)' }} />
-            )}
-          </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            {values.data.photoUrl ? 'Change photo' : 'Upload photo'}
+          </Button>
+          {values.data.photoUrl && (
             <Button
               variant="outlined"
               size="small"
-              onClick={() => photoInputRef.current?.click()}
-              startIcon={<Icon name="upload" size={14} strokeWidth={1.9} />}
+              color="error"
+              onClick={() => void setFieldValue('data.photoUrl', undefined)}
+              startIcon={<Icon name="trash" size={14} strokeWidth={1.9} />}
               sx={{ fontSize: 12, textTransform: 'none' }}
             >
-              {values.data.photoUrl ? 'Change photo' : 'Upload photo'}
+              Remove photo
             </Button>
-            {values.data.photoUrl && (
+          )}
+        </Box>
+
+        {/* Shape picker */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <Box sx={{ fontSize: 12, color: 'text.secondary' }}>Shape</Box>
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            {shapeOptions.map(({ value, label }) => (
               <Button
-                variant="text"
+                key={value}
+                variant={shape === value ? 'contained' : 'outlined'}
                 size="small"
-                color="error"
-                onClick={() => void setFieldValue('data.photoUrl', undefined)}
-                startIcon={<Icon name="trash" size={14} strokeWidth={1.9} />}
-                sx={{ fontSize: 12, textTransform: 'none' }}
+                onClick={() => void setFieldValue('data.photoShape', value)}
+                sx={{ fontSize: 12, textTransform: 'none', minWidth: 76 }}
               >
-                Remove photo
+                {label}
               </Button>
-            )}
+            ))}
           </Box>
         </Box>
-        <input
-          ref={photoInputRef}
-          type="file"
-          accept="image/*"
-          onChange={handlePhoto}
-          style={{ display: 'none' }}
-          aria-hidden="true"
-        />
-      </Box>
 
-      {/* Photo shape */}
-      <Box>
-        <InputLabel sx={{ mb: 1, fontSize: 13 }}>Photo shape</InputLabel>
-        <Box sx={{ display: 'flex', gap: 1 }}>
-          {shapeOptions.map(({ value, label }) => (
-            <Button
-              key={value}
-              variant={shape === value ? 'contained' : 'outlined'}
-              size="small"
-              onClick={() => void setFieldValue('data.photoShape', value)}
-              sx={{ fontSize: 12, textTransform: 'none', flex: 1 }}
-            >
-              {label}
-            </Button>
-          ))}
-        </Box>
+        <input ref={photoInputRef} type="file" accept="image/*"
+          onChange={handlePhoto} style={{ display: 'none' }} aria-hidden="true" />
       </Box>
 
       {/* Name */}
@@ -359,55 +369,109 @@ function HeaderForm({ formik }: { formik: HeaderFormik }) {
 
       {/* Social links */}
       <Box>
-        <InputLabel sx={{ mb: 1.5, fontSize: 13 }}>Social Links</InputLabel>
+        <InputLabel sx={{ fontSize: 16, fontWeight: 500, color: 'text.primary', mb: 2.5 }}>
+          Social Links
+          <Box component="span" sx={{ ml: 1, fontSize: 16, color: 'text.disabled', fontWeight: 400 }}>
+            {links.length}/{MAX_HEADER_LINKS}
+          </Box>
+        </InputLabel>
+
         {links.map((link, index) => (
-          <Box key={link.id} sx={{ display: 'flex', gap: 1.5, alignItems: 'center', mb: 1 }}>
-            <FormControl size="small" sx={{ minWidth: 140, flexShrink: 0 }}>
-              <InputLabel>Platform</InputLabel>
-              <Select
-                label="Platform"
-                value={link.platform}
-                onChange={(e) => void setFieldValue(`data.links[${index}].platform`, e.target.value)}
+          <Box key={link.id} sx={{ mb: 2 }}>
+            {/* Row 1: platform + title + delete — all top-aligned */}
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-start' }}>
+              <FormControl size="small" sx={{ minWidth: 130, flexShrink: 0 }}>
+                <InputLabel>Platform</InputLabel>
+                <Select
+                  label="Platform"
+                  value={link.platform}
+                  onChange={(e) => void setFieldValue(`data.links[${index}].platform`, e.target.value)}
+                >
+                  {platforms.map((p) => (
+                    <MenuItem key={p} value={p}>{p}</MenuItem>
+                  ))}
+                </Select>
+                {/* spacer matches TextField helperText height so both columns are equal */}
+                <FormHelperText> </FormHelperText>
+              </FormControl>
+              <TextField
+                size="small"
+                sx={{ flex: 1 }}
+                value={link.title ?? ''}
+                placeholder={link.platform !== 'Other' ? link.platform : 'My Portfolio'}
+                onChange={(e) => void setFieldValue(`data.links[${index}].title`, e.target.value)}
+                onBlur={() => void formik.setFieldTouched(`data.links[${index}].title`, true)}
+                error={
+                  getIn(formik.touched, `data.links[${index}].title`) &&
+                  Boolean(getIn(formik.errors, `data.links[${index}].title`))
+                }
+                helperText={
+                  (getIn(formik.touched, `data.links[${index}].title`) &&
+                  getIn(formik.errors, `data.links[${index}].title`)) || ' '
+                }
+              />
+              <IconButton
+                onClick={() => removeLink(index)}
+                aria-label="Remove link"
+                size="small"
+                sx={{
+                  flexShrink: 0,
+                  color: 'var(--ink-3)',
+                  border: '1px solid',
+                  borderColor: 'divider',
+                  borderRadius: 1,
+                  p: '5px',
+                  '&:hover': { color: 'error.main', borderColor: 'error.main', background: 'transparent' },
+                }}
               >
-                {platforms.map((p) => (
-                  <MenuItem key={p} value={p}>{p}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <TextField
-              label="URL"
-              size="small"
-              sx={{ flex: 1 }}
-              value={link.url}
-              onChange={(e) => void setFieldValue(`data.links[${index}].url`, e.target.value)}
-              onBlur={() => void formik.setFieldTouched(`data.links[${index}].url`, true)}
-              error={
-                getIn(formik.touched, `data.links[${index}].url`) &&
-                Boolean(getIn(formik.errors, `data.links[${index}].url`))
-              }
-              helperText={
-                (getIn(formik.touched, `data.links[${index}].url`) &&
-                getIn(formik.errors, `data.links[${index}].url`)) || ' '
-              }
-            />
-            <IconButton
-              onClick={() => removeLink(index)}
-              aria-label="Remove link"
-            >
-              <Icon name="trash" size={14} strokeWidth={1.9} />
-            </IconButton>
+                <Icon name="trash" size={14} strokeWidth={1.9} />
+              </IconButton>
+            </Box>
+            {/* Row 2: URL — extra top gap to separate from row 1 */}
+            <Box sx={{ mt: 1.5 }}>
+              <TextField
+                label="URL"
+                size="small"
+                fullWidth
+                value={link.url}
+                onChange={(e) => void setFieldValue(`data.links[${index}].url`, e.target.value)}
+                onBlur={() => void formik.setFieldTouched(`data.links[${index}].url`, true)}
+                error={
+                  getIn(formik.touched, `data.links[${index}].url`) &&
+                  Boolean(getIn(formik.errors, `data.links[${index}].url`))
+                }
+                helperText={
+                  (getIn(formik.touched, `data.links[${index}].url`) &&
+                  getIn(formik.errors, `data.links[${index}].url`)) || ' '
+                }
+              />
+            </Box>
           </Box>
         ))}
-        <Button
-          startIcon={<Icon name="plus" size={14} strokeWidth={1.9} />}
-          onClick={addLink}
-          variant="outlined"
-          size="small"
-          sx={{ textTransform: 'none' }}
-        >
-          Add link
-        </Button>
+
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
+          <Button
+            startIcon={<Icon name="plus" size={13} strokeWidth={2} />}
+            onClick={addLink}
+            disabled={links.length >= MAX_HEADER_LINKS}
+            variant="outlined"
+            size="small"
+            sx={{ fontSize: 12, textTransform: 'none' }}
+          >
+            Add link
+          </Button>
+        </Box>
       </Box>
+
+      {cropSrc && (
+        <PhotoCropDialog
+          open={cropOpen}
+          src={cropSrc}
+          shape={shape}
+          onConfirm={handleCropConfirm}
+          onCancel={handleCropCancel}
+        />
+      )}
 
     </Box>
   );

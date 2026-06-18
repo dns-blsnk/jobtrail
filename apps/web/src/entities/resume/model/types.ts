@@ -17,6 +17,7 @@ export type SocialPlatform = 'LinkedIn' | 'GitHub' | 'Portfolio' | 'Twitter' | '
 export interface SocialLinkItem {
   id: string;
   platform: SocialPlatform;
+  title?: string;
   url: string;
 }
 

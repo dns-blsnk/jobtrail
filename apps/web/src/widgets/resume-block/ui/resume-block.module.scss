@@ -13,6 +13,7 @@
     border-color: var(--border);
 
     .dragHandle,
+    .blockActions,
     .editBtn {
       opacity: 1;
     }
@@ -54,14 +55,26 @@
   }
 }
 
-// Edit button
-.editBtn {
+// Block actions container (edit + delete)
+.blockActions {
   position: absolute;
   top: 8px;
   right: 8px;
   opacity: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  @include transition(opacity, 0.15s, ease);
+
+  @media (hover: none) and (pointer: coarse) {
+    opacity: 1;
+  }
+}
+
+// Edit button
+.editBtn {
+  position: relative;
   @include flex-center($gap: 4px);
-  @include tap-target-responsive;
   padding: 4px 10px;
   border-radius: 5px;
   border: 1px solid var(--border);
@@ -72,15 +85,45 @@
   cursor: pointer;
   @include transition(all, 0.15s, ease);
 
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+  }
+
   &:hover {
     background: var(--surface-2);
     color: var(--ink);
+    border-color: var(--border-2);
+  }
+}
+
+// Delete button
+.deleteBtn {
+  position: relative;
+  @include flex-center;
+  padding: 4px 7px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink-3);
+  cursor: pointer;
+  @include transition(all, 0.15s, ease);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 40px;
+    min-height: 40px;
   }
 
-  @media (hover: none) and (pointer: coarse) {
-    opacity: 1;
-    padding: 6px 12px;
-    min-height: 36px;
+  &:hover {
+    background: var(--error-soft, #fff0f0);
+    border-color: var(--error, #e53e3e);
+    color: var(--error, #e53e3e);
   }
 }
 
@@ -194,6 +237,23 @@
   font-size: 13px;
   font-weight: 500;
   color: var(--ink-2);
+}
+
+.blockTypeCardBadge {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 4px;
+  padding: 1px 6px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.blockTypeCardDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 // Add block button

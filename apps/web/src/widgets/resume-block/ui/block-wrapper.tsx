@@ -8,6 +8,7 @@ import { Icon } from '@/shared/ui/icon/icon';
 import type { BlockType } from '@/entities/resume/model/types';
 import { EditBlockModal } from '@/features/resume/edit-block/ui/edit-block-modal';
 import { useEditBlock } from '@/features/resume/edit-block/model/use-edit-block';
+import { useResumeStore } from '@/entities/resume/model/resume-store';
 import { BlockEmptyState } from '@/widgets/resume-block/ui/block-empty-state';
 import s from './resume-block.module.scss';
 
@@ -22,6 +23,7 @@ interface BlockWrapperProps {
 
 export function BlockWrapper({ id, isHeader, isPreview, isEmpty, blockType, children }: BlockWrapperProps) {
   const { editingBlockId, isNew, openEdit, closeEdit } = useEditBlock();
+  const removeBlock = useResumeStore((state) => state.removeBlock);
 
   const {
     attributes,
@@ -49,15 +51,17 @@ export function BlockWrapper({ id, isHeader, isPreview, isEmpty, blockType, chil
     return (
       <div className={s.blockWrapper} data-is-header>
         {!isPreview && (
-          <button
-            type="button"
-            className={s.editBtn}
-            onClick={() => openEdit(id)}
-            aria-label="Edit block"
-          >
-            <Icon name="pencil" size={14} strokeWidth={1.9} />
-            Edit
-          </button>
+          <div className={s.blockActions}>
+            <button
+              type="button"
+              className={s.editBtn}
+              onClick={() => openEdit(id)}
+              aria-label="Edit block"
+            >
+              <Icon name="pencil" size={14} strokeWidth={1.9} />
+              Edit
+            </button>
+          </div>
         )}
         {isEmpty && !isPreview ? (
           <BlockEmptyState blockType={blockType} onAdd={handleAddClick} />
@@ -88,15 +92,25 @@ export function BlockWrapper({ id, isHeader, isPreview, isEmpty, blockType, chil
         </div>
       )}
       {!isPreview && (
-        <button
-          type="button"
-          className={s.editBtn}
-          onClick={() => openEdit(id)}
-          aria-label="Edit block"
-        >
-          <Icon name="pencil" size={14} strokeWidth={1.9} />
-          Edit
-        </button>
+        <div className={s.blockActions}>
+          <button
+            type="button"
+            className={s.editBtn}
+            onClick={() => openEdit(id)}
+            aria-label="Edit block"
+          >
+            <Icon name="pencil" size={14} strokeWidth={1.9} />
+            Edit
+          </button>
+          <button
+            type="button"
+            className={s.deleteBtn}
+            onClick={() => removeBlock(id)}
+            aria-label="Delete block"
+          >
+            <Icon name="trash" size={14} strokeWidth={1.9} />
+          </button>
+        </div>
       )}
       {isEmpty && !isPreview ? (
         <BlockEmptyState blockType={blockType} onAdd={handleAddClick} />

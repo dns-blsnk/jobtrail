@@ -35,6 +35,7 @@ const headerSchema = Yup.object({
       .of(Yup.object({
         id:       Yup.string(),
         platform: Yup.string().required(),
+        title:    Yup.string().required('Title is required'),
         url:      Yup.string()
           .matches(URL_REGEX, 'Enter a valid URL (https://...)')
           .required('URL is required'),
