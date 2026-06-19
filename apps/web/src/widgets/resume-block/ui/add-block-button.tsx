@@ -30,6 +30,7 @@ export function AddBlockButton() {
       />
 
       <EditBlockModal
+        key={pendingBlockType ?? 'new'}
         open={pendingBlockType !== null}
         blockId={null}
         pendingBlockType={pendingBlockType}
