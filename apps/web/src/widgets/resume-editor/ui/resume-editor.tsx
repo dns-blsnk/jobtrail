@@ -59,21 +59,29 @@ function isBlockEmpty(block: ResumeBlock): boolean {
     case 'summary':
       return !bd.data.text;
     case 'experience':
-      return bd.data.items.length === 0;
+      return bd.data.items.length === 0 ||
+        bd.data.items.every((item) => !item.company && !item.role && !item.description);
     case 'education':
-      return bd.data.items.length === 0;
+      return bd.data.items.length === 0 ||
+        bd.data.items.every((item) => !item.institution && !item.degree);
     case 'skills':
-      return bd.data.groups.length === 0;
+      return bd.data.groups.length === 0 ||
+        bd.data.groups.every((g) => !g.name && g.tags.length === 0);
     case 'projects':
-      return bd.data.items.length === 0;
+      return bd.data.items.length === 0 ||
+        bd.data.items.every((item) => !item.name && !item.description);
     case 'languages':
-      return bd.data.items.length === 0;
+      return bd.data.items.length === 0 ||
+        bd.data.items.every((item) => !item.language);
     case 'certifications':
-      return bd.data.items.length === 0;
+      return bd.data.items.length === 0 ||
+        bd.data.items.every((item) => !item.name && !item.issuer);
     case 'social-links':
-      return bd.data.items.length === 0;
+      return bd.data.items.length === 0 ||
+        bd.data.items.every((item) => !item.url);
     case 'awards':
-      return bd.data.items.length === 0;
+      return bd.data.items.length === 0 ||
+        bd.data.items.every((item) => !item.title);
     case 'custom':
       return !bd.data.sectionTitle && !bd.data.content;
   }

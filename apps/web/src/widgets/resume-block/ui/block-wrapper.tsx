@@ -79,6 +79,7 @@ export function BlockWrapper({ id, isHeader, isPreview, isEmpty, blockType, chil
           children
         )}
         <EditBlockModal
+          key={editingBlockId}
           open={editingBlockId === id}
           blockId={editingBlockId}
           isNew={isNew}
@@ -128,6 +129,7 @@ export function BlockWrapper({ id, isHeader, isPreview, isEmpty, blockType, chil
         children
       )}
       <EditBlockModal
+        key={editingBlockId}
         open={editingBlockId === id}
         blockId={editingBlockId}
         isNew={isNew}

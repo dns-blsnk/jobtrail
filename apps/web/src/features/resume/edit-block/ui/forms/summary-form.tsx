@@ -8,8 +8,13 @@ import type { BlockData } from '@/entities/resume/model/types';
 
 type SummaryFormik = ReturnType<typeof useFormik<Extract<BlockData, { type: 'summary' }>>>;
 
+const MAX_SUMMARY_LENGTH = 600;
+
 export function SummaryForm({ formik }: { formik: SummaryFormik }) {
   const t = useTranslations('resumeBuilderPage.editBlock');
+  const textLength = formik.values.data.text.length;
+  const textError = getIn(formik.touched, 'data.text') && getIn(formik.errors, 'data.text');
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       <TextField
@@ -32,8 +37,14 @@ export function SummaryForm({ formik }: { formik: SummaryFormik }) {
         value={formik.values.data.text}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-        error={!!getIn(formik.touched, 'data.text') && !!getIn(formik.errors, 'data.text')}
-        helperText={getIn(formik.touched, 'data.text') && getIn(formik.errors, 'data.text')}
+        error={!!textError}
+        slotProps={{ htmlInput: { maxLength: MAX_SUMMARY_LENGTH } }}
+        helperText={
+          <Box component="span" sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>{textError || ' '}</span>
+            <span style={{ flexShrink: 0, marginLeft: 8 }}>{textLength} / {MAX_SUMMARY_LENGTH}</span>
+          </Box>
+        }
       />
     </Box>
   );
