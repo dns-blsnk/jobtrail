@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -65,8 +65,14 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
   const links = values.data.links ?? [];
   const platforms: SocialLinkItem['platform'][] = ['LinkedIn', 'GitHub', 'Portfolio', 'Twitter', 'Other'];
 
+  // Track link-field touched state by link ID (not by array index).
+  // This prevents stale touched from showing on a new link added at the same index.
+  const [touchedLinkIds, setTouchedLinkIds] = useState(() => new Set<string>());
+  const touchLink = useCallback((id: string) => {
+    setTouchedLinkIds((prev) => { const next = new Set(prev); next.add(id); return next; });
+  }, []);
+
   // Track which link IDs were present when the form was last submitted.
-  // New links added after a failed submit don't show errors until the next submit attempt.
   const submittedLinkIds = useRef(new Set<string>());
   const prevSubmitCount = useRef(formik.submitCount);
   if (formik.submitCount > prevSubmitCount.current) {
@@ -256,13 +262,13 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
                 value={link.title ?? ''}
                 placeholder={link.platform !== 'Other' ? link.platform : 'My Portfolio'}
                 onChange={(e) => void setFieldValue(`data.links[${index}].title`, e.target.value)}
-                onBlur={() => void formik.setFieldTouched(`data.links[${index}].title`, true)}
+                onBlur={() => touchLink(link.id)}
                 error={
-                  (getIn(formik.touched, `data.links[${index}].title`) || submittedLinkIds.current.has(link.id)) &&
+                  (touchedLinkIds.has(link.id) || submittedLinkIds.current.has(link.id)) &&
                   Boolean(getIn(formik.errors, `data.links[${index}].title`))
                 }
                 helperText={
-                  ((getIn(formik.touched, `data.links[${index}].title`) || submittedLinkIds.current.has(link.id)) &&
+                  ((touchedLinkIds.has(link.id) || submittedLinkIds.current.has(link.id)) &&
                   getIn(formik.errors, `data.links[${index}].title`)) || ' '
                 }
               />
@@ -291,13 +297,13 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
                 fullWidth
                 value={link.url}
                 onChange={(e) => void setFieldValue(`data.links[${index}].url`, e.target.value)}
-                onBlur={() => void formik.setFieldTouched(`data.links[${index}].url`, true)}
+                onBlur={() => touchLink(link.id)}
                 error={
-                  (getIn(formik.touched, `data.links[${index}].url`) || submittedLinkIds.current.has(link.id)) &&
+                  (touchedLinkIds.has(link.id) || submittedLinkIds.current.has(link.id)) &&
                   Boolean(getIn(formik.errors, `data.links[${index}].url`))
                 }
                 helperText={
-                  ((getIn(formik.touched, `data.links[${index}].url`) || submittedLinkIds.current.has(link.id)) &&
+                  ((touchedLinkIds.has(link.id) || submittedLinkIds.current.has(link.id)) &&
                   getIn(formik.errors, `data.links[${index}].url`)) || ' '
                 }
               />
