@@ -16,6 +16,17 @@ function urlField(label: string, required = false) {
     : base.nullable().optional();
 }
 
+function dateField(required = false) {
+  const base = Yup.string().test(
+    'date-min',
+    'Enter a valid date (e.g. Jan 2023)',
+    (value) => !value || value.trim().length >= 4,
+  );
+  return required
+    ? base.required('Date is required')
+    : base.nullable().optional();
+}
+
 const headerSchema = Yup.object({
   type: Yup.string(),
   data: Yup.object({
@@ -56,10 +67,10 @@ const experienceItemSchema = Yup.object({
   id:          Yup.string(),
   company:     Yup.string().required('Company is required'),
   role:        Yup.string().required('Role is required'),
-  startDate:   Yup.string().required('Start date is required'),
+  startDate:   dateField(true).required('Start date is required'),
   endDate:     Yup.string().when('present', {
     is: false,
-    then: (s) => s.required('End date is required'),
+    then: (s) => s.test('date-min', 'Enter a valid date (e.g. Jan 2023)', (v) => !v || v.trim().length >= 4).required('End date is required'),
     otherwise: (s) => s.optional(),
   }),
   present:     Yup.boolean(),
@@ -77,8 +88,8 @@ const educationItemSchema = Yup.object({
   institution: Yup.string().required('Institution is required'),
   degree:      Yup.string().required('Degree is required'),
   field:       Yup.string().required('Field of study is required'),
-  startDate:   Yup.string().required('Start date is required'),
-  endDate:     Yup.string().optional(),
+  startDate:   dateField(true).required('Start date is required'),
+  endDate:     dateField(),
   gpa:         Yup.string().optional(),
 });
 
@@ -106,8 +117,8 @@ const projectItemSchema = Yup.object({
   description: Yup.string().optional(),
   techStack:   Yup.array().of(Yup.string()),
   url:         urlField('Project URL'),
-  startDate:   Yup.string().optional(),
-  endDate:     Yup.string().optional(),
+  startDate:   dateField(),
+  endDate:     dateField(),
 });
 
 const projectsSchema = Yup.object({
@@ -132,8 +143,8 @@ const certificationItemSchema = Yup.object({
   id:         Yup.string(),
   name:       Yup.string().required('Certification name is required'),
   issuer:     Yup.string().required('Issuer is required'),
-  issueDate:  Yup.string().required('Issue date is required'),
-  expiryDate: Yup.string().optional(),
+  issueDate:  dateField(true).required('Issue date is required'),
+  expiryDate: dateField(),
   url:        urlField('Credential URL'),
 });
 
@@ -161,7 +172,7 @@ const awardsSchema = Yup.object({
     items: Yup.array().of(Yup.object({
       id:          Yup.string(),
       title:       Yup.string().required('Title is required'),
-      date:        Yup.string().optional(),
+      date:        dateField(),
       description: Yup.string().optional(),
     })),
   }),
