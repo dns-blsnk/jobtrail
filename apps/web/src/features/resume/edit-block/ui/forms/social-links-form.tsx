@@ -9,12 +9,14 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
 import { useFormik, getIn } from 'formik';
+import { useTranslations } from 'next-intl';
 import { Icon } from '@/shared/ui/icon/icon';
 import type { BlockData, SocialLinkItem } from '@/entities/resume/model/types';
 
 type SocialLinksFormik = ReturnType<typeof useFormik<Extract<BlockData, { type: 'social-links' }>>>;
 
 export function SocialLinksForm({ formik }: { formik: SocialLinksFormik }) {
+  const t = useTranslations('resumeBuilderPage.editBlock');
   const { values, setFieldValue } = formik;
 
   function addItem() {
@@ -37,9 +39,9 @@ export function SocialLinksForm({ formik }: { formik: SocialLinksFormik }) {
       {values.data.items.map((item, index) => (
         <Box key={item.id} sx={{ display: 'flex', gap: 2, alignItems: 'center', mb: 2 }}>
           <FormControl size="small" sx={{ minWidth: 140 }}>
-            <InputLabel>Platform</InputLabel>
+            <InputLabel>{t('platform')}</InputLabel>
             <Select
-              label="Platform"
+              label={t('platform')}
               value={item.platform}
               onChange={(e) => void setFieldValue(`data.items[${index}].platform`, e.target.value)}
             >
@@ -49,7 +51,7 @@ export function SocialLinksForm({ formik }: { formik: SocialLinksFormik }) {
             </Select>
           </FormControl>
           <TextField
-            label="URL"
+            label={t('url')}
             size="small"
             sx={{ flex: 1 }}
             value={item.url}
@@ -64,7 +66,7 @@ export function SocialLinksForm({ formik }: { formik: SocialLinksFormik }) {
         </Box>
       ))}
       <Button startIcon={<Icon name="plus" size={14} />} onClick={addItem} variant="outlined" size="small">
-        Add link
+        {t('addLink')}
       </Button>
     </Box>
   );

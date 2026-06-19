@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import { useFormik, getIn } from 'formik';
+import { useTranslations } from 'next-intl';
 import { Icon } from '@/shared/ui/icon/icon';
 import { row } from '@/features/resume/edit-block/ui/forms/form-row';
 import type { BlockData, CertificationItem } from '@/entities/resume/model/types';
@@ -12,6 +13,7 @@ import type { BlockData, CertificationItem } from '@/entities/resume/model/types
 type CertificationsFormik = ReturnType<typeof useFormik<Extract<BlockData, { type: 'certifications' }>>>;
 
 export function CertificationsForm({ formik }: { formik: CertificationsFormik }) {
+  const t = useTranslations('resumeBuilderPage.editBlock');
   const { values, setFieldValue } = formik;
 
   function addItem() {
@@ -49,7 +51,7 @@ export function CertificationsForm({ formik }: { formik: CertificationsFormik })
       {values.data.items.map((item, index) => (
         <Box key={item.id} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, mb: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-            <Box sx={{ fontWeight: 600, fontSize: 14 }}>{item.name || `Certification ${index + 1}`}</Box>
+            <Box sx={{ fontWeight: 600, fontSize: 14 }}>{item.name || t('certificationNumber', { number: index + 1 })}</Box>
             <Box sx={{ display: 'flex', gap: 1 }}>
               <IconButton onClick={() => moveUp(index)} disabled={index === 0} aria-label="Move up">
                 <Icon name="moveUp" size={14} />
@@ -65,14 +67,14 @@ export function CertificationsForm({ formik }: { formik: CertificationsFormik })
           {row(
             <>
               <TextField
-                label="Name" size="small" value={item.name}
+                label={t('name')} size="small" value={item.name}
                 onChange={(e) => void setFieldValue(`data.items[${index}].name`, e.target.value)}
                 onBlur={() => void formik.setFieldTouched(`data.items[${index}].name`, true)}
                 error={getIn(formik.touched, `data.items[${index}].name`) && Boolean(getIn(formik.errors, `data.items[${index}].name`))}
                 helperText={getIn(formik.touched, `data.items[${index}].name`) && getIn(formik.errors, `data.items[${index}].name`)}
               />
               <TextField
-                label="Issuer" size="small" value={item.issuer}
+                label={t('issuer')} size="small" value={item.issuer}
                 onChange={(e) => void setFieldValue(`data.items[${index}].issuer`, e.target.value)}
                 onBlur={() => void formik.setFieldTouched(`data.items[${index}].issuer`, true)}
                 error={getIn(formik.touched, `data.items[${index}].issuer`) && Boolean(getIn(formik.errors, `data.items[${index}].issuer`))}
@@ -83,15 +85,15 @@ export function CertificationsForm({ formik }: { formik: CertificationsFormik })
           {row(
             <>
               <TextField
-                label="Issue Date" size="small" value={item.issueDate}
+                label={t('issueDate')} size="small" value={item.issueDate}
                 onChange={(e) => void setFieldValue(`data.items[${index}].issueDate`, e.target.value)}
                 onBlur={() => void formik.setFieldTouched(`data.items[${index}].issueDate`, true)}
                 error={getIn(formik.touched, `data.items[${index}].issueDate`) && Boolean(getIn(formik.errors, `data.items[${index}].issueDate`))}
                 helperText={getIn(formik.touched, `data.items[${index}].issueDate`) && getIn(formik.errors, `data.items[${index}].issueDate`)}
               />
-              <TextField label="Expiry Date" size="small" value={item.expiryDate ?? ''} onChange={(e) => void setFieldValue(`data.items[${index}].expiryDate`, e.target.value)} />
+              <TextField label={t('expiryDate')} size="small" value={item.expiryDate ?? ''} onChange={(e) => void setFieldValue(`data.items[${index}].expiryDate`, e.target.value)} />
               <TextField
-                label="URL" size="small" value={item.url ?? ''}
+                label={t('url')} size="small" value={item.url ?? ''}
                 onChange={(e) => void setFieldValue(`data.items[${index}].url`, e.target.value)}
                 onBlur={() => void formik.setFieldTouched(`data.items[${index}].url`, true)}
                 error={getIn(formik.touched, `data.items[${index}].url`) && Boolean(getIn(formik.errors, `data.items[${index}].url`))}
@@ -102,7 +104,7 @@ export function CertificationsForm({ formik }: { formik: CertificationsFormik })
         </Box>
       ))}
       <Button startIcon={<Icon name="plus" size={14} />} onClick={addItem} variant="outlined" size="small">
-        Add certification
+        {t('addCertification')}
       </Button>
     </Box>
   );

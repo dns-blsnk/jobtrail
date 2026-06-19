@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import { useFormik, getIn } from 'formik';
+import { useTranslations } from 'next-intl';
 import { Icon } from '@/shared/ui/icon/icon';
 import { row } from '@/features/resume/edit-block/ui/forms/form-row';
 import type { BlockData, AwardItem } from '@/entities/resume/model/types';
@@ -12,6 +13,7 @@ import type { BlockData, AwardItem } from '@/entities/resume/model/types';
 type AwardsFormik = ReturnType<typeof useFormik<Extract<BlockData, { type: 'awards' }>>>;
 
 export function AwardsForm({ formik }: { formik: AwardsFormik }) {
+  const t = useTranslations('resumeBuilderPage.editBlock');
   const { values, setFieldValue } = formik;
 
   function addItem() {
@@ -47,7 +49,7 @@ export function AwardsForm({ formik }: { formik: AwardsFormik }) {
       {values.data.items.map((item, index) => (
         <Box key={item.id} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, mb: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-            <Box sx={{ fontWeight: 600, fontSize: 14 }}>{item.title || `Award ${index + 1}`}</Box>
+            <Box sx={{ fontWeight: 600, fontSize: 14 }}>{item.title || t('awardNumber', { number: index + 1 })}</Box>
             <Box sx={{ display: 'flex', gap: 1 }}>
               <IconButton onClick={() => moveUp(index)} disabled={index === 0} aria-label="Move up">
                 <Icon name="moveUp" size={14} />
@@ -63,27 +65,27 @@ export function AwardsForm({ formik }: { formik: AwardsFormik }) {
           {row(
             <>
               <TextField
-                label="Title" size="small" value={item.title}
+                label={t('title')} size="small" value={item.title}
                 onChange={(e) => void setFieldValue(`data.items[${index}].title`, e.target.value)}
                 onBlur={() => void formik.setFieldTouched(`data.items[${index}].title`, true)}
                 error={getIn(formik.touched, `data.items[${index}].title`) && Boolean(getIn(formik.errors, `data.items[${index}].title`))}
                 helperText={getIn(formik.touched, `data.items[${index}].title`) && getIn(formik.errors, `data.items[${index}].title`)}
               />
-              <TextField label="Date" size="small" value={item.date} onChange={(e) => void setFieldValue(`data.items[${index}].date`, e.target.value)} />
+              <TextField label={t('date')} size="small" value={item.date} onChange={(e) => void setFieldValue(`data.items[${index}].date`, e.target.value)} />
             </>
           )}
           <TextField
             fullWidth
             multiline
             rows={3}
-            label="Description"
+            label={t('description')}
             value={item.description}
             onChange={(e) => void setFieldValue(`data.items[${index}].description`, e.target.value)}
           />
         </Box>
       ))}
       <Button startIcon={<Icon name="plus" size={14} />} onClick={addItem} variant="outlined" size="small">
-        Add award
+        {t('addAward')}
       </Button>
     </Box>
   );

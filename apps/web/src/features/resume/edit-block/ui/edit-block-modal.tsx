@@ -51,6 +51,7 @@ interface EditBlockModalProps {
 
 export function EditBlockModal({ open, blockId, isNew, onClose }: EditBlockModalProps) {
   const t = useTranslations('resumeBuilderPage.editBlockTitles');
+  const tBlock = useTranslations('resumeBuilderPage.editBlock');
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const { drafts, activeDraftId, updateBlock, removeBlock } = useResumeStore();
@@ -94,8 +95,8 @@ export function EditBlockModal({ open, blockId, isNew, onClose }: EditBlockModal
         </form>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="inherit">Cancel</Button>
-        <Button type="submit" form="edit-block-form" variant="contained" disabled={formik.isSubmitting}>Save</Button>
+        <Button onClick={handleClose} color="inherit">{tBlock('cancel')}</Button>
+        <Button type="submit" form="edit-block-form" variant="contained" disabled={formik.isSubmitting}>{tBlock('save')}</Button>
       </DialogActions>
     </Dialog>
   );

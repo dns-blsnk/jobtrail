@@ -9,12 +9,14 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
 import { useFormik } from 'formik';
+import { useTranslations } from 'next-intl';
 import { Icon } from '@/shared/ui/icon/icon';
 import type { BlockData, LanguageItem } from '@/entities/resume/model/types';
 
 type LanguagesFormik = ReturnType<typeof useFormik<Extract<BlockData, { type: 'languages' }>>>;
 
 export function LanguagesForm({ formik }: { formik: LanguagesFormik }) {
+  const t = useTranslations('resumeBuilderPage.editBlock');
   const { values, setFieldValue } = formik;
 
   function addItem() {
@@ -37,16 +39,16 @@ export function LanguagesForm({ formik }: { formik: LanguagesFormik }) {
       {values.data.items.map((item, index) => (
         <Box key={item.id} sx={{ display: 'flex', gap: 2, alignItems: 'center', mb: 2 }}>
           <TextField
-            label="Language"
+            label={t('language')}
             size="small"
             sx={{ flex: 1 }}
             value={item.language}
             onChange={(e) => void setFieldValue(`data.items[${index}].language`, e.target.value)}
           />
           <FormControl size="small" sx={{ minWidth: 120 }}>
-            <InputLabel>Level</InputLabel>
+            <InputLabel>{t('level')}</InputLabel>
             <Select
-              label="Level"
+              label={t('level')}
               value={item.level}
               onChange={(e) => void setFieldValue(`data.items[${index}].level`, e.target.value)}
             >
@@ -61,7 +63,7 @@ export function LanguagesForm({ formik }: { formik: LanguagesFormik }) {
         </Box>
       ))}
       <Button startIcon={<Icon name="plus" size={14} />} onClick={addItem} variant="outlined" size="small">
-        Add language
+        {t('addLanguage')}
       </Button>
     </Box>
   );

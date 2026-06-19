@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
 import { useFormik, getIn } from 'formik';
+import { useTranslations } from 'next-intl';
 import { Icon } from '@/shared/ui/icon/icon';
 import { row } from '@/features/resume/edit-block/ui/forms/form-row';
 import type { BlockData, ProjectItem } from '@/entities/resume/model/types';
@@ -13,6 +14,7 @@ import type { BlockData, ProjectItem } from '@/entities/resume/model/types';
 type ProjectsFormik = ReturnType<typeof useFormik<Extract<BlockData, { type: 'projects' }>>>;
 
 export function ProjectsForm({ formik }: { formik: ProjectsFormik }) {
+  const t = useTranslations('resumeBuilderPage.editBlock');
   const { values, setFieldValue } = formik;
 
   function addItem() {
@@ -62,7 +64,7 @@ export function ProjectsForm({ formik }: { formik: ProjectsFormik }) {
 
   function removeTech(itemIndex: number, tag: string) {
     const current = values.data.items[itemIndex].techStack;
-    void setFieldValue(`data.items[${itemIndex}].techStack`, current.filter((t) => t !== tag));
+    void setFieldValue(`data.items[${itemIndex}].techStack`, current.filter((tg) => tg !== tag));
   }
 
   return (
@@ -70,7 +72,7 @@ export function ProjectsForm({ formik }: { formik: ProjectsFormik }) {
       {values.data.items.map((item, index) => (
         <Box key={item.id} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, mb: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-            <Box sx={{ fontWeight: 600, fontSize: 14 }}>{item.name || `Project ${index + 1}`}</Box>
+            <Box sx={{ fontWeight: 600, fontSize: 14 }}>{item.name || t('projectNumber', { number: index + 1 })}</Box>
             <Box sx={{ display: 'flex', gap: 1 }}>
               <IconButton onClick={() => moveUp(index)} disabled={index === 0} aria-label="Move up">
                 <Icon name="moveUp" size={14} />
@@ -86,14 +88,14 @@ export function ProjectsForm({ formik }: { formik: ProjectsFormik }) {
           {row(
             <>
               <TextField
-                label="Project Name" size="small" value={item.name}
+                label={t('projectName')} size="small" value={item.name}
                 onChange={(e) => void setFieldValue(`data.items[${index}].name`, e.target.value)}
                 onBlur={() => void formik.setFieldTouched(`data.items[${index}].name`, true)}
                 error={getIn(formik.touched, `data.items[${index}].name`) && Boolean(getIn(formik.errors, `data.items[${index}].name`))}
                 helperText={getIn(formik.touched, `data.items[${index}].name`) && getIn(formik.errors, `data.items[${index}].name`)}
               />
               <TextField
-                label="URL" size="small" value={item.url ?? ''}
+                label={t('url')} size="small" value={item.url ?? ''}
                 onChange={(e) => void setFieldValue(`data.items[${index}].url`, e.target.value)}
                 onBlur={() => void formik.setFieldTouched(`data.items[${index}].url`, true)}
                 error={getIn(formik.touched, `data.items[${index}].url`) && Boolean(getIn(formik.errors, `data.items[${index}].url`))}
@@ -103,8 +105,8 @@ export function ProjectsForm({ formik }: { formik: ProjectsFormik }) {
           )}
           {row(
             <>
-              <TextField label="Start Date" size="small" value={item.startDate} onChange={(e) => void setFieldValue(`data.items[${index}].startDate`, e.target.value)} />
-              <TextField label="End Date" size="small" value={item.endDate} onChange={(e) => void setFieldValue(`data.items[${index}].endDate`, e.target.value)} />
+              <TextField label={t('startDate')} size="small" value={item.startDate} onChange={(e) => void setFieldValue(`data.items[${index}].startDate`, e.target.value)} />
+              <TextField label={t('endDate')} size="small" value={item.endDate} onChange={(e) => void setFieldValue(`data.items[${index}].endDate`, e.target.value)} />
             </>
           )}
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 1 }}>
@@ -114,7 +116,7 @@ export function ProjectsForm({ formik }: { formik: ProjectsFormik }) {
           </Box>
           <TextField
             size="small"
-            placeholder="Add tech (Enter)"
+            placeholder={t('techPlaceholder')}
             onKeyDown={(e) => handleTechKeyDown(e as React.KeyboardEvent<HTMLInputElement>, index)}
             fullWidth
             sx={{ mb: 2 }}
@@ -123,14 +125,14 @@ export function ProjectsForm({ formik }: { formik: ProjectsFormik }) {
             fullWidth
             multiline
             rows={3}
-            label="Description"
+            label={t('description')}
             value={item.description}
             onChange={(e) => void setFieldValue(`data.items[${index}].description`, e.target.value)}
           />
         </Box>
       ))}
       <Button startIcon={<Icon name="plus" size={14} />} onClick={addItem} variant="outlined" size="small">
-        Add project
+        {t('addProject')}
       </Button>
     </Box>
   );

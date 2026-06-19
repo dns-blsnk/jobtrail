@@ -6,12 +6,14 @@ import TextField from '@mui/material/TextField';
 import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
 import { useFormik, getIn } from 'formik';
+import { useTranslations } from 'next-intl';
 import { Icon } from '@/shared/ui/icon/icon';
 import type { BlockData, SkillsData } from '@/entities/resume/model/types';
 
 type SkillsFormik = ReturnType<typeof useFormik<Extract<BlockData, { type: 'skills' }>>>;
 
 export function SkillsForm({ formik }: { formik: SkillsFormik }) {
+  const t = useTranslations('resumeBuilderPage.editBlock');
   const { values, setFieldValue } = formik;
 
   function addGroup() {
@@ -43,7 +45,7 @@ export function SkillsForm({ formik }: { formik: SkillsFormik }) {
 
   function removeTag(groupIndex: number, tag: string) {
     const current = values.data.groups[groupIndex].tags;
-    void setFieldValue(`data.groups[${groupIndex}].tags`, current.filter((t) => t !== tag));
+    void setFieldValue(`data.groups[${groupIndex}].tags`, current.filter((tg) => tg !== tag));
   }
 
   return (
@@ -52,7 +54,7 @@ export function SkillsForm({ formik }: { formik: SkillsFormik }) {
         <Box key={group.id} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, mb: 2 }}>
           <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1 }}>
             <TextField
-              label="Group name"
+              label={t('groupName')}
               size="small"
               value={group.name}
               onChange={(e) => void setFieldValue(`data.groups[${index}].name`, e.target.value)}
@@ -72,7 +74,7 @@ export function SkillsForm({ formik }: { formik: SkillsFormik }) {
           </Box>
           <TextField
             size="small"
-            placeholder="Type skill and press Enter"
+            placeholder={t('skillPlaceholder')}
             onKeyDown={(e) => handleTagKeyDown(e as React.KeyboardEvent<HTMLInputElement>, index)}
             fullWidth
             error={getIn(formik.touched, `data.groups[${index}].tags`) && Boolean(getIn(formik.errors, `data.groups[${index}].tags`))}
@@ -81,7 +83,7 @@ export function SkillsForm({ formik }: { formik: SkillsFormik }) {
         </Box>
       ))}
       <Button startIcon={<Icon name="plus" size={14} />} onClick={addGroup} variant="outlined" size="small">
-        Add group
+        {t('addGroup')}
       </Button>
     </Box>
   );

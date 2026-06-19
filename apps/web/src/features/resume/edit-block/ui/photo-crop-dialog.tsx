@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import { useTranslations } from 'next-intl';
 import Cropper from 'react-easy-crop';
 import type { Area, Point } from 'react-easy-crop';
 import Dialog from '@mui/material/Dialog';
@@ -47,6 +48,7 @@ async function getCroppedImg(imageSrc: string, pixelCrop: Area): Promise<string>
 }
 
 export function PhotoCropDialog({ open, src, shape, onConfirm, onCancel }: PhotoCropDialogProps) {
+  const t = useTranslations('resumeBuilderPage.editBlock');
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
@@ -74,7 +76,7 @@ export function PhotoCropDialog({ open, src, shape, onConfirm, onCancel }: Photo
 
   return (
     <Dialog open={open} onClose={handleCancel} maxWidth="sm" fullWidth>
-      <DialogTitle>Crop Photo</DialogTitle>
+      <DialogTitle>{t('cropPhoto')}</DialogTitle>
       <DialogContent>
         <Box sx={{ position: 'relative', width: '100%', height: 320, background: '#111' }}>
           <Cropper
@@ -102,8 +104,8 @@ export function PhotoCropDialog({ open, src, shape, onConfirm, onCancel }: Photo
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleCancel} color="inherit">Cancel</Button>
-        <Button onClick={() => void handleConfirm()} variant="contained">Apply</Button>
+        <Button onClick={handleCancel} color="inherit">{t('cancel')}</Button>
+        <Button onClick={() => void handleConfirm()} variant="contained">{t('apply')}</Button>
       </DialogActions>
     </Dialog>
   );
