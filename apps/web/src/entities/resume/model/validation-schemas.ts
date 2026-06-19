@@ -58,7 +58,7 @@ const headerSchema = Yup.object({
 const summarySchema = Yup.object({
   type: Yup.string(),
   data: Yup.object({
-    sectionTitle: Yup.string().optional(),
+    sectionTitle: Yup.string().required('Section title is required'),
     text: Yup.string().min(20, 'Summary should be at least 20 characters').required('Summary is required'),
   }),
 });
@@ -172,8 +172,8 @@ const awardsSchema = Yup.object({
     items: Yup.array().of(Yup.object({
       id:          Yup.string(),
       title:       Yup.string().required('Title is required'),
-      date:        dateField(),
-      description: Yup.string().optional(),
+      date:        dateField(true),
+      description: Yup.string().required('Description is required'),
     })),
   }),
 });

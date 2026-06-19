@@ -12,6 +12,15 @@ import type { BlockData, SkillsData } from '@/entities/resume/model/types';
 
 type SkillsFormik = ReturnType<typeof useFormik<Extract<BlockData, { type: 'skills' }>>>;
 
+const deleteButtonSx = {
+  border: '1px solid',
+  borderColor: 'divider',
+  borderRadius: 1,
+  p: '5px',
+  color: 'var(--ink-3)',
+  '&:hover': { color: 'error.main', borderColor: 'error.main', background: 'transparent' },
+} as const;
+
 export function SkillsForm({ formik }: { formik: SkillsFormik }) {
   const t = useTranslations('resumeBuilderPage.editBlock');
   const { values, setFieldValue } = formik;
@@ -51,8 +60,9 @@ export function SkillsForm({ formik }: { formik: SkillsFormik }) {
   return (
     <Box>
       {values.data.groups.map((group, index) => (
-        <Box key={group.id} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, mb: 2 }}>
-          <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1 }}>
+        <Box key={group.id} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: { xs: 1.5, sm: 2 }, mb: 2 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-start' }}>
             <TextField
               label={t('groupName')}
               size="small"
@@ -60,14 +70,14 @@ export function SkillsForm({ formik }: { formik: SkillsFormik }) {
               onChange={(e) => void setFieldValue(`data.groups[${index}].name`, e.target.value)}
               onBlur={() => void formik.setFieldTouched(`data.groups[${index}].name`, true)}
               error={getIn(formik.touched, `data.groups[${index}].name`) && Boolean(getIn(formik.errors, `data.groups[${index}].name`))}
-              helperText={getIn(formik.touched, `data.groups[${index}].name`) && getIn(formik.errors, `data.groups[${index}].name`)}
+              helperText={(getIn(formik.touched, `data.groups[${index}].name`) && getIn(formik.errors, `data.groups[${index}].name`)) || ' '}
               sx={{ flex: 1 }}
             />
-            <IconButton onClick={() => removeGroup(index)} aria-label="Remove group">
+            <IconButton onClick={() => removeGroup(index)} aria-label="Remove group" size="small" sx={deleteButtonSx}>
               <Icon name="trash" size={14} />
             </IconButton>
           </Box>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 1 }}>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
             {group.tags.map((tag) => (
               <Chip key={tag} label={tag} size="small" onDelete={() => removeTag(index, tag)} />
             ))}
@@ -78,13 +88,16 @@ export function SkillsForm({ formik }: { formik: SkillsFormik }) {
             onKeyDown={(e) => handleTagKeyDown(e as React.KeyboardEvent<HTMLInputElement>, index)}
             fullWidth
             error={getIn(formik.touched, `data.groups[${index}].tags`) && Boolean(getIn(formik.errors, `data.groups[${index}].tags`))}
-            helperText={getIn(formik.touched, `data.groups[${index}].tags`) && getIn(formik.errors, `data.groups[${index}].tags`)}
+            helperText={(getIn(formik.touched, `data.groups[${index}].tags`) && getIn(formik.errors, `data.groups[${index}].tags`)) || ' '}
           />
+          </Box>
         </Box>
       ))}
-      <Button startIcon={<Icon name="plus" size={14} />} onClick={addGroup} variant="outlined" size="small">
-        {t('addGroup')}
-      </Button>
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
+        <Button startIcon={<Icon name="plus" size={14} />} onClick={addGroup} variant="outlined" size="small">
+          {t('addGroup')}
+        </Button>
+      </Box>
     </Box>
   );
 }

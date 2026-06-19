@@ -97,71 +97,72 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
 
       {/* Photo upload */}
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 2 }}>
-        {/* Left: photo preview */}
-        <Box
-          onClick={() => photoInputRef.current?.click()}
-          sx={{
-            width:        shapePreview[shape].width,
-            height:       shapePreview[shape].height,
-            borderRadius: shapePreview[shape].borderRadius,
-            border: '2px dashed',
-            borderColor: values.data.photoUrl ? 'var(--border)' : 'var(--border-2)',
-            overflow: 'hidden',
-            flexShrink: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: 'var(--surface-2)',
-            cursor: 'pointer',
-            transition: 'border-color 0.15s ease, border-radius 0.15s ease, width 0.15s ease, height 0.15s ease',
-            '&:hover': { borderColor: 'var(--accent)' },
-          }}
-        >
-          {values.data.photoUrl ? (
-            <Box component="img" src={values.data.photoUrl} alt="Profile"
-              sx={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          ) : (
-            <Icon name="user" size={32} strokeWidth={1.4} style={{ color: 'var(--ink-3)' }} />
-          )}
-        </Box>
-
-        {/* Middle: upload / remove */}
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <Button
-            variant="outlined"
-            size="small"
+      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'flex-start', sm: 'center' }, gap: 2, mb: 2 }}>
+        {/* Photo preview + upload/remove buttons */}
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Box
             onClick={() => photoInputRef.current?.click()}
-            startIcon={<Icon name="upload" size={14} strokeWidth={1.9} />}
-            sx={{ fontSize: 12, textTransform: 'none' }}
+            sx={{
+              width:        shapePreview[shape].width,
+              height:       shapePreview[shape].height,
+              borderRadius: shapePreview[shape].borderRadius,
+              border: '2px dashed',
+              borderColor: values.data.photoUrl ? 'var(--border)' : 'var(--border-2)',
+              overflow: 'hidden',
+              flexShrink: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'var(--surface-2)',
+              cursor: 'pointer',
+              transition: 'border-color 0.15s ease, border-radius 0.15s ease, width 0.15s ease, height 0.15s ease',
+              '&:hover': { borderColor: 'var(--accent)' },
+            }}
           >
-            {values.data.photoUrl ? t('changePhoto') : t('uploadPhoto')}
-          </Button>
-          {values.data.photoUrl && (
+            {values.data.photoUrl ? (
+              <Box component="img" src={values.data.photoUrl} alt="Profile"
+                sx={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            ) : (
+              <Icon name="user" size={32} strokeWidth={1.4} style={{ color: 'var(--ink-3)' }} />
+            )}
+          </Box>
+
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
             <Button
               variant="outlined"
               size="small"
-              color="error"
-              onClick={() => void setFieldValue('data.photoUrl', undefined)}
-              startIcon={<Icon name="trash" size={14} strokeWidth={1.9} />}
+              onClick={() => photoInputRef.current?.click()}
+              startIcon={<Icon name="upload" size={14} strokeWidth={1.9} />}
               sx={{ fontSize: 12, textTransform: 'none' }}
             >
-              {t('removePhoto')}
+              {values.data.photoUrl ? t('changePhoto') : t('uploadPhoto')}
             </Button>
-          )}
+            {values.data.photoUrl && (
+              <Button
+                variant="outlined"
+                size="small"
+                color="error"
+                onClick={() => void setFieldValue('data.photoUrl', undefined)}
+                startIcon={<Icon name="trash" size={14} strokeWidth={1.9} />}
+                sx={{ fontSize: 12, textTransform: 'none' }}
+              >
+                {t('removePhoto')}
+              </Button>
+            )}
+          </Box>
         </Box>
 
-        {/* Shape picker */}
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+        {/* Shape picker — on mobile appears below photo row */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, flex: 1 }}>
           <Box sx={{ fontSize: 12, color: 'text.secondary' }}>{t('shape')}</Box>
-          <Box sx={{ display: 'flex', gap: 1 }}>
+          <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', '@media (max-width: 767px)': { '& > button': { flex: 1 } } }}>
             {shapeOptions.map(({ value, label }) => (
               <Button
                 key={value}
                 variant={shape === value ? 'contained' : 'outlined'}
                 size="small"
                 onClick={() => void setFieldValue('data.photoShape', value)}
-                sx={{ fontSize: 12, textTransform: 'none', minWidth: 76 }}
+                sx={{ fontSize: 12, textTransform: 'none', minWidth: 72 }}
               >
                 {label}
               </Button>
@@ -174,15 +175,15 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
       </Box>
 
       {/* Name */}
-      <Box sx={{ display: 'flex', gap: 2 }}>
+      <Box sx={{ display: 'flex', gap: { xs: 1, sm: 2 }, flexWrap: 'wrap', '@media (max-width: 767px)': { flexDirection: 'column', flexWrap: 'nowrap', gap: 1 } }}>
         <TextField
-          label={t('firstName')} size="small" name="data.firstName" sx={{ flex: 1 }}
+          label={t('firstName')} size="small" name="data.firstName" sx={{ flex: '1 1 140px' }}
           value={values.data.firstName} onChange={handleChange} onBlur={handleBlur}
           error={!!getIn(formik.touched, 'data.firstName') && !!getIn(formik.errors, 'data.firstName')}
           helperText={(getIn(formik.touched, 'data.firstName') && getIn(formik.errors, 'data.firstName')) || ' '}
         />
         <TextField
-          label={t('lastName')} size="small" name="data.lastName" sx={{ flex: 1 }}
+          label={t('lastName')} size="small" name="data.lastName" sx={{ flex: '1 1 140px' }}
           value={values.data.lastName} onChange={handleChange} onBlur={handleBlur}
           error={!!getIn(formik.touched, 'data.lastName') && !!getIn(formik.errors, 'data.lastName')}
           helperText={(getIn(formik.touched, 'data.lastName') && getIn(formik.errors, 'data.lastName')) || ' '}
@@ -198,15 +199,15 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
       />
 
       {/* Email + Phone (optional) */}
-      <Box sx={{ display: 'flex', gap: 2 }}>
+      <Box sx={{ display: 'flex', gap: { xs: 1, sm: 2 }, flexWrap: 'wrap', '@media (max-width: 767px)': { flexDirection: 'column', flexWrap: 'nowrap', gap: 1 } }}>
         <TextField
-          label={t('email')} size="small" type="email" name="data.email" sx={{ flex: 1 }}
+          label={t('email')} size="small" type="email" name="data.email" sx={{ flex: '1 1 180px' }}
           value={values.data.email} onChange={handleChange} onBlur={handleBlur}
           error={!!getIn(formik.touched, 'data.email') && !!getIn(formik.errors, 'data.email')}
           helperText={(getIn(formik.touched, 'data.email') && getIn(formik.errors, 'data.email')) || ' '}
         />
         <TextField
-          label={t('phoneOptional')} size="small" name="data.phone" sx={{ flex: 1 }}
+          label={t('phoneOptional')} size="small" name="data.phone" sx={{ flex: '1 1 140px' }}
           value={values.data.phone ?? ''}
           onChange={handleChange} onBlur={handleBlur}
           error={!!getIn(formik.touched, 'data.phone') && !!getIn(formik.errors, 'data.phone')}
@@ -215,14 +216,14 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
       </Box>
 
       {/* Location (optional) + Website (optional) */}
-      <Box sx={{ display: 'flex', gap: 2 }}>
+      <Box sx={{ display: 'flex', gap: { xs: 1, sm: 2 }, flexWrap: 'wrap', '@media (max-width: 767px)': { flexDirection: 'column', flexWrap: 'nowrap', gap: 1 } }}>
         <TextField
-          label={t('locationOptional')} size="small" name="data.location" sx={{ flex: 1 }}
+          label={t('locationOptional')} size="small" name="data.location" sx={{ flex: '1 1 140px' }}
           value={values.data.location ?? ''} onChange={handleChange} onBlur={handleBlur}
           helperText=" "
         />
         <TextField
-          label={t('websiteOptional')} size="small" name="data.website" sx={{ flex: 1 }}
+          label={t('websiteOptional')} size="small" name="data.website" sx={{ flex: '1 1 180px' }}
           value={values.data.website ?? ''} onChange={handleChange} onBlur={handleBlur}
           error={!!getIn(formik.touched, 'data.website') && !!getIn(formik.errors, 'data.website')}
           helperText={(getIn(formik.touched, 'data.website') && getIn(formik.errors, 'data.website')) || ' '}

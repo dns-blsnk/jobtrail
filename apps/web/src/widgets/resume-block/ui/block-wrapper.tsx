@@ -61,6 +61,16 @@ export function BlockWrapper({ id, isHeader, isPreview, isEmpty, blockType, chil
               <Icon name="pencil" size={14} strokeWidth={1.9} />
               Edit
             </button>
+            {blockType !== 'header' && (
+              <button
+                type="button"
+                className={s.deleteBtn}
+                onClick={() => removeBlock(id)}
+                aria-label="Delete block"
+              >
+                <Icon name="trash" size={14} strokeWidth={1.9} />
+              </button>
+            )}
           </div>
         )}
         {isEmpty && !isPreview ? (

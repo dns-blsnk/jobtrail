@@ -41,7 +41,7 @@ export function BlockTypeSelector({ open, onClose, onBlockAdded }: BlockTypeSele
   const usedTypes = new Set(activeDraft?.blocks.map((b) => b.blockData.type) ?? []);
 
   function handleSelect(type: BlockType) {
-    if (usedTypes.has(type)) return;
+    if (usedTypes.has(type) && type !== 'custom') return;
     const blockId = addBlock(type);
     onClose();
     if (blockId) {
@@ -55,7 +55,7 @@ export function BlockTypeSelector({ open, onClose, onBlockAdded }: BlockTypeSele
       <DialogContent>
         <div className={s.blockTypeGrid}>
           {BLOCK_OPTIONS.map((option) => {
-            const isUsed = usedTypes.has(option.type);
+            const isUsed = usedTypes.has(option.type) && option.type !== 'custom';
             return (
               <button
                 key={option.type}

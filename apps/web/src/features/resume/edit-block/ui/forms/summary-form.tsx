@@ -14,13 +14,14 @@ export function SummaryForm({ formik }: { formik: SummaryFormik }) {
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       <TextField
         fullWidth
-        label={t('sectionTitleOptional')}
+        label={t('sectionTitle')}
         size="small"
         name="data.sectionTitle"
-        placeholder="Profile"
         value={formik.values.data.sectionTitle ?? ''}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
+        error={!!getIn(formik.touched, 'data.sectionTitle') && !!getIn(formik.errors, 'data.sectionTitle')}
+        helperText={(getIn(formik.touched, 'data.sectionTitle') && getIn(formik.errors, 'data.sectionTitle')) || ' '}
       />
       <TextField
         fullWidth
