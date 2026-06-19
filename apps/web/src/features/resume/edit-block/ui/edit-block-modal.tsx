@@ -41,23 +41,110 @@ const BLOCK_FORMS = {
   custom: dynamic(() => import('@/features/resume/edit-block/ui/forms/custom-form').then((m) => m.CustomForm), {loading}),
 } satisfies Record<BlockType, unknown>;
 
+function getNewBlockFormValues(type: BlockType): BlockData {
+  switch (type) {
+    case 'header':
+      return {
+        type: 'header',
+        data: { firstName: '', lastName: '', jobTitle: '', email: '', photoShape: 'circle', links: [] },
+      };
+    case 'summary':
+      return { type: 'summary', data: { sectionTitle: '', text: '' } };
+    case 'experience':
+      return {
+        type: 'experience',
+        data: {
+          items: [{
+            id: crypto.randomUUID(),
+            company: '', role: '', startDate: '', endDate: '',
+            present: false, location: '', description: '',
+          }],
+        },
+      };
+    case 'education':
+      return {
+        type: 'education',
+        data: {
+          items: [{
+            id: crypto.randomUUID(),
+            institution: '', degree: '', field: '',
+            startDate: '', endDate: '', gpa: '',
+          }],
+        },
+      };
+    case 'skills':
+      return {
+        type: 'skills',
+        data: { groups: [{ id: crypto.randomUUID(), name: '', tags: [] }] },
+      };
+    case 'projects':
+      return {
+        type: 'projects',
+        data: {
+          items: [{
+            id: crypto.randomUUID(),
+            name: '', description: '', techStack: [],
+            url: '', startDate: '', endDate: '',
+          }],
+        },
+      };
+    case 'languages':
+      return {
+        type: 'languages',
+        data: { items: [{ id: crypto.randomUUID(), language: '', level: 'B2' }] },
+      };
+    case 'certifications':
+      return {
+        type: 'certifications',
+        data: {
+          items: [{
+            id: crypto.randomUUID(),
+            name: '', issuer: '', issueDate: '', expiryDate: '', url: '',
+          }],
+        },
+      };
+    case 'social-links':
+      return {
+        type: 'social-links',
+        data: { items: [{ id: crypto.randomUUID(), platform: 'LinkedIn', url: '' }] },
+      };
+    case 'awards':
+      return {
+        type: 'awards',
+        data: { items: [{ id: crypto.randomUUID(), title: '', date: '', description: '' }] },
+      };
+    case 'custom':
+      return { type: 'custom', data: { sectionTitle: '', content: '' } };
+  }
+}
 
 interface EditBlockModalProps {
   open: boolean;
   blockId: string | null;
+  pendingBlockType?: BlockType | null;
   isNew: boolean;
   onClose: () => void;
 }
 
-export function EditBlockModal({ open, blockId, isNew, onClose }: EditBlockModalProps) {
+export function EditBlockModal({ open, blockId, pendingBlockType, isNew, onClose }: EditBlockModalProps) {
   const t = useTranslations('resumeBuilderPage.editBlockTitles');
   const tBlock = useTranslations('resumeBuilderPage.editBlock');
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const { drafts, activeDraftId, updateBlock, removeBlock } = useResumeStore();
+  const { drafts, activeDraftId, updateBlock, removeBlock, addBlockWithData } = useResumeStore();
 
   const activeDraft = drafts.find((d) => d.id === activeDraftId) ?? null;
-  const block = activeDraft?.blocks.find((b) => b.id === blockId) ?? null;
+
+  const existingBlock = blockId
+    ? (activeDraft?.blocks.find((b) => b.id === blockId) ?? null)
+    : null;
+
+  const blockType: BlockType | null =
+    existingBlock?.blockData.type ?? pendingBlockType ?? null;
+
+  const initialValues: BlockData =
+    existingBlock?.blockData ??
+    (pendingBlockType ? getNewBlockFormValues(pendingBlockType) : { type: 'summary', data: { sectionTitle: '', text: '' } });
 
   const handleClose = useCallback(() => {
     if (isNew && blockId) removeBlock(blockId);
@@ -65,18 +152,21 @@ export function EditBlockModal({ open, blockId, isNew, onClose }: EditBlockModal
   }, [isNew, blockId, removeBlock, onClose]);
 
   const formik = useFormik<BlockData>({
-    initialValues: block?.blockData ?? { type: 'summary', data: { text: '' } },
+    initialValues,
     enableReinitialize: true,
-    validationSchema: block ? getValidationSchema(block.blockData.type) : undefined,
+    validationSchema: blockType ? getValidationSchema(blockType) : undefined,
     onSubmit: (values) => {
-      if (blockId) updateBlock(blockId, values);
+      if (isNew && !blockId) {
+        addBlockWithData(values);
+      } else if (blockId) {
+        updateBlock(blockId, values);
+      }
       onClose();
     },
   });
 
-  if (!block) return null;
+  if (!blockType) return null;
 
-  const blockType = block.blockData.type;
   const ActiveForm = BLOCK_FORMS[blockType] as ComponentType<{ formik: typeof formik }>;
 
   return (
@@ -96,7 +186,9 @@ export function EditBlockModal({ open, blockId, isNew, onClose }: EditBlockModal
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="inherit">{tBlock('cancel')}</Button>
-        <Button type="submit" form="edit-block-form" variant="contained" disabled={formik.isSubmitting}>{tBlock('save')}</Button>
+        <Button type="submit" form="edit-block-form" variant="contained" disabled={formik.isSubmitting}>
+          {isNew ? tBlock('apply') : tBlock('save')}
+        </Button>
       </DialogActions>
     </Dialog>
   );

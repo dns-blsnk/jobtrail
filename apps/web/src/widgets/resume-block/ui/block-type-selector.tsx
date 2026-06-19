@@ -13,7 +13,7 @@ import s from './resume-block.module.scss';
 interface BlockTypeSelectorProps {
   open: boolean;
   onClose: () => void;
-  onBlockAdded: (blockId: string) => void;
+  onTypeSelected: (type: BlockType) => void;
 }
 
 interface BlockTypeOption {
@@ -35,18 +35,15 @@ const BLOCK_OPTIONS: BlockTypeOption[] = [
   { type: 'custom', label: 'Custom', icon: 'fileText' },
 ];
 
-export function BlockTypeSelector({ open, onClose, onBlockAdded }: BlockTypeSelectorProps) {
-  const { drafts, activeDraftId, addBlock } = useResumeStore();
+export function BlockTypeSelector({ open, onClose, onTypeSelected }: BlockTypeSelectorProps) {
+  const { drafts, activeDraftId } = useResumeStore();
   const activeDraft = drafts.find((d) => d.id === activeDraftId);
   const usedTypes = new Set(activeDraft?.blocks.map((b) => b.blockData.type) ?? []);
 
   function handleSelect(type: BlockType) {
     if (usedTypes.has(type) && type !== 'custom') return;
-    const blockId = addBlock(type);
     onClose();
-    if (blockId) {
-      onBlockAdded(blockId);
-    }
+    onTypeSelected(type);
   }
 
   return (

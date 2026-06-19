@@ -4,19 +4,12 @@ import { useState } from 'react';
 import { Icon } from '@/shared/ui/icon/icon';
 import { BlockTypeSelector } from '@/widgets/resume-block/ui/block-type-selector';
 import { EditBlockModal } from '@/features/resume/edit-block/ui/edit-block-modal';
+import type { BlockType } from '@/entities/resume/model/types';
 import s from './resume-block.module.scss';
 
 export function AddBlockButton() {
   const [selectorOpen, setSelectorOpen] = useState(false);
-  const [editingNewBlockId, setEditingNewBlockId] = useState<string | null>(null);
-
-  function handleBlockAdded(blockId: string) {
-    setEditingNewBlockId(blockId);
-  }
-
-  function handleEditClose() {
-    setEditingNewBlockId(null);
-  }
+  const [pendingBlockType, setPendingBlockType] = useState<BlockType | null>(null);
 
   return (
     <>
@@ -29,16 +22,19 @@ export function AddBlockButton() {
         <Icon name="plus" size={16} strokeWidth={2.2} />
         Add section
       </button>
+
       <BlockTypeSelector
         open={selectorOpen}
         onClose={() => setSelectorOpen(false)}
-        onBlockAdded={handleBlockAdded}
+        onTypeSelected={(type) => setPendingBlockType(type)}
       />
+
       <EditBlockModal
-        open={editingNewBlockId !== null}
-        blockId={editingNewBlockId}
+        open={pendingBlockType !== null}
+        blockId={null}
+        pendingBlockType={pendingBlockType}
         isNew={true}
-        onClose={handleEditClose}
+        onClose={() => setPendingBlockType(null)}
       />
     </>
   );

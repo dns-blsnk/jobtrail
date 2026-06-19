@@ -19,6 +19,7 @@ interface ResumeStore {
   setActiveDraft: (id: string) => void;
   setDraftTemplate: (id: string, templateId: TemplateId) => void;
   addBlock: (type: BlockType) => string;
+  addBlockWithData: (blockData: BlockData) => string;
   updateBlock: (blockId: string, blockData: BlockData) => void;
   removeBlock: (blockId: string) => void;
   reorderBlocks: (newOrder: string[]) => void;
@@ -162,6 +163,24 @@ export const useResumeStore = create<ResumeStore>()(
           ),
         }));
         void drafts;
+        return blockId;
+      },
+
+      addBlockWithData: (blockData: BlockData): string => {
+        const { activeDraftId } = get();
+        if (!activeDraftId) return '';
+        const blockId = crypto.randomUUID();
+        set((state) => ({
+          drafts: state.drafts.map((d) =>
+            d.id === activeDraftId
+              ? {
+                  ...d,
+                  updatedAt: new Date().toISOString(),
+                  blocks: [...d.blocks, { id: blockId, blockData }],
+                }
+              : d
+          ),
+        }));
         return blockId;
       },
 
