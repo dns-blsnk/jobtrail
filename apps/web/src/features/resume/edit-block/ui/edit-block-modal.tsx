@@ -153,7 +153,6 @@ export function EditBlockModal({ open, blockId, pendingBlockType, isNew, onClose
 
   const formik = useFormik<BlockData>({
     initialValues,
-    enableReinitialize: true,
     validationSchema: blockType ? getValidationSchema(blockType) : undefined,
     onSubmit: (values) => {
       if (isNew && !blockId) {
