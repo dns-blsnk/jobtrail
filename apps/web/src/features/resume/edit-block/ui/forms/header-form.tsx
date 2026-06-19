@@ -65,6 +65,15 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
   const links = values.data.links ?? [];
   const platforms: SocialLinkItem['platform'][] = ['LinkedIn', 'GitHub', 'Portfolio', 'Twitter', 'Other'];
 
+  // Track which link IDs were present when the form was last submitted.
+  // New links added after a failed submit don't show errors until the next submit attempt.
+  const submittedLinkIds = useRef(new Set<string>());
+  const prevSubmitCount = useRef(formik.submitCount);
+  if (formik.submitCount > prevSubmitCount.current) {
+    prevSubmitCount.current = formik.submitCount;
+    submittedLinkIds.current = new Set(links.map((l) => l.id));
+  }
+
   function addLink() {
     if (links.length >= MAX_HEADER_LINKS) return;
     void setFieldValue('data.links', [
@@ -249,11 +258,11 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
                 onChange={(e) => void setFieldValue(`data.links[${index}].title`, e.target.value)}
                 onBlur={() => void formik.setFieldTouched(`data.links[${index}].title`, true)}
                 error={
-                  (getIn(formik.touched, `data.links[${index}].title`) || formik.submitCount > 0) &&
+                  (getIn(formik.touched, `data.links[${index}].title`) || submittedLinkIds.current.has(link.id)) &&
                   Boolean(getIn(formik.errors, `data.links[${index}].title`))
                 }
                 helperText={
-                  ((getIn(formik.touched, `data.links[${index}].title`) || formik.submitCount > 0) &&
+                  ((getIn(formik.touched, `data.links[${index}].title`) || submittedLinkIds.current.has(link.id)) &&
                   getIn(formik.errors, `data.links[${index}].title`)) || ' '
                 }
               />
@@ -284,11 +293,11 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
                 onChange={(e) => void setFieldValue(`data.links[${index}].url`, e.target.value)}
                 onBlur={() => void formik.setFieldTouched(`data.links[${index}].url`, true)}
                 error={
-                  (getIn(formik.touched, `data.links[${index}].url`) || formik.submitCount > 0) &&
+                  (getIn(formik.touched, `data.links[${index}].url`) || submittedLinkIds.current.has(link.id)) &&
                   Boolean(getIn(formik.errors, `data.links[${index}].url`))
                 }
                 helperText={
-                  ((getIn(formik.touched, `data.links[${index}].url`) || formik.submitCount > 0) &&
+                  ((getIn(formik.touched, `data.links[${index}].url`) || submittedLinkIds.current.has(link.id)) &&
                   getIn(formik.errors, `data.links[${index}].url`)) || ' '
                 }
               />
