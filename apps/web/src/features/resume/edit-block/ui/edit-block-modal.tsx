@@ -9,48 +9,36 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 import {useFormik} from 'formik';
 import {useTranslations} from 'next-intl';
 import {useResumeStore} from '@/entities/resume/model/resume-store';
 import {getValidationSchema} from '@/entities/resume/model/validation-schemas';
 import type {BlockData, BlockType} from '@/entities/resume/model/types';
-import {HeaderFormSkeleton}       from '@/features/resume/edit-block/ui/forms/skeletons/header-form-skeleton';
-import {SummaryFormSkeleton}      from '@/features/resume/edit-block/ui/forms/skeletons/summary-form-skeleton';
-import {ExperienceFormSkeleton}   from '@/features/resume/edit-block/ui/forms/skeletons/experience-form-skeleton';
-import {EducationFormSkeleton}    from '@/features/resume/edit-block/ui/forms/skeletons/education-form-skeleton';
-import {SkillsFormSkeleton}       from '@/features/resume/edit-block/ui/forms/skeletons/skills-form-skeleton';
-import {ProjectsFormSkeleton}     from '@/features/resume/edit-block/ui/forms/skeletons/projects-form-skeleton';
-import {LanguagesFormSkeleton}    from '@/features/resume/edit-block/ui/forms/skeletons/languages-form-skeleton';
+import {HeaderFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/header-form-skeleton';
+import {SummaryFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/summary-form-skeleton';
+import {ExperienceFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/experience-form-skeleton';
+import {EducationFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/education-form-skeleton';
+import {SkillsFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/skills-form-skeleton';
+import {ProjectsFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/projects-form-skeleton';
+import {LanguagesFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/languages-form-skeleton';
 import {CertificationsFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/certifications-form-skeleton';
-import {SocialLinksFormSkeleton}  from '@/features/resume/edit-block/ui/forms/skeletons/social-links-form-skeleton';
-import {AwardsFormSkeleton}       from '@/features/resume/edit-block/ui/forms/skeletons/awards-form-skeleton';
-import {CustomFormSkeleton}       from '@/features/resume/edit-block/ui/forms/skeletons/custom-form-skeleton';
-
-function FormFallback() {
-  return (
-      <Box sx={{display: 'flex', justifyContent: 'center', py: 6}}>
-        <CircularProgress size={28}/>
-      </Box>
-  );
-}
-
-const loading = () => <FormFallback/>;
+import {SocialLinksFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/social-links-form-skeleton';
+import {AwardsFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/awards-form-skeleton';
+import {CustomFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/custom-form-skeleton';
 
 const BLOCK_FORMS = {
-  header:         dynamic(() => import('@/features/resume/edit-block/ui/forms/header-form').then((m) => m.HeaderForm), {loading}),
-  summary:        dynamic(() => import('@/features/resume/edit-block/ui/forms/summary-form').then((m) => m.SummaryForm), {loading}),
-  experience:     dynamic(() => import('@/features/resume/edit-block/ui/forms/experience-form').then((m) => m.ExperienceForm), {loading}),
-  education:      dynamic(() => import('@/features/resume/edit-block/ui/forms/education-form').then((m) => m.EducationForm), {loading}),
-  skills:         dynamic(() => import('@/features/resume/edit-block/ui/forms/skills-form').then((m) => m.SkillsForm), {loading}),
-  projects:       dynamic(() => import('@/features/resume/edit-block/ui/forms/projects-form').then((m) => m.ProjectsForm), {loading}),
-  languages:      dynamic(() => import('@/features/resume/edit-block/ui/forms/languages-form').then((m) => m.LanguagesForm), {loading}),
-  certifications: dynamic(() => import('@/features/resume/edit-block/ui/forms/certifications-form').then((m) => m.CertificationsForm), {loading}),
-  'social-links': dynamic(() => import('@/features/resume/edit-block/ui/forms/social-links-form').then((m) => m.SocialLinksForm), {loading}),
-  awards:         dynamic(() => import('@/features/resume/edit-block/ui/forms/awards-form').then((m) => m.AwardsForm), {loading}),
-  custom:         dynamic(() => import('@/features/resume/edit-block/ui/forms/custom-form').then((m) => m.CustomForm), {loading}),
+  header:         dynamic(() => import('@/features/resume/edit-block/ui/forms/header-form').then((m) => m.HeaderForm),         { loading: () => <HeaderFormSkeleton /> }),
+  summary:        dynamic(() => import('@/features/resume/edit-block/ui/forms/summary-form').then((m) => m.SummaryForm),       { loading: () => <SummaryFormSkeleton /> }),
+  experience:     dynamic(() => import('@/features/resume/edit-block/ui/forms/experience-form').then((m) => m.ExperienceForm), { loading: () => <ExperienceFormSkeleton /> }),
+  education:      dynamic(() => import('@/features/resume/edit-block/ui/forms/education-form').then((m) => m.EducationForm),   { loading: () => <EducationFormSkeleton /> }),
+  skills:         dynamic(() => import('@/features/resume/edit-block/ui/forms/skills-form').then((m) => m.SkillsForm),         { loading: () => <SkillsFormSkeleton /> }),
+  projects:       dynamic(() => import('@/features/resume/edit-block/ui/forms/projects-form').then((m) => m.ProjectsForm),     { loading: () => <ProjectsFormSkeleton /> }),
+  languages:      dynamic(() => import('@/features/resume/edit-block/ui/forms/languages-form').then((m) => m.LanguagesForm),   { loading: () => <LanguagesFormSkeleton /> }),
+  certifications: dynamic(() => import('@/features/resume/edit-block/ui/forms/certifications-form').then((m) => m.CertificationsForm), { loading: () => <CertificationsFormSkeleton /> }),
+  'social-links': dynamic(() => import('@/features/resume/edit-block/ui/forms/social-links-form').then((m) => m.SocialLinksForm), { loading: () => <SocialLinksFormSkeleton /> }),
+  awards:         dynamic(() => import('@/features/resume/edit-block/ui/forms/awards-form').then((m) => m.AwardsForm),         { loading: () => <AwardsFormSkeleton /> }),
+  custom:         dynamic(() => import('@/features/resume/edit-block/ui/forms/custom-form').then((m) => m.CustomForm),         { loading: () => <CustomFormSkeleton /> }),
 } satisfies Record<BlockType, unknown>;
 
 const BLOCK_SKELETONS: Record<BlockType, ComponentType> = {
