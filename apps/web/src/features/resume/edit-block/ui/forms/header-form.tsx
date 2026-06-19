@@ -77,6 +77,7 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
     void setFieldValue('data.links', links.filter((_, i) => i !== index));
   }
 
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
 
@@ -248,11 +249,11 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
                 onChange={(e) => void setFieldValue(`data.links[${index}].title`, e.target.value)}
                 onBlur={() => void formik.setFieldTouched(`data.links[${index}].title`, true)}
                 error={
-                  getIn(formik.touched, `data.links[${index}].title`) &&
+                  (getIn(formik.touched, `data.links[${index}].title`) || formik.submitCount > 0) &&
                   Boolean(getIn(formik.errors, `data.links[${index}].title`))
                 }
                 helperText={
-                  (getIn(formik.touched, `data.links[${index}].title`) &&
+                  ((getIn(formik.touched, `data.links[${index}].title`) || formik.submitCount > 0) &&
                   getIn(formik.errors, `data.links[${index}].title`)) || ' '
                 }
               />
@@ -283,11 +284,11 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
                 onChange={(e) => void setFieldValue(`data.links[${index}].url`, e.target.value)}
                 onBlur={() => void formik.setFieldTouched(`data.links[${index}].url`, true)}
                 error={
-                  getIn(formik.touched, `data.links[${index}].url`) &&
+                  (getIn(formik.touched, `data.links[${index}].url`) || formik.submitCount > 0) &&
                   Boolean(getIn(formik.errors, `data.links[${index}].url`))
                 }
                 helperText={
-                  (getIn(formik.touched, `data.links[${index}].url`) &&
+                  ((getIn(formik.touched, `data.links[${index}].url`) || formik.submitCount > 0) &&
                   getIn(formik.errors, `data.links[${index}].url`)) || ' '
                 }
               />
