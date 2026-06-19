@@ -2,6 +2,10 @@
 
 import { useState } from 'react';
 import { clsx } from 'clsx';
+import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import {
   DndContext,
   PointerSensor,
@@ -107,12 +111,66 @@ export function ResumeEditor({ isPreview }: ResumeEditorProps) {
   const { drafts, activeDraftId, reorderBlocks } = useResumeStore();
   const activeDraft = drafts.find((d) => d.id === activeDraftId) ?? null;
   const [activeDragId, setActiveDragId] = useState<string | null>(null);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isLoading = false;
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
     useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 5 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
   );
+
+  if (isLoading) {
+    return (
+      <div className={s.editor}>
+        {isMobile && (
+          <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+            {[0, 1, 2].map((i) => (
+              <Skeleton
+                key={i}
+                variant="rectangular"
+                width={60}
+                height={32}
+                animation="wave"
+                sx={{ borderRadius: '16px', flexShrink: 0 }}
+              />
+            ))}
+          </Box>
+        )}
+        <div className={s.canvas}>
+          {isMobile ? (
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+              <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'flex-start' }}>
+                <Skeleton
+                  variant="rectangular"
+                  width={80}
+                  height={80}
+                  animation="wave"
+                  sx={{ borderRadius: '8px', flexShrink: 0 }}
+                />
+                <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+                  <Skeleton variant="rectangular" width="60%" height={24} animation="wave" sx={{ borderRadius: '4px' }} />
+                  <Skeleton variant="rectangular" width="40%" height={16} animation="wave" sx={{ borderRadius: '4px' }} />
+                  <Skeleton variant="rectangular" width="50%" height={16} animation="wave" sx={{ borderRadius: '4px' }} />
+                </Box>
+              </Box>
+              <Skeleton variant="rectangular" width="100%" height={60} animation="wave" sx={{ borderRadius: '8px' }} />
+              <Skeleton variant="rectangular" width="100%" height={80} animation="wave" sx={{ borderRadius: '8px' }} />
+              <Skeleton variant="rectangular" width="100%" height={80} animation="wave" sx={{ borderRadius: '8px' }} />
+            </Box>
+          ) : (
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <Skeleton variant="rectangular" width="100%" height={120} animation="wave" sx={{ borderRadius: '8px' }} />
+              <Skeleton variant="rectangular" width="100%" height={80} animation="wave" sx={{ borderRadius: '8px' }} />
+              <Skeleton variant="rectangular" width="100%" height={100} animation="wave" sx={{ borderRadius: '8px' }} />
+              <Skeleton variant="rectangular" width="100%" height={100} animation="wave" sx={{ borderRadius: '8px' }} />
+            </Box>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   if (!activeDraft) {
     return (
