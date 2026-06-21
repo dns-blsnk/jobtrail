@@ -16,6 +16,8 @@ model User {
   updatedAt      DateTime        @updatedAt
   refreshTokens  RefreshToken[]
   oAuthProviders OAuthProvider[]
+  jobs           Job[]
+  profile        UserProfile?
 }
 
 model RefreshToken {
@@ -49,6 +51,113 @@ enum Provider {
   GOOGLE
   GITHUB
   LINKEDIN
+}
+
+model Job {
+  id             String          @id @default(uuid())
+  userId         String
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  sourceUrl      String?
+  source         JobSource?
+
+  title          String
+  company        String
+  location       String?
+  remote         Boolean?
+  workFormat     WorkFormat?
+
+  salaryMin      Int?
+  salaryMax      Int?
+  salaryCurrency String?         @default("USD")
+
+  description    String?         @db.Text
+  requirements   String?         @db.Text
+
+  techStack      String[]
+  seniority      ExperienceLevel?
+  matchScore     Int?
+
+  status         JobStatus       @default(SAVED)
+  appliedAt      DateTime?
+  deadline       DateTime?
+  notes          String?
+
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([userId])
+  @@index([userId, status])
+}
+
+enum JobSource {
+  LINKEDIN
+  INDEED
+  GLASSDOOR
+  DJINNI
+  DOU
+  OTHER
+}
+
+enum JobStatus {
+  SAVED
+  APPLYING
+  APPLIED
+  INTERVIEW
+  OFFER
+  REJECTED
+  ARCHIVED
+}
+
+enum WorkFormat {
+  REMOTE
+  HYBRID
+  ONSITE
+  ANY
+}
+
+enum SearchStatus {
+  ACTIVELY_LOOKING
+  OPEN_TO_OPPORTUNITIES
+  NOT_LOOKING
+}
+
+enum ExperienceLevel {
+  INTERN
+  JUNIOR
+  MIDDLE
+  SENIOR
+  LEAD
+  PRINCIPAL
+}
+
+model UserProfile {
+  id               String           @id @default(uuid())
+  userId           String           @unique
+  user             User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  headline         String?
+  bio              String?
+  location         String?
+  avatarUrl        String?
+
+  experienceLevel  ExperienceLevel?
+  targetRoles      String[]
+  preferredStack   String[]
+  salaryMin        Int?
+  salaryMax        Int?
+  salaryCurrency   String?          @default("USD")
+  workFormat       WorkFormat?
+  availableFrom    DateTime?
+
+  searchStatus     SearchStatus     @default(ACTIVELY_LOOKING)
+
+  linkedinUrl      String?
+  githubUrl        String?
+  portfolioUrl     String?
+
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
 }
 
 model ContactMessage {
