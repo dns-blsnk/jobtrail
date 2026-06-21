@@ -6,7 +6,7 @@ import Skeleton from '@mui/material/Skeleton';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useResumeStore } from '@/entities/resume/model/resume-store';
-import { Icon } from '@/shared/ui/icon/icon';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { CreateDraftButton } from '@/features/resume/manage-draft/ui/create-draft-button';
 import { DraftCard } from '@/widgets/resume-sidebar/ui/draft-card';
 import s from './resume-sidebar.module.scss';
@@ -22,7 +22,7 @@ export function ResumeSidebar({ isOpen, onClose }: ResumeSidebarProps) {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isLoading = false;
 
-  function handleDraftSelect(id: string) {
+  function handleDraftSelect(_id: string) {
     onClose();
   }
 
@@ -48,7 +48,7 @@ export function ResumeSidebar({ isOpen, onClose }: ResumeSidebarProps) {
             onClick={onClose}
             aria-label="Close drafts panel"
           >
-            <Icon name="x" size={18} strokeWidth={1.9} />
+            <CloseOutlinedIcon sx={{ fontSize: 18 }} />
           </button>
         </div>
       )}

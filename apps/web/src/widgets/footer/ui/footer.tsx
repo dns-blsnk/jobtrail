@@ -16,8 +16,6 @@ const NAV_LINKS = [
   { href: '/terms', key: 'terms' },
 ] as const;
 
-type NavKey = (typeof NAV_LINKS)[number]['key'];
-
 export function Footer() {
   const t = useTranslations('footer');
   const pathname = usePathname();
@@ -28,7 +26,7 @@ export function Footer() {
         <nav aria-label="Footer navigation" className={s.nav}>
           {NAV_LINKS.map(({ href, key }) => (
             <Link key={key} className={clsx(s.link, pathname === href && s.linkActive)} href={href}>
-              {t(`nav.${key as NavKey}`)}
+              {t(`nav.${key}`)}
             </Link>
           ))}
         </nav>

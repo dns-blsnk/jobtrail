@@ -5,10 +5,13 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
-import { useFormik, getIn } from 'formik';
+import { type useFormik, getIn } from 'formik';
 import { useTranslations } from 'next-intl';
-import { Icon } from '@/shared/ui/icon/icon';
+import ArrowUpwardOutlinedIcon from '@mui/icons-material/ArrowUpwardOutlined';
+import ArrowDownwardOutlinedIcon from '@mui/icons-material/ArrowDownwardOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { row } from '@/features/resume/edit-block/ui/forms/form-row';
+import { Icon } from '@/shared/ui/icon/icon';
 import type { BlockData, ExperienceItem } from '@/entities/resume/model/types';
 
 type ExperienceFormik = ReturnType<typeof useFormik<Extract<BlockData, { type: 'experience' }>>>;
@@ -98,7 +101,7 @@ export function ExperienceForm({ formik }: { formik: ExperienceFormik }) {
                 size="small"
                 sx={moveButtonSx}
               >
-                <Icon name="moveUp" size={14} />
+                <ArrowUpwardOutlinedIcon sx={{ fontSize: 14 }} />
               </IconButton>
               <IconButton
                 onClick={() => moveDown(index)}
@@ -107,7 +110,7 @@ export function ExperienceForm({ formik }: { formik: ExperienceFormik }) {
                 size="small"
                 sx={moveButtonSx}
               >
-                <Icon name="moveDown" size={14} />
+                <ArrowDownwardOutlinedIcon sx={{ fontSize: 14 }} />
               </IconButton>
               <IconButton
                 onClick={() => removeItem(index)}
@@ -115,7 +118,7 @@ export function ExperienceForm({ formik }: { formik: ExperienceFormik }) {
                 size="small"
                 sx={deleteButtonSx}
               >
-                <Icon name="trash" size={14} />
+                <DeleteOutlineOutlinedIcon sx={{ fontSize: 14 }} />
               </IconButton>
             </Box>
           </Box>

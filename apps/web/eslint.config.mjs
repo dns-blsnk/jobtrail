@@ -16,16 +16,17 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export default tseslint.config(
   // ── Ignore patterns ──────────────────────────────────────────────────────
   {
-    ignores: ['.next/**', 'node_modules/**', 'dist/**'],
+    ignores: ['.next/**', 'node_modules/**', 'dist/**', 'next-env.d.ts'],
   },
 
   // ── Base rules ────────────────────────────────────────────────────────────
   eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
 
   // ── App-specific rules ────────────────────────────────────────────────────
   {
     files: ['**/*.{ts,tsx}'],
+    // recommendedTypeChecked scoped to TS files only — avoids "no type info" errors on .mjs
+    extends: [...tseslint.configs.recommendedTypeChecked],
     plugins: {
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,
@@ -71,6 +72,8 @@ export default tseslint.config(
         { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
       ],
       '@typescript-eslint/no-floating-promises': 'warn',
+      // Next.js async server components / withAuthGuard callbacks don't always await
+      '@typescript-eslint/require-await': 'off',
       // Relaxed: MUI / third-party libs generate too many false positives
       '@typescript-eslint/no-unsafe-argument': 'off',
       '@typescript-eslint/no-unsafe-assignment': 'off',

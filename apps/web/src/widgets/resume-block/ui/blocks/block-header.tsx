@@ -24,6 +24,7 @@ export function BlockHeader({ data }: BlockHeaderProps) {
     <div className={s.header}>
       {data.photoUrl && (
         <div className={s.headerPhotoWrap}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={data.photoUrl}
             alt={fullName || 'Profile photo'}

@@ -26,6 +26,7 @@ export function JobDetailsDrawer() {
 
   useEffect(() => {
     if (job) setNotes(job.notes ?? '');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [job?.id]);
 
   const handleNotesChange = (value: string) => {
