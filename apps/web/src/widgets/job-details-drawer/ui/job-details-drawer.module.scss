@@ -1,0 +1,199 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+@use 'variables' as su;
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: su.$z-modal - 1;
+  animation: fadeIn 0.2s ease;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 480px;
+  max-width: 100vw;
+  background: v.$color-background;
+  border-left: 1px solid v.$color-border-soft;
+  z-index: su.$z-modal;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.25s ease;
+
+  &[data-open='true'] {
+    transform: translateX(0);
+  }
+
+  @include mobile {
+    width: 100vw;
+  }
+}
+
+.content {
+  @include flex-col($gap: 20px);
+  padding: 24px;
+}
+
+.drawerHeader {
+  @include flex-between($gap: 12px);
+  align-items: flex-start;
+}
+
+.drawerTitleGroup {
+  @include flex-col($gap: 2px);
+  flex: 1;
+  min-width: 0;
+}
+
+.drawerTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: v.$color-heading;
+  margin: 0;
+  @include line-clamp(2);
+}
+
+.drawerCompany {
+  font-size: 14px;
+  font-weight: 500;
+  color: v.$color-muted;
+  margin: 0;
+}
+
+.closeBtn {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  @include flex-col;
+  align-items: center;
+  justify-content: center;
+  color: v.$color-muted;
+  background: v.$color-border-soft;
+  border: none;
+  border-radius: v.$radius-sm;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: v.$color-border-strong;
+    color: v.$color-text;
+  }
+}
+
+.meta {
+  @include flex-center($gap: 10px);
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: v.$color-muted;
+  padding-bottom: 12px;
+  border-bottom: 1px solid v.$color-border-soft;
+}
+
+.metaItem {
+  &::before {
+    content: '·';
+    margin-right: 10px;
+    color: v.$color-border-strong;
+  }
+
+  &:first-child::before {
+    display: none;
+  }
+}
+
+.statusRow {
+  @include flex-between;
+  gap: 12px;
+}
+
+.originalLink {
+  font-size: 13px;
+  font-weight: 500;
+  color: v.$color-primary;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.techSection {
+  @include flex-col($gap: 8px);
+}
+
+.techPills {
+  @include flex-center($gap: 6px);
+  flex-wrap: wrap;
+}
+
+.techPill {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: v.$color-text;
+  background: v.$color-border-soft;
+  border-radius: v.$radius-pill;
+}
+
+.notesSection {
+  @include flex-col($gap: 6px);
+}
+
+.sectionLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: v.$color-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+.notesTextarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: v.$color-text;
+  background: v.$color-background;
+  border: 1.5px solid v.$color-border-strong;
+  border-radius: v.$radius-md;
+  resize: vertical;
+  outline: none;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease;
+
+  &:focus {
+    border-color: v.$color-primary;
+  }
+
+  &::placeholder {
+    color: v.$color-muted;
+  }
+}
+
+.section {
+  @include flex-col($gap: 8px);
+}
+
+.sectionBody {
+  font-size: 13px;
+  line-height: 1.7;
+  color: v.$color-text;
+  white-space: pre-wrap;
+  max-height: 300px;
+  overflow-y: auto;
+  @include hide-scrollbar;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

@@ -1,0 +1,34 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+
+.root {
+  @include flex-col($gap: 0);
+}
+
+.list {
+  @include flex-col($gap: 12px);
+}
+
+.empty {
+  @include flex-col($gap: 8px);
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  border: 1px dashed v.$color-border-strong;
+  border-radius: v.$radius-lg;
+  text-align: center;
+}
+
+.emptyTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: v.$color-text;
+  margin: 0;
+}
+
+.emptyHint {
+  font-size: 14px;
+  color: v.$color-muted;
+  margin: 0;
+  max-width: 280px;
+}

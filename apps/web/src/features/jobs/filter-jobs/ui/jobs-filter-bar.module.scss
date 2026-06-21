@@ -1,0 +1,78 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+
+.root {
+  @include flex-center($gap: 12px);
+  flex-wrap: wrap;
+}
+
+.tabs {
+  @include flex-center($gap: 4px);
+}
+
+.tab {
+  height: 32px;
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: v.$color-muted;
+  background: transparent;
+  border: 1.5px solid transparent;
+  border-radius: v.$radius-pill;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    color: v.$color-text;
+    background: v.$color-border-soft;
+  }
+
+  &[data-active='true'] {
+    color: v.$color-primary;
+    border-color: v.$color-primary;
+    background: rgba(55, 93, 251, 0.06);
+  }
+}
+
+.chips {
+  @include flex-center($gap: 8px);
+  margin-left: auto;
+}
+
+.chip {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: v.$color-muted;
+  background: v.$color-border-soft;
+  border: none;
+  border-radius: v.$radius-pill;
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    color: v.$color-text;
+    background: v.$color-border-strong;
+  }
+
+  &[data-active='true'] {
+    color: v.$color-primary;
+    background: rgba(55, 93, 251, 0.1);
+  }
+}
+
+.clearBtn {
+  font-size: 12px;
+  font-weight: 500;
+  color: v.$color-muted;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0 4px;
+  text-decoration: underline;
+
+  &:hover {
+    color: v.$color-text;
+  }
+}

@@ -11,7 +11,7 @@
 .inner {
   max-width: su.$container-full;
   margin-inline: auto;
-  @include flex-col($gap: 32px);
+  @include flex-col($gap: 24px);
 }
 
 .pageHeader {
@@ -32,26 +32,26 @@
   margin: 0;
 }
 
-.emptyState {
-  @include flex-col($gap: 12px);
-  align-items: center;
-  justify-content: center;
-  padding: 80px 24px;
-  border: 1px dashed v.$color-border-strong;
-  border-radius: v.$radius-lg;
-  text-align: center;
+.content {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 24px;
+  align-items: start;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+  }
 }
 
-.emptyTitle {
-  font-size: 16px;
-  font-weight: 600;
-  color: v.$color-text;
-  margin: 0;
+.list {
+  @include flex-col;
+  min-width: 0;
 }
 
-.emptyHint {
-  font-size: 14px;
-  color: v.$color-muted;
-  margin: 0;
-  max-width: 300px;
+.sidebar {
+  min-width: 0;
+
+  @include tablet {
+    display: none;
+  }
 }
