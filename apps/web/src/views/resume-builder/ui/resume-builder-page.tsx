@@ -77,16 +77,9 @@ export function ResumeBuilderPage() {
       </div>
 
       <div className={s.content}>
-        <ResumeSidebar
-          isOpen={sidebarOpen}
-          onClose={() => setSidebarOpen(false)}
-        />
+        <ResumeSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         {sidebarOpen && (
-          <div
-            className={s.backdrop}
-            onClick={() => setSidebarOpen(false)}
-            aria-hidden="true"
-          />
+          <div className={s.backdrop} onClick={() => setSidebarOpen(false)} aria-hidden="true" />
         )}
         <ResumeEditor isPreview={isPreview} />
       </div>

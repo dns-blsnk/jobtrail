@@ -27,13 +27,16 @@ export function ResumeSidebar({ isOpen, onClose }: ResumeSidebarProps) {
   }
 
   return (
-    <aside
-      className={clsx(s.sidebar, isOpen && s.sidebarOpen)}
-      aria-label="Resume drafts"
-    >
+    <aside className={clsx(s.sidebar, isOpen && s.sidebarOpen)} aria-label="Resume drafts">
       {isLoading && isMobile ? (
         <div className={s.sidebarHeader}>
-          <Skeleton variant="rectangular" width={120} height={32} animation="wave" sx={{ borderRadius: '6px' }} />
+          <Skeleton
+            variant="rectangular"
+            width={120}
+            height={32}
+            animation="wave"
+            sx={{ borderRadius: '6px' }}
+          />
           <Skeleton variant="circular" width={32} height={32} animation="wave" />
         </div>
       ) : (
@@ -72,9 +75,7 @@ export function ResumeSidebar({ isOpen, onClose }: ResumeSidebarProps) {
           </Box>
         ) : (
           <>
-            {drafts.length === 0 && (
-              <p className={s.emptyText}>No drafts yet</p>
-            )}
+            {drafts.length === 0 && <p className={s.emptyText}>No drafts yet</p>}
             {drafts.map((draft) => (
               <div key={draft.id} role="listitem">
                 <DraftCard

@@ -45,11 +45,7 @@ export function LangSwitch({ up = false, tone = 'light' }: LangSwitchProps) {
   };
 
   return (
-    <div
-      className={clsx(s.root, deep && s.deep)}
-      onBlur={handleBlur}
-      onKeyDown={handleKeyDown}
-    >
+    <div className={clsx(s.root, deep && s.deep)} onBlur={handleBlur} onKeyDown={handleKeyDown}>
       <button
         aria-controls={listboxId}
         aria-expanded={open}
@@ -60,11 +56,7 @@ export function LangSwitch({ up = false, tone = 'light' }: LangSwitchProps) {
       >
         <Icon name="globe" size={17} strokeWidth={1.9} />
         {current.name}
-        <Icon
-          className={clsx(s.caret, open && s.caretOpen)}
-          name="chevronDown"
-          size={15}
-        />
+        <Icon className={clsx(s.caret, open && s.caretOpen)} name="chevronDown" size={15} />
       </button>
 
       <ul

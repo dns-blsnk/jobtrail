@@ -13,7 +13,11 @@ const MAX_VISIBLE_TECH = 5;
 function MatchBadge({ score }: { score: number | null }) {
   const t = useTranslations('jobsPage.card');
   if (score === null) {
-    return <span className={s.matchBadge} data-variant="none">{t('noMatch')}</span>;
+    return (
+      <span className={s.matchBadge} data-variant="none">
+        {t('noMatch')}
+      </span>
+    );
   }
   const variant = score >= 80 ? 'high' : score >= 50 ? 'mid' : 'low';
   return (
@@ -33,9 +37,7 @@ export function JobCard({ job }: JobCardProps) {
   const selectJob = useJobStore((s) => s.selectJob);
   const [showAllTech, setShowAllTech] = useState(false);
 
-  const visibleTech = showAllTech
-    ? job.techStack
-    : job.techStack.slice(0, MAX_VISIBLE_TECH);
+  const visibleTech = showAllTech ? job.techStack : job.techStack.slice(0, MAX_VISIBLE_TECH);
   const hiddenCount = job.techStack.length - MAX_VISIBLE_TECH;
 
   const salary = formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency);
@@ -46,7 +48,11 @@ export function JobCard({ job }: JobCardProps) {
   };
 
   return (
-    <article className={s.card} onClick={() => selectJob(job.id)} role="button" tabIndex={0}
+    <article
+      className={s.card}
+      onClick={() => selectJob(job.id)}
+      role="button"
+      tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && selectJob(job.id)}
       aria-label={`${job.title} at ${job.company}`}
     >
@@ -61,7 +67,14 @@ export function JobCard({ job }: JobCardProps) {
             disabled={isDeleting}
             aria-label={t('card.deleteJob')}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <polyline points="3 6 5 6 21 6" />
               <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
               <path d="M10 11v6M14 11v6" />
@@ -86,13 +99,18 @@ export function JobCard({ job }: JobCardProps) {
       {job.techStack.length > 0 && (
         <div className={s.techStack}>
           {visibleTech.map((tech) => (
-            <span key={tech} className={s.techPill}>{tech}</span>
+            <span key={tech} className={s.techPill}>
+              {tech}
+            </span>
           ))}
           {!showAllTech && hiddenCount > 0 && (
             <button
               type="button"
               className={s.moreTech}
-              onClick={(e) => { e.stopPropagation(); setShowAllTech(true); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowAllTech(true);
+              }}
             >
               {t('card.moreTech', { n: hiddenCount })}
             </button>
@@ -116,7 +134,11 @@ export function JobCard({ job }: JobCardProps) {
   );
 }
 
-function formatSalary(min: number | null, max: number | null, currency: string | null): string | null {
+function formatSalary(
+  min: number | null,
+  max: number | null,
+  currency: string | null,
+): string | null {
   if (!min && !max) return null;
   const c = currency ?? 'USD';
   const fmt = (n: number) => `$${(n / 1000).toFixed(0)}k`;

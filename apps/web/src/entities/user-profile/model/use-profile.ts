@@ -21,8 +21,7 @@ export function useMutateUserProfile() {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: UpdateProfilePayload) =>
-      profileApi.update(session!.accessToken, data),
+    mutationFn: (data: UpdateProfilePayload) => profileApi.update(session!.accessToken, data),
     onMutate: async (data) => {
       await qc.cancelQueries({ queryKey: USER_PROFILE_QUERY_KEY });
       const prev = qc.getQueryData<UserProfile>(USER_PROFILE_QUERY_KEY);

@@ -79,7 +79,9 @@ export function ProfileCareerPrefs({ profile }: ProfileCareerPrefsProps) {
               <Typography variant="caption" color="text.secondary" sx={{ minWidth: 120 }}>
                 {t('careerPrefs.targetRoles')}
               </Typography>
-              {profile.targetRoles.map((r) => <Chip key={r} label={r} size="small" />)}
+              {profile.targetRoles.map((r) => (
+                <Chip key={r} label={r} size="small" />
+              ))}
             </Box>
           )}
 
@@ -88,7 +90,9 @@ export function ProfileCareerPrefs({ profile }: ProfileCareerPrefsProps) {
               <Typography variant="caption" color="text.secondary" sx={{ minWidth: 120 }}>
                 {t('careerPrefs.preferredStack')}
               </Typography>
-              {profile.preferredStack.map((s) => <Chip key={s} label={s} size="small" variant="outlined" />)}
+              {profile.preferredStack.map((s) => (
+                <Chip key={s} label={s} size="small" variant="outlined" />
+              ))}
             </Box>
           )}
 
@@ -98,7 +102,8 @@ export function ProfileCareerPrefs({ profile }: ProfileCareerPrefsProps) {
                 {t('careerPrefs.salary')}
               </Typography>
               <Typography variant="body2">
-                {profile.salaryMin ?? '?'} – {profile.salaryMax ?? '?'} {profile.salaryCurrency ?? 'USD'}
+                {profile.salaryMin ?? '?'} – {profile.salaryMax ?? '?'}{' '}
+                {profile.salaryCurrency ?? 'USD'}
               </Typography>
             </Box>
           )}
@@ -117,7 +122,9 @@ export function ProfileCareerPrefs({ profile }: ProfileCareerPrefsProps) {
             !profile.preferredStack.length &&
             profile.salaryMin === null &&
             !profile.workFormat && (
-              <Typography variant="body2" color="text.disabled">—</Typography>
+              <Typography variant="body2" color="text.disabled">
+                —
+              </Typography>
             )}
         </Box>
       )}

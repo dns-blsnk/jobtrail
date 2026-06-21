@@ -12,13 +12,12 @@ import { Avatar } from '@/shared/ui/avatar/avatar';
 import { IconButton } from '@/shared/ui/icon-button/icon-button';
 import s from './header.module.scss';
 
-const NavDrawer = dynamic(
-  () => import('./nav-drawer').then((m) => ({ default: m.NavDrawer })),
-  { ssr: false }
-);
+const NavDrawer = dynamic(() => import('./nav-drawer').then((m) => ({ default: m.NavDrawer })), {
+  ssr: false,
+});
 const UserMenuDrawer = dynamic(
   () => import('./user-menu-drawer').then((m) => ({ default: m.UserMenuDrawer })),
-  { ssr: false }
+  { ssr: false },
 );
 
 function Logo() {
@@ -48,16 +47,18 @@ export function MobileHeader() {
     setMenuOpen(true);
   }, []);
 
-  const user = profileUser
-    ? { name: profileUser.name ?? null, email: profileUser.email }
-    : null;
+  const user = profileUser ? { name: profileUser.name ?? null, email: profileUser.email } : null;
 
   return (
     <>
       <header className={s.header}>
         <div className={clsx(s.inner, s.innerMobile)}>
           <div className={s.left}>
-            <IconButton icon="menu" label={th('aria.openMenu')} onClick={() => setDrawerOpen(true)} />
+            <IconButton
+              icon="menu"
+              label={th('aria.openMenu')}
+              onClick={() => setDrawerOpen(true)}
+            />
             <Logo />
           </div>
           <div className={s.right}>
@@ -98,7 +99,10 @@ export function MobileHeader() {
           open={menuOpen}
           user={user}
           onClose={closeMenu}
-          onLogout={() => { closeMenu(); void signOut(); }}
+          onLogout={() => {
+            closeMenu();
+            void signOut();
+          }}
         />
       )}
     </>

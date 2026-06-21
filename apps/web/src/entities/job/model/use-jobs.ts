@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import {
   createJob,
@@ -36,8 +31,7 @@ export function useJobs(filters: JobFilters) {
     queryFn: ({ pageParam }) =>
       fetchJobs({ ...filters, page: pageParam as number, limit: JOBS_LIMIT }, token),
     initialPageParam: 1,
-    getNextPageParam: (lastPage) =>
-      lastPage.hasMore ? lastPage.page + 1 : undefined,
+    getNextPageParam: (lastPage) => (lastPage.hasMore ? lastPage.page + 1 : undefined),
     enabled: !!token,
   });
 }
@@ -92,9 +86,7 @@ export function useUpdateJob() {
             ...old,
             pages: old.pages.map((page) => ({
               ...page,
-              data: page.data.map((job) =>
-                job.id === id ? { ...job, ...payload } : job,
-              ),
+              data: page.data.map((job) => (job.id === id ? { ...job, ...payload } : job)),
             })),
           };
         },

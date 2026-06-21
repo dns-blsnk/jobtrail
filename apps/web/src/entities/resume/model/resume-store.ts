@@ -2,12 +2,7 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type {
-  Draft,
-  BlockType,
-  BlockData,
-  TemplateId,
-} from '@/entities/resume/model/types';
+import type { Draft, BlockType, BlockData, TemplateId } from '@/entities/resume/model/types';
 
 interface ResumeStore {
   drafts: Draft[];
@@ -127,7 +122,7 @@ export const useResumeStore = create<ResumeStore>()(
       renameDraft: (id: string, name: string) => {
         set((state) => ({
           drafts: state.drafts.map((d) =>
-            d.id === id ? { ...d, name, updatedAt: new Date().toISOString() } : d
+            d.id === id ? { ...d, name, updatedAt: new Date().toISOString() } : d,
           ),
         }));
       },
@@ -139,9 +134,7 @@ export const useResumeStore = create<ResumeStore>()(
       setDraftTemplate: (id: string, templateId: TemplateId) => {
         set((state) => ({
           drafts: state.drafts.map((d) =>
-            d.id === id
-              ? { ...d, templateId, updatedAt: new Date().toISOString() }
-              : d
+            d.id === id ? { ...d, templateId, updatedAt: new Date().toISOString() } : d,
           ),
         }));
       },
@@ -159,7 +152,7 @@ export const useResumeStore = create<ResumeStore>()(
                   updatedAt: new Date().toISOString(),
                   blocks: [...d.blocks, { id: blockId, blockData }],
                 }
-              : d
+              : d,
           ),
         }));
         void drafts;
@@ -178,7 +171,7 @@ export const useResumeStore = create<ResumeStore>()(
                   updatedAt: new Date().toISOString(),
                   blocks: [...d.blocks, { id: blockId, blockData }],
                 }
-              : d
+              : d,
           ),
         }));
         return blockId;
@@ -193,11 +186,9 @@ export const useResumeStore = create<ResumeStore>()(
               ? {
                   ...d,
                   updatedAt: new Date().toISOString(),
-                  blocks: d.blocks.map((b) =>
-                    b.id === blockId ? { ...b, blockData } : b
-                  ),
+                  blocks: d.blocks.map((b) => (b.id === blockId ? { ...b, blockData } : b)),
                 }
-              : d
+              : d,
           ),
         }));
       },
@@ -213,7 +204,7 @@ export const useResumeStore = create<ResumeStore>()(
                   updatedAt: new Date().toISOString(),
                   blocks: d.blocks.filter((b) => b.id !== blockId),
                 }
-              : d
+              : d,
           ),
         }));
       },
@@ -237,6 +228,6 @@ export const useResumeStore = create<ResumeStore>()(
         }));
       },
     }),
-    { name: 'job-tracker-resume' }
-  )
+    { name: 'job-tracker-resume' },
+  ),
 );

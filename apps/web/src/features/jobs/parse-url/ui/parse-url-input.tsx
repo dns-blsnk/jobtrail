@@ -32,11 +32,7 @@ export function ParseUrlInput() {
           disabled={!isValid || isPending}
           aria-busy={isPending}
         >
-          {isPending ? (
-            <span className={s.loadingText}>{t('loading')}</span>
-          ) : (
-            t('button')
-          )}
+          {isPending ? <span className={s.loadingText}>{t('loading')}</span> : t('button')}
         </button>
       </div>
       {isError && (

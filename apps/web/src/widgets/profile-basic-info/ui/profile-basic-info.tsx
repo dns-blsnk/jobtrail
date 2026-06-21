@@ -59,12 +59,20 @@ export function ProfileBasicInfo({ profile }: ProfileBasicInfoProps) {
       ) : (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
           {profile.headline ? (
-            <Typography variant="body2" sx={{ fontWeight: 600 }}>{profile.headline}</Typography>
+            <Typography variant="body2" sx={{ fontWeight: 600 }}>
+              {profile.headline}
+            </Typography>
           ) : (
-            <Typography variant="body2" color="text.disabled">—</Typography>
+            <Typography variant="body2" color="text.disabled">
+              —
+            </Typography>
           )}
           {profile.bio && (
-            <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5, whiteSpace: 'pre-wrap' }}>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ mt: 0.5, whiteSpace: 'pre-wrap' }}
+            >
               {profile.bio}
             </Typography>
           )}

@@ -12,12 +12,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Throttle } from '@nestjs/throttler';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -70,11 +65,7 @@ export class JobsController {
   @ApiOperation({ summary: 'Update a job (status, notes, etc.)' })
   @ApiResponse({ status: 200, description: 'Job updated' })
   @ApiResponse({ status: 404, description: 'Job not found' })
-  update(
-    @CurrentUser() user: IUser,
-    @Param('id') id: string,
-    @Body() dto: UpdateJobDto,
-  ) {
+  update(@CurrentUser() user: IUser, @Param('id') id: string, @Body() dto: UpdateJobDto) {
     return this.jobsService.update(user.id, id, dto);
   }
 

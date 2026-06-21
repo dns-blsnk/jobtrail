@@ -18,7 +18,12 @@ export function BlogGrid({ posts, readMoreLabel, minReadLabel }: BlogGridProps) 
     <div className={s.grid}>
       <div className={s['col-large']}>
         {largePosts.map((post) => (
-          <BlogCardLarge key={post.id} minReadLabel={minReadLabel} post={post} readMoreLabel={readMoreLabel} />
+          <BlogCardLarge
+            key={post.id}
+            minReadLabel={minReadLabel}
+            post={post}
+            readMoreLabel={readMoreLabel}
+          />
         ))}
       </div>
       <div className={s['col-small']}>
@@ -54,7 +59,9 @@ function BlogCardLarge({ post, readMoreLabel, minReadLabel }: CardProps) {
         <p className={s['card-excerpt']}>{post.excerpt}</p>
         <div className={s['card-meta']}>
           <time dateTime={post.publicationDate}>{formatDate(post.publicationDate)}</time>
-          <span>{post.readTimeMinutes} {minReadLabel}</span>
+          <span>
+            {post.readTimeMinutes} {minReadLabel}
+          </span>
         </div>
         {readMoreLabel && <span className={s['read-more']}>{readMoreLabel} →</span>}
       </div>
@@ -79,7 +86,9 @@ function BlogCardSmall({ post, minReadLabel }: CardProps) {
         <h3 className={s['card-title-small']}>{post.title}</h3>
         <div className={s['card-meta']}>
           <time dateTime={post.publicationDate}>{formatDate(post.publicationDate)}</time>
-          <span>{post.readTimeMinutes} {minReadLabel}</span>
+          <span>
+            {post.readTimeMinutes} {minReadLabel}
+          </span>
         </div>
       </div>
     </Link>

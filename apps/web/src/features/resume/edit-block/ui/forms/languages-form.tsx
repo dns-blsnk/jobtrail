@@ -38,7 +38,10 @@ export function LanguagesForm({ formik }: { formik: LanguagesFormik }) {
   }
 
   function removeItem(index: number) {
-    void setFieldValue('data.items', values.data.items.filter((_, i) => i !== index));
+    void setFieldValue(
+      'data.items',
+      values.data.items.filter((_, i) => i !== index),
+    );
   }
 
   const levels: LanguageItem['level'][] = ['Native', 'C2', 'C1', 'B2', 'B1', 'A2', 'A1'];
@@ -48,7 +51,12 @@ export function LanguagesForm({ formik }: { formik: LanguagesFormik }) {
       {values.data.items.map((item, index) => (
         <Box
           key={item.id}
-          sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: { xs: 1, sm: 2 }, mb: 2 }}
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            gap: { xs: 1, sm: 2 },
+            mb: 2,
+          }}
         >
           <TextField
             label={t('language')}
@@ -57,8 +65,15 @@ export function LanguagesForm({ formik }: { formik: LanguagesFormik }) {
             value={item.language}
             onChange={(e) => void setFieldValue(`data.items[${index}].language`, e.target.value)}
             onBlur={() => void formik.setFieldTouched(`data.items[${index}].language`, true)}
-            error={getIn(formik.touched, `data.items[${index}].language`) && Boolean(getIn(formik.errors, `data.items[${index}].language`))}
-            helperText={(getIn(formik.touched, `data.items[${index}].language`) && getIn(formik.errors, `data.items[${index}].language`)) || ' '}
+            error={
+              getIn(formik.touched, `data.items[${index}].language`) &&
+              Boolean(getIn(formik.errors, `data.items[${index}].language`))
+            }
+            helperText={
+              (getIn(formik.touched, `data.items[${index}].language`) &&
+                getIn(formik.errors, `data.items[${index}].language`)) ||
+              ' '
+            }
           />
           <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-start' }}>
             <FormControl size="small" sx={{ flex: 1, minWidth: 120 }}>
@@ -69,18 +84,30 @@ export function LanguagesForm({ formik }: { formik: LanguagesFormik }) {
                 onChange={(e) => void setFieldValue(`data.items[${index}].level`, e.target.value)}
               >
                 {levels.map((l) => (
-                  <MenuItem key={l} value={l}>{l}</MenuItem>
+                  <MenuItem key={l} value={l}>
+                    {l}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
-            <IconButton onClick={() => removeItem(index)} aria-label="Remove" size="small" sx={deleteButtonSx}>
+            <IconButton
+              onClick={() => removeItem(index)}
+              aria-label="Remove"
+              size="small"
+              sx={deleteButtonSx}
+            >
               <Icon name="trash" size={14} />
             </IconButton>
           </Box>
         </Box>
       ))}
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
-        <Button startIcon={<Icon name="plus" size={14} />} onClick={addItem} variant="outlined" size="small">
+        <Button
+          startIcon={<Icon name="plus" size={14} />}
+          onClick={addItem}
+          variant="outlined"
+          size="small"
+        >
           {t('addLanguage')}
         </Button>
       </Box>

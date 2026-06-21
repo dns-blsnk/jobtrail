@@ -1,9 +1,7 @@
 import * as Yup from 'yup';
 
 export const contactSchema = Yup.object({
-  name: Yup.string()
-    .required('Name is required')
-    .max(100, 'Name must be at most 100 characters'),
+  name: Yup.string().required('Name is required').max(100, 'Name must be at most 100 characters'),
   email: Yup.string()
     .required('Email is required')
     .email('Invalid email address')

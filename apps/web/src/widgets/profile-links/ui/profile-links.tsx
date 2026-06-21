@@ -79,7 +79,9 @@ export function ProfileLinks({ profile }: ProfileLinksProps) {
           <LinkRow label={t('links.github')} url={profile.githubUrl} />
           <LinkRow label={t('links.portfolio')} url={profile.portfolioUrl} />
           {!hasLinks && (
-            <Typography variant="body2" color="text.disabled">—</Typography>
+            <Typography variant="body2" color="text.disabled">
+              —
+            </Typography>
           )}
         </Box>
       )}

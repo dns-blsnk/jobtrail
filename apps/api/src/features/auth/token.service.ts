@@ -75,8 +75,7 @@ export class TokenService {
   ): Promise<void> {
     const hash = this.hashToken(token);
     const expiresAt = new Date(
-      Date.now() +
-        this.parseDuration(this.configService.get<string>('JWT_REFRESH_EXPIRES', '7d')),
+      Date.now() + this.parseDuration(this.configService.get<string>('JWT_REFRESH_EXPIRES', '7d')),
     );
     await this.prisma.refreshToken.create({
       data: { token: hash, userId, expiresAt, userAgent: meta?.userAgent, ip: meta?.ip },

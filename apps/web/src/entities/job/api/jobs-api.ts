@@ -36,7 +36,11 @@ export async function createJob(payload: CreateJobPayload, token: string): Promi
   return request<Job>('/jobs', { method: 'POST', body: payload, token });
 }
 
-export async function updateJob(id: string, payload: UpdateJobPayload, token: string): Promise<Job> {
+export async function updateJob(
+  id: string,
+  payload: UpdateJobPayload,
+  token: string,
+): Promise<Job> {
   return request<Job>(`/jobs/${id}`, { method: 'PATCH', body: payload, token });
 }
 

@@ -1,7 +1,13 @@
 'use client';
 
 import Box from '@mui/material/Box';
-import { FieldSk, IconBtnSk, CardSk, AddBtnSk, PillSk } from '@/features/resume/edit-block/ui/forms/skeletons/parts';
+import {
+  FieldSk,
+  IconBtnSk,
+  CardSk,
+  AddBtnSk,
+  PillSk,
+} from '@/features/resume/edit-block/ui/forms/skeletons/parts';
 
 export function SkillsFormSkeleton() {
   return (
@@ -15,7 +21,9 @@ export function SkillsFormSkeleton() {
             </Box>
           </Box>
           <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-            <PillSk width={65} /><PillSk width={80} /><PillSk width={55} />
+            <PillSk width={65} />
+            <PillSk width={80} />
+            <PillSk width={55} />
           </Box>
           <FieldSk labelWidth={80} />
         </Box>

@@ -35,7 +35,10 @@ export function SkillsForm({ formik }: { formik: SkillsFormik }) {
   }
 
   function removeGroup(index: number) {
-    void setFieldValue('data.groups', values.data.groups.filter((_, i) => i !== index));
+    void setFieldValue(
+      'data.groups',
+      values.data.groups.filter((_, i) => i !== index),
+    );
   }
 
   function handleTagKeyDown(e: React.KeyboardEvent<HTMLInputElement>, index: number) {
@@ -54,47 +57,83 @@ export function SkillsForm({ formik }: { formik: SkillsFormik }) {
 
   function removeTag(groupIndex: number, tag: string) {
     const current = values.data.groups[groupIndex].tags;
-    void setFieldValue(`data.groups[${groupIndex}].tags`, current.filter((tg) => tg !== tag));
+    void setFieldValue(
+      `data.groups[${groupIndex}].tags`,
+      current.filter((tg) => tg !== tag),
+    );
   }
 
   return (
     <Box>
       {values.data.groups.map((group, index) => (
-        <Box key={group.id} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: { xs: 1.5, sm: 2 }, mb: 2 }}>
+        <Box
+          key={group.id}
+          sx={{
+            border: '1px solid',
+            borderColor: 'divider',
+            borderRadius: 2,
+            p: { xs: 1.5, sm: 2 },
+            mb: 2,
+          }}
+        >
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-start' }}>
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-start' }}>
+              <TextField
+                label={t('groupName')}
+                size="small"
+                value={group.name}
+                onChange={(e) => void setFieldValue(`data.groups[${index}].name`, e.target.value)}
+                onBlur={() => void formik.setFieldTouched(`data.groups[${index}].name`, true)}
+                error={
+                  getIn(formik.touched, `data.groups[${index}].name`) &&
+                  Boolean(getIn(formik.errors, `data.groups[${index}].name`))
+                }
+                helperText={
+                  (getIn(formik.touched, `data.groups[${index}].name`) &&
+                    getIn(formik.errors, `data.groups[${index}].name`)) ||
+                  ' '
+                }
+                sx={{ flex: 1 }}
+              />
+              <IconButton
+                onClick={() => removeGroup(index)}
+                aria-label="Remove group"
+                size="small"
+                sx={deleteButtonSx}
+              >
+                <Icon name="trash" size={14} />
+              </IconButton>
+            </Box>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+              {group.tags.map((tag) => (
+                <Chip key={tag} label={tag} size="small" onDelete={() => removeTag(index, tag)} />
+              ))}
+            </Box>
             <TextField
-              label={t('groupName')}
               size="small"
-              value={group.name}
-              onChange={(e) => void setFieldValue(`data.groups[${index}].name`, e.target.value)}
-              onBlur={() => void formik.setFieldTouched(`data.groups[${index}].name`, true)}
-              error={getIn(formik.touched, `data.groups[${index}].name`) && Boolean(getIn(formik.errors, `data.groups[${index}].name`))}
-              helperText={(getIn(formik.touched, `data.groups[${index}].name`) && getIn(formik.errors, `data.groups[${index}].name`)) || ' '}
-              sx={{ flex: 1 }}
+              placeholder={t('skillPlaceholder')}
+              onKeyDown={(e) => handleTagKeyDown(e as React.KeyboardEvent<HTMLInputElement>, index)}
+              fullWidth
+              error={
+                getIn(formik.touched, `data.groups[${index}].tags`) &&
+                Boolean(getIn(formik.errors, `data.groups[${index}].tags`))
+              }
+              helperText={
+                (getIn(formik.touched, `data.groups[${index}].tags`) &&
+                  getIn(formik.errors, `data.groups[${index}].tags`)) ||
+                ' '
+              }
             />
-            <IconButton onClick={() => removeGroup(index)} aria-label="Remove group" size="small" sx={deleteButtonSx}>
-              <Icon name="trash" size={14} />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-            {group.tags.map((tag) => (
-              <Chip key={tag} label={tag} size="small" onDelete={() => removeTag(index, tag)} />
-            ))}
-          </Box>
-          <TextField
-            size="small"
-            placeholder={t('skillPlaceholder')}
-            onKeyDown={(e) => handleTagKeyDown(e as React.KeyboardEvent<HTMLInputElement>, index)}
-            fullWidth
-            error={getIn(formik.touched, `data.groups[${index}].tags`) && Boolean(getIn(formik.errors, `data.groups[${index}].tags`))}
-            helperText={(getIn(formik.touched, `data.groups[${index}].tags`) && getIn(formik.errors, `data.groups[${index}].tags`)) || ' '}
-          />
           </Box>
         </Box>
       ))}
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
-        <Button startIcon={<Icon name="plus" size={14} />} onClick={addGroup} variant="outlined" size="small">
+        <Button
+          startIcon={<Icon name="plus" size={14} />}
+          onClick={addGroup}
+          variant="outlined"
+          size="small"
+        >
           {t('addGroup')}
         </Button>
       </Box>

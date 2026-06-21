@@ -39,10 +39,19 @@ export function SocialLinksForm({ formik }: { formik: SocialLinksFormik }) {
   }
 
   function removeItem(index: number) {
-    void setFieldValue('data.items', values.data.items.filter((_, i) => i !== index));
+    void setFieldValue(
+      'data.items',
+      values.data.items.filter((_, i) => i !== index),
+    );
   }
 
-  const platforms: SocialLinkItem['platform'][] = ['LinkedIn', 'GitHub', 'Portfolio', 'Twitter', 'Other'];
+  const platforms: SocialLinkItem['platform'][] = [
+    'LinkedIn',
+    'GitHub',
+    'Portfolio',
+    'Twitter',
+    'Other',
+  ];
 
   return (
     <Box>
@@ -60,15 +69,24 @@ export function SocialLinksForm({ formik }: { formik: SocialLinksFormik }) {
               <Select
                 label={t('platform')}
                 value={item.platform}
-                onChange={(e) => void setFieldValue(`data.items[${index}].platform`, e.target.value)}
+                onChange={(e) =>
+                  void setFieldValue(`data.items[${index}].platform`, e.target.value)
+                }
               >
                 {platforms.map((p) => (
-                  <MenuItem key={p} value={p}>{p}</MenuItem>
+                  <MenuItem key={p} value={p}>
+                    {p}
+                  </MenuItem>
                 ))}
               </Select>
               <FormHelperText> </FormHelperText>
             </FormControl>
-            <IconButton onClick={() => removeItem(index)} aria-label="Remove" size="small" sx={deleteButtonSx}>
+            <IconButton
+              onClick={() => removeItem(index)}
+              aria-label="Remove"
+              size="small"
+              sx={deleteButtonSx}
+            >
               <Icon name="trash" size={14} />
             </IconButton>
           </Box>
@@ -79,13 +97,25 @@ export function SocialLinksForm({ formik }: { formik: SocialLinksFormik }) {
             value={item.url}
             onChange={(e) => void setFieldValue(`data.items[${index}].url`, e.target.value)}
             onBlur={() => void formik.setFieldTouched(`data.items[${index}].url`, true)}
-            error={getIn(formik.touched, `data.items[${index}].url`) && Boolean(getIn(formik.errors, `data.items[${index}].url`))}
-            helperText={(getIn(formik.touched, `data.items[${index}].url`) && getIn(formik.errors, `data.items[${index}].url`)) || ' '}
+            error={
+              getIn(formik.touched, `data.items[${index}].url`) &&
+              Boolean(getIn(formik.errors, `data.items[${index}].url`))
+            }
+            helperText={
+              (getIn(formik.touched, `data.items[${index}].url`) &&
+                getIn(formik.errors, `data.items[${index}].url`)) ||
+              ' '
+            }
           />
         </Box>
       ))}
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
-        <Button startIcon={<Icon name="plus" size={14} />} onClick={addItem} variant="outlined" size="small">
+        <Button
+          startIcon={<Icon name="plus" size={14} />}
+          onClick={addItem}
+          variant="outlined"
+          size="small"
+        >
           {t('addLink')}
         </Button>
       </Box>

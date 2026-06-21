@@ -20,11 +20,9 @@ export const useJobStore = create<JobStore>((set) => ({
   filters: INITIAL_FILTERS,
   selectedJobId: null,
 
-  setStatus: (status) =>
-    set((state) => ({ filters: { ...state.filters, status } })),
+  setStatus: (status) => set((state) => ({ filters: { ...state.filters, status } })),
 
-  setRemote: (remote) =>
-    set((state) => ({ filters: { ...state.filters, remote } })),
+  setRemote: (remote) => set((state) => ({ filters: { ...state.filters, remote } })),
 
   setStack: (stack) =>
     set((state) => ({ filters: { ...state.filters, stack: stack.length ? stack : undefined } })),

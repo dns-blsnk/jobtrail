@@ -19,11 +19,14 @@ export function ProfileSearchStatus({ profile }: ProfileSearchStatusProps) {
 
   function handleStatusChange(status: SearchStatus) {
     const prev = profile.searchStatus;
-    mutation.mutate({ searchStatus: status }, {
-      onSuccess: () => {
-        if (prev !== status) capture('search_status_changed', { status });
+    mutation.mutate(
+      { searchStatus: status },
+      {
+        onSuccess: () => {
+          if (prev !== status) capture('search_status_changed', { status });
+        },
       },
-    });
+    );
   }
 
   function handleAvailableFromChange(date: string | null) {

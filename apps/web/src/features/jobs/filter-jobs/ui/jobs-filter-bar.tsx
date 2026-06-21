@@ -27,9 +27,7 @@ export function JobsFilterBar() {
             key={key}
             type="button"
             className={s.tab}
-            data-active={
-              key === 'ALL' ? !filters.status : filters.status === key
-            }
+            data-active={key === 'ALL' ? !filters.status : filters.status === key}
             onClick={() => setStatus(key === 'ALL' ? undefined : (key as JobStatus))}
           >
             {key === 'ALL' ? t('filters.all') : t(`status.${label}`)}

@@ -50,7 +50,10 @@ export function ProjectsForm({ formik }: { formik: ProjectsFormik }) {
   }
 
   function removeItem(index: number) {
-    void setFieldValue('data.items', values.data.items.filter((_, i) => i !== index));
+    void setFieldValue(
+      'data.items',
+      values.data.items.filter((_, i) => i !== index),
+    );
   }
 
   function moveUp(index: number) {
@@ -83,89 +86,171 @@ export function ProjectsForm({ formik }: { formik: ProjectsFormik }) {
 
   function removeTech(itemIndex: number, tag: string) {
     const current = values.data.items[itemIndex].techStack;
-    void setFieldValue(`data.items[${itemIndex}].techStack`, current.filter((tg) => tg !== tag));
+    void setFieldValue(
+      `data.items[${itemIndex}].techStack`,
+      current.filter((tg) => tg !== tag),
+    );
   }
 
   return (
     <Box>
       {values.data.items.map((item, index) => (
-        <Box key={item.id} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: { xs: 1.5, sm: 2 }, mb: 2 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
-            <Box sx={{ fontWeight: 600, fontSize: 14 }}>{item.name || t('projectNumber', { number: index + 1 })}</Box>
+        <Box
+          key={item.id}
+          sx={{
+            border: '1px solid',
+            borderColor: 'divider',
+            borderRadius: 2,
+            p: { xs: 1.5, sm: 2 },
+            mb: 2,
+          }}
+        >
+          <Box
+            sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}
+          >
+            <Box sx={{ fontWeight: 600, fontSize: 14 }}>
+              {item.name || t('projectNumber', { number: index + 1 })}
+            </Box>
             <Box sx={{ display: 'flex', gap: 1 }}>
-              <IconButton onClick={() => moveUp(index)} disabled={index === 0} aria-label="Move up" size="small" sx={moveButtonSx}>
+              <IconButton
+                onClick={() => moveUp(index)}
+                disabled={index === 0}
+                aria-label="Move up"
+                size="small"
+                sx={moveButtonSx}
+              >
                 <Icon name="moveUp" size={14} />
               </IconButton>
-              <IconButton onClick={() => moveDown(index)} disabled={index === values.data.items.length - 1} aria-label="Move down" size="small" sx={moveButtonSx}>
+              <IconButton
+                onClick={() => moveDown(index)}
+                disabled={index === values.data.items.length - 1}
+                aria-label="Move down"
+                size="small"
+                sx={moveButtonSx}
+              >
                 <Icon name="moveDown" size={14} />
               </IconButton>
-              <IconButton onClick={() => removeItem(index)} aria-label="Remove" size="small" sx={deleteButtonSx}>
+              <IconButton
+                onClick={() => removeItem(index)}
+                aria-label="Remove"
+                size="small"
+                sx={deleteButtonSx}
+              >
                 <Icon name="trash" size={14} />
               </IconButton>
             </Box>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-          {row(
-            <>
-              <TextField
-                label={t('projectName')} size="small" value={item.name}
-                onChange={(e) => void setFieldValue(`data.items[${index}].name`, e.target.value)}
-                onBlur={() => void formik.setFieldTouched(`data.items[${index}].name`, true)}
-                error={getIn(formik.touched, `data.items[${index}].name`) && Boolean(getIn(formik.errors, `data.items[${index}].name`))}
-                helperText={(getIn(formik.touched, `data.items[${index}].name`) && getIn(formik.errors, `data.items[${index}].name`)) || ' '}
-              />
-              <TextField
-                label={t('url')} size="small" value={item.url ?? ''}
-                onChange={(e) => void setFieldValue(`data.items[${index}].url`, e.target.value)}
-                onBlur={() => void formik.setFieldTouched(`data.items[${index}].url`, true)}
-                error={getIn(formik.touched, `data.items[${index}].url`) && Boolean(getIn(formik.errors, `data.items[${index}].url`))}
-                helperText={(getIn(formik.touched, `data.items[${index}].url`) && getIn(formik.errors, `data.items[${index}].url`)) || ' '}
-              />
-            </>
-          )}
-          {row(
-            <>
-              <TextField
-                label={t('startDate')} size="small" value={item.startDate}
-                onChange={(e) => void setFieldValue(`data.items[${index}].startDate`, e.target.value)}
-                onBlur={() => void formik.setFieldTouched(`data.items[${index}].startDate`, true)}
-                error={getIn(formik.touched, `data.items[${index}].startDate`) && Boolean(getIn(formik.errors, `data.items[${index}].startDate`))}
-                helperText={(getIn(formik.touched, `data.items[${index}].startDate`) && getIn(formik.errors, `data.items[${index}].startDate`)) || ' '}
-              />
-              <TextField
-                label={t('endDate')} size="small" value={item.endDate}
-                onChange={(e) => void setFieldValue(`data.items[${index}].endDate`, e.target.value)}
-                onBlur={() => void formik.setFieldTouched(`data.items[${index}].endDate`, true)}
-                error={getIn(formik.touched, `data.items[${index}].endDate`) && Boolean(getIn(formik.errors, `data.items[${index}].endDate`))}
-                helperText={(getIn(formik.touched, `data.items[${index}].endDate`) && getIn(formik.errors, `data.items[${index}].endDate`)) || ' '}
-              />
-            </>
-          )}
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-            {item.techStack.map((tag) => (
-              <Chip key={tag} label={tag} size="small" onDelete={() => removeTech(index, tag)} />
-            ))}
-          </Box>
-          <TextField
-            size="small"
-            placeholder={t('techPlaceholder')}
-            onKeyDown={(e) => handleTechKeyDown(e as React.KeyboardEvent<HTMLInputElement>, index)}
-            fullWidth
-            helperText=" "
-          />
-          <TextField
-            fullWidth
-            multiline
-            rows={3}
-            label={t('description')}
-            value={item.description}
-            onChange={(e) => void setFieldValue(`data.items[${index}].description`, e.target.value)}
-          />
+            {row(
+              <>
+                <TextField
+                  label={t('projectName')}
+                  size="small"
+                  value={item.name}
+                  onChange={(e) => void setFieldValue(`data.items[${index}].name`, e.target.value)}
+                  onBlur={() => void formik.setFieldTouched(`data.items[${index}].name`, true)}
+                  error={
+                    getIn(formik.touched, `data.items[${index}].name`) &&
+                    Boolean(getIn(formik.errors, `data.items[${index}].name`))
+                  }
+                  helperText={
+                    (getIn(formik.touched, `data.items[${index}].name`) &&
+                      getIn(formik.errors, `data.items[${index}].name`)) ||
+                    ' '
+                  }
+                />
+                <TextField
+                  label={t('url')}
+                  size="small"
+                  value={item.url ?? ''}
+                  onChange={(e) => void setFieldValue(`data.items[${index}].url`, e.target.value)}
+                  onBlur={() => void formik.setFieldTouched(`data.items[${index}].url`, true)}
+                  error={
+                    getIn(formik.touched, `data.items[${index}].url`) &&
+                    Boolean(getIn(formik.errors, `data.items[${index}].url`))
+                  }
+                  helperText={
+                    (getIn(formik.touched, `data.items[${index}].url`) &&
+                      getIn(formik.errors, `data.items[${index}].url`)) ||
+                    ' '
+                  }
+                />
+              </>,
+            )}
+            {row(
+              <>
+                <TextField
+                  label={t('startDate')}
+                  size="small"
+                  value={item.startDate}
+                  onChange={(e) =>
+                    void setFieldValue(`data.items[${index}].startDate`, e.target.value)
+                  }
+                  onBlur={() => void formik.setFieldTouched(`data.items[${index}].startDate`, true)}
+                  error={
+                    getIn(formik.touched, `data.items[${index}].startDate`) &&
+                    Boolean(getIn(formik.errors, `data.items[${index}].startDate`))
+                  }
+                  helperText={
+                    (getIn(formik.touched, `data.items[${index}].startDate`) &&
+                      getIn(formik.errors, `data.items[${index}].startDate`)) ||
+                    ' '
+                  }
+                />
+                <TextField
+                  label={t('endDate')}
+                  size="small"
+                  value={item.endDate}
+                  onChange={(e) =>
+                    void setFieldValue(`data.items[${index}].endDate`, e.target.value)
+                  }
+                  onBlur={() => void formik.setFieldTouched(`data.items[${index}].endDate`, true)}
+                  error={
+                    getIn(formik.touched, `data.items[${index}].endDate`) &&
+                    Boolean(getIn(formik.errors, `data.items[${index}].endDate`))
+                  }
+                  helperText={
+                    (getIn(formik.touched, `data.items[${index}].endDate`) &&
+                      getIn(formik.errors, `data.items[${index}].endDate`)) ||
+                    ' '
+                  }
+                />
+              </>,
+            )}
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+              {item.techStack.map((tag) => (
+                <Chip key={tag} label={tag} size="small" onDelete={() => removeTech(index, tag)} />
+              ))}
+            </Box>
+            <TextField
+              size="small"
+              placeholder={t('techPlaceholder')}
+              onKeyDown={(e) =>
+                handleTechKeyDown(e as React.KeyboardEvent<HTMLInputElement>, index)
+              }
+              fullWidth
+              helperText=" "
+            />
+            <TextField
+              fullWidth
+              multiline
+              rows={3}
+              label={t('description')}
+              value={item.description}
+              onChange={(e) =>
+                void setFieldValue(`data.items[${index}].description`, e.target.value)
+              }
+            />
           </Box>
         </Box>
       ))}
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
-        <Button startIcon={<Icon name="plus" size={14} />} onClick={addItem} variant="outlined" size="small">
+        <Button
+          startIcon={<Icon name="plus" size={14} />}
+          onClick={addItem}
+          variant="outlined"
+          size="small"
+        >
           {t('addProject')}
         </Button>
       </Box>

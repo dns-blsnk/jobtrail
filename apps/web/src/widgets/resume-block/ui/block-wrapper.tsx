@@ -21,18 +21,21 @@ interface BlockWrapperProps {
   children: React.ReactNode;
 }
 
-export function BlockWrapper({ id, isHeader, isPreview, isEmpty, blockType, children }: BlockWrapperProps) {
+export function BlockWrapper({
+  id,
+  isHeader,
+  isPreview,
+  isEmpty,
+  blockType,
+  children,
+}: BlockWrapperProps) {
   const { editingBlockId, isNew, openEdit, closeEdit } = useEditBlock();
   const removeBlock = useResumeStore((state) => state.removeBlock);
 
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id, disabled: isHeader });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id,
+    disabled: isHeader,
+  });
 
   const style: CSSProperties = {
     transform: CSS.Transform.toString(transform),

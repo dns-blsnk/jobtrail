@@ -12,14 +12,17 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
-export function Button({ title, loading, disabled, leftLabel, rightLabel, type = 'button', onClick }: ButtonProps) {
+export function Button({
+  title,
+  loading,
+  disabled,
+  leftLabel,
+  rightLabel,
+  type = 'button',
+  onClick,
+}: ButtonProps) {
   return (
-    <button
-      className={s.button}
-      disabled={disabled ?? loading}
-      type={type}
-      onClick={onClick}
-    >
+    <button className={s.button} disabled={disabled ?? loading} type={type} onClick={onClick}>
       {leftLabel && <span className={s.label}>{leftLabel}</span>}
       <span>{loading ? 'Loading...' : title}</span>
       {rightLabel && <span className={s.label}>{rightLabel}</span>}

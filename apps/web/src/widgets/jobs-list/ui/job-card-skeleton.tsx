@@ -17,24 +17,73 @@ function JobCardSkeletonItem() {
       }}
     >
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Skeleton variant="rectangular" width={80} height={22} animation="wave" sx={{ borderRadius: '12px' }} />
+        <Skeleton
+          variant="rectangular"
+          width={80}
+          height={22}
+          animation="wave"
+          sx={{ borderRadius: '12px' }}
+        />
         <Box sx={{ display: 'flex', gap: 1 }}>
-          <Skeleton variant="rectangular" width={90} height={28} animation="wave" sx={{ borderRadius: '6px' }} />
-          <Skeleton variant="rectangular" width={28} height={28} animation="wave" sx={{ borderRadius: '6px' }} />
+          <Skeleton
+            variant="rectangular"
+            width={90}
+            height={28}
+            animation="wave"
+            sx={{ borderRadius: '6px' }}
+          />
+          <Skeleton
+            variant="rectangular"
+            width={28}
+            height={28}
+            animation="wave"
+            sx={{ borderRadius: '6px' }}
+          />
         </Box>
       </Box>
       <Box>
-        <Skeleton variant="rectangular" width="60%" height={20} animation="wave" sx={{ borderRadius: '4px', mb: 0.5 }} />
-        <Skeleton variant="rectangular" width="40%" height={16} animation="wave" sx={{ borderRadius: '4px' }} />
+        <Skeleton
+          variant="rectangular"
+          width="60%"
+          height={20}
+          animation="wave"
+          sx={{ borderRadius: '4px', mb: 0.5 }}
+        />
+        <Skeleton
+          variant="rectangular"
+          width="40%"
+          height={16}
+          animation="wave"
+          sx={{ borderRadius: '4px' }}
+        />
       </Box>
       <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
         {[70, 90, 60, 80, 50].map((w, i) => (
-          <Skeleton key={i} variant="rectangular" width={w} height={24} animation="wave" sx={{ borderRadius: '12px' }} />
+          <Skeleton
+            key={i}
+            variant="rectangular"
+            width={w}
+            height={24}
+            animation="wave"
+            sx={{ borderRadius: '12px' }}
+          />
         ))}
       </Box>
       <Box sx={{ display: 'flex', gap: 2 }}>
-        <Skeleton variant="rectangular" width={120} height={14} animation="wave" sx={{ borderRadius: '4px' }} />
-        <Skeleton variant="rectangular" width={100} height={14} animation="wave" sx={{ borderRadius: '4px' }} />
+        <Skeleton
+          variant="rectangular"
+          width={120}
+          height={14}
+          animation="wave"
+          sx={{ borderRadius: '4px' }}
+        />
+        <Skeleton
+          variant="rectangular"
+          width={100}
+          height={14}
+          animation="wave"
+          sx={{ borderRadius: '4px' }}
+        />
       </Box>
     </Box>
   );

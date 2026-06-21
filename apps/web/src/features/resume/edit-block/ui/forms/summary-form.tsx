@@ -25,8 +25,15 @@ export function SummaryForm({ formik }: { formik: SummaryFormik }) {
         value={formik.values.data.sectionTitle ?? ''}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-        error={!!getIn(formik.touched, 'data.sectionTitle') && !!getIn(formik.errors, 'data.sectionTitle')}
-        helperText={(getIn(formik.touched, 'data.sectionTitle') && getIn(formik.errors, 'data.sectionTitle')) || ' '}
+        error={
+          !!getIn(formik.touched, 'data.sectionTitle') &&
+          !!getIn(formik.errors, 'data.sectionTitle')
+        }
+        helperText={
+          (getIn(formik.touched, 'data.sectionTitle') &&
+            getIn(formik.errors, 'data.sectionTitle')) ||
+          ' '
+        }
       />
       <TextField
         fullWidth
@@ -42,7 +49,9 @@ export function SummaryForm({ formik }: { formik: SummaryFormik }) {
         helperText={
           <Box component="span" sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <span>{textError || ' '}</span>
-            <span style={{ flexShrink: 0, marginLeft: 8 }}>{textLength} / {MAX_SUMMARY_LENGTH}</span>
+            <span style={{ flexShrink: 0, marginLeft: 8 }}>
+              {textLength} / {MAX_SUMMARY_LENGTH}
+            </span>
           </Box>
         }
       />

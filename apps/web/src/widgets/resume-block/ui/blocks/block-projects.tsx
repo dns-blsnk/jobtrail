@@ -15,20 +15,31 @@ export function BlockProjects({ data }: BlockProjectsProps) {
             <div>
               <div className={s.itemTitle}>
                 {item.url ? (
-                  <a href={item.url} target="_blank" rel="noopener noreferrer" className={s.itemLink}>
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={s.itemLink}
+                  >
                     {item.name}
                   </a>
-                ) : item.name}
+                ) : (
+                  item.name
+                )}
               </div>
             </div>
             <div className={s.itemDate}>
-              {item.startDate}{item.startDate || item.endDate ? ' – ' : ''}{item.endDate}
+              {item.startDate}
+              {item.startDate || item.endDate ? ' – ' : ''}
+              {item.endDate}
             </div>
           </div>
           {item.techStack.length > 0 && (
             <div className={s.tagList}>
               {item.techStack.map((tech) => (
-                <span key={tech} className={s.tag}>{tech}</span>
+                <span key={tech} className={s.tag}>
+                  {tech}
+                </span>
               ))}
             </div>
           )}

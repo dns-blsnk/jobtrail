@@ -39,10 +39,20 @@ const BLOCK_LABELS: Record<BlockType, string> = {
 export function BlockEmptyState({ blockType, onAdd }: BlockEmptyStateProps) {
   return (
     <div className={s.emptyState}>
-      <Icon name={BLOCK_ICONS[blockType]} size={28} strokeWidth={1.5} className={s.emptyStateIcon} />
+      <Icon
+        name={BLOCK_ICONS[blockType]}
+        size={28}
+        strokeWidth={1.5}
+        className={s.emptyStateIcon}
+      />
       <div className={s.emptyStateTitle}>{BLOCK_LABELS[blockType]}</div>
       <div className={s.emptyStateSubtitle}>Click to add</div>
-      <button type="button" className={s.emptyStateBtn} onClick={onAdd} aria-label={`Add ${BLOCK_LABELS[blockType]}`}>
+      <button
+        type="button"
+        className={s.emptyStateBtn}
+        onClick={onAdd}
+        aria-label={`Add ${BLOCK_LABELS[blockType]}`}
+      >
         Add
       </button>
     </div>

@@ -51,25 +51,38 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
   }
 
   const shape = values.data.photoShape ?? 'circle';
-  const shapePreview: Record<typeof shape, { borderRadius: string; width: number; height: number }> = {
-    circle:   { borderRadius: '50%',  width: 80, height: 80  },
-    square:   { borderRadius: '12px', width: 80, height: 80  },
-    portrait: { borderRadius: '8px',  width: 80, height: 112 },
+  const shapePreview: Record<
+    typeof shape,
+    { borderRadius: string; width: number; height: number }
+  > = {
+    circle: { borderRadius: '50%', width: 80, height: 80 },
+    square: { borderRadius: '12px', width: 80, height: 80 },
+    portrait: { borderRadius: '8px', width: 80, height: 112 },
   };
   const shapeOptions: Array<{ value: typeof shape; label: string }> = [
-    { value: 'circle',   label: t('circle')   },
-    { value: 'square',   label: t('square')   },
+    { value: 'circle', label: t('circle') },
+    { value: 'square', label: t('square') },
     { value: 'portrait', label: t('portrait') },
   ];
 
   const links = values.data.links ?? [];
-  const platforms: SocialLinkItem['platform'][] = ['LinkedIn', 'GitHub', 'Portfolio', 'Twitter', 'Other'];
+  const platforms: SocialLinkItem['platform'][] = [
+    'LinkedIn',
+    'GitHub',
+    'Portfolio',
+    'Twitter',
+    'Other',
+  ];
 
   // Track link-field touched state by "${id}.field" key (not by array index).
   // This prevents stale touched and cross-field bleed between title and url.
   const [touchedLinkFields, setTouchedLinkFields] = useState(() => new Set<string>());
   const touchLinkField = useCallback((id: string, field: string) => {
-    setTouchedLinkFields((prev) => { const next = new Set(prev); next.add(`${id}.${field}`); return next; });
+    setTouchedLinkFields((prev) => {
+      const next = new Set(prev);
+      next.add(`${id}.${field}`);
+      return next;
+    });
   }, []);
 
   // Track which link IDs were present when the form was last submitted.
@@ -84,27 +97,41 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
     if (links.length >= MAX_HEADER_LINKS) return;
     void setFieldValue('data.links', [
       ...links,
-      { id: crypto.randomUUID(), platform: 'LinkedIn', title: '', url: '' } satisfies SocialLinkItem,
+      {
+        id: crypto.randomUUID(),
+        platform: 'LinkedIn',
+        title: '',
+        url: '',
+      } satisfies SocialLinkItem,
     ]);
   }
 
   function removeLink(index: number) {
-    void setFieldValue('data.links', links.filter((_, i) => i !== index));
+    void setFieldValue(
+      'data.links',
+      links.filter((_, i) => i !== index),
+    );
   }
-
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-
       {/* Photo upload */}
-      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'flex-start', sm: 'center' }, gap: 2, mb: 2 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
+          alignItems: { xs: 'flex-start', sm: 'center' },
+          gap: 2,
+          mb: 2,
+        }}
+      >
         {/* Photo preview + upload/remove buttons */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <Box
             onClick={() => photoInputRef.current?.click()}
             sx={{
-              width:        shapePreview[shape].width,
-              height:       shapePreview[shape].height,
+              width: shapePreview[shape].width,
+              height: shapePreview[shape].height,
               borderRadius: shapePreview[shape].borderRadius,
               border: '2px dashed',
               borderColor: values.data.photoUrl ? 'var(--border)' : 'var(--border-2)',
@@ -115,13 +142,18 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
               justifyContent: 'center',
               background: 'var(--surface-2)',
               cursor: 'pointer',
-              transition: 'border-color 0.15s ease, border-radius 0.15s ease, width 0.15s ease, height 0.15s ease',
+              transition:
+                'border-color 0.15s ease, border-radius 0.15s ease, width 0.15s ease, height 0.15s ease',
               '&:hover': { borderColor: 'var(--accent)' },
             }}
           >
             {values.data.photoUrl ? (
-              <Box component="img" src={values.data.photoUrl} alt="Profile"
-                sx={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <Box
+                component="img"
+                src={values.data.photoUrl}
+                alt="Profile"
+                sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
             ) : (
               <Icon name="user" size={32} strokeWidth={1.4} style={{ color: 'var(--ink-3)' }} />
             )}
@@ -155,7 +187,14 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
         {/* Shape picker — on mobile appears below photo row */}
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, flex: 1 }}>
           <Box sx={{ fontSize: 12, color: 'text.secondary' }}>{t('shape')}</Box>
-          <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', '@media (max-width: 767px)': { '& > button': { flex: 1 } } }}>
+          <Box
+            sx={{
+              display: 'flex',
+              gap: 1,
+              flexWrap: 'wrap',
+              '@media (max-width: 767px)': { '& > button': { flex: 1 } },
+            }}
+          >
             {shapeOptions.map(({ value, label }) => (
               <Button
                 key={value}
@@ -170,63 +209,142 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
           </Box>
         </Box>
 
-        <input ref={photoInputRef} type="file" accept="image/*"
-          onChange={handlePhoto} style={{ display: 'none' }} aria-hidden="true" />
+        <input
+          ref={photoInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handlePhoto}
+          style={{ display: 'none' }}
+          aria-hidden="true"
+        />
       </Box>
 
       {/* Name */}
-      <Box sx={{ display: 'flex', gap: { xs: 1, sm: 2 }, flexWrap: 'wrap', '@media (max-width: 767px)': { flexDirection: 'column', flexWrap: 'nowrap', gap: 1 } }}>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: { xs: 1, sm: 2 },
+          flexWrap: 'wrap',
+          '@media (max-width: 767px)': { flexDirection: 'column', flexWrap: 'nowrap', gap: 1 },
+        }}
+      >
         <TextField
-          label={t('firstName')} size="small" name="data.firstName" sx={{ flex: '1 1 140px' }}
-          value={values.data.firstName} onChange={handleChange} onBlur={handleBlur}
-          error={!!getIn(formik.touched, 'data.firstName') && !!getIn(formik.errors, 'data.firstName')}
-          helperText={(getIn(formik.touched, 'data.firstName') && getIn(formik.errors, 'data.firstName')) || ' '}
+          label={t('firstName')}
+          size="small"
+          name="data.firstName"
+          sx={{ flex: '1 1 140px' }}
+          value={values.data.firstName}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={
+            !!getIn(formik.touched, 'data.firstName') && !!getIn(formik.errors, 'data.firstName')
+          }
+          helperText={
+            (getIn(formik.touched, 'data.firstName') && getIn(formik.errors, 'data.firstName')) ||
+            ' '
+          }
         />
         <TextField
-          label={t('lastName')} size="small" name="data.lastName" sx={{ flex: '1 1 140px' }}
-          value={values.data.lastName} onChange={handleChange} onBlur={handleBlur}
-          error={!!getIn(formik.touched, 'data.lastName') && !!getIn(formik.errors, 'data.lastName')}
-          helperText={(getIn(formik.touched, 'data.lastName') && getIn(formik.errors, 'data.lastName')) || ' '}
+          label={t('lastName')}
+          size="small"
+          name="data.lastName"
+          sx={{ flex: '1 1 140px' }}
+          value={values.data.lastName}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={
+            !!getIn(formik.touched, 'data.lastName') && !!getIn(formik.errors, 'data.lastName')
+          }
+          helperText={
+            (getIn(formik.touched, 'data.lastName') && getIn(formik.errors, 'data.lastName')) || ' '
+          }
         />
       </Box>
 
       {/* Job title */}
       <TextField
-        fullWidth label={t('jobTitle')} size="small" name="data.jobTitle"
-        value={values.data.jobTitle} onChange={handleChange} onBlur={handleBlur}
+        fullWidth
+        label={t('jobTitle')}
+        size="small"
+        name="data.jobTitle"
+        value={values.data.jobTitle}
+        onChange={handleChange}
+        onBlur={handleBlur}
         error={!!getIn(formik.touched, 'data.jobTitle') && !!getIn(formik.errors, 'data.jobTitle')}
-        helperText={(getIn(formik.touched, 'data.jobTitle') && getIn(formik.errors, 'data.jobTitle')) || ' '}
+        helperText={
+          (getIn(formik.touched, 'data.jobTitle') && getIn(formik.errors, 'data.jobTitle')) || ' '
+        }
       />
 
       {/* Email + Phone (optional) */}
-      <Box sx={{ display: 'flex', gap: { xs: 1, sm: 2 }, flexWrap: 'wrap', '@media (max-width: 767px)': { flexDirection: 'column', flexWrap: 'nowrap', gap: 1 } }}>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: { xs: 1, sm: 2 },
+          flexWrap: 'wrap',
+          '@media (max-width: 767px)': { flexDirection: 'column', flexWrap: 'nowrap', gap: 1 },
+        }}
+      >
         <TextField
-          label={t('email')} size="small" type="email" name="data.email" sx={{ flex: '1 1 180px' }}
-          value={values.data.email} onChange={handleChange} onBlur={handleBlur}
+          label={t('email')}
+          size="small"
+          type="email"
+          name="data.email"
+          sx={{ flex: '1 1 180px' }}
+          value={values.data.email}
+          onChange={handleChange}
+          onBlur={handleBlur}
           error={!!getIn(formik.touched, 'data.email') && !!getIn(formik.errors, 'data.email')}
-          helperText={(getIn(formik.touched, 'data.email') && getIn(formik.errors, 'data.email')) || ' '}
+          helperText={
+            (getIn(formik.touched, 'data.email') && getIn(formik.errors, 'data.email')) || ' '
+          }
         />
         <TextField
-          label={t('phoneOptional')} size="small" name="data.phone" sx={{ flex: '1 1 140px' }}
+          label={t('phoneOptional')}
+          size="small"
+          name="data.phone"
+          sx={{ flex: '1 1 140px' }}
           value={values.data.phone ?? ''}
-          onChange={handleChange} onBlur={handleBlur}
+          onChange={handleChange}
+          onBlur={handleBlur}
           error={!!getIn(formik.touched, 'data.phone') && !!getIn(formik.errors, 'data.phone')}
-          helperText={(getIn(formik.touched, 'data.phone') && getIn(formik.errors, 'data.phone')) || ' '}
+          helperText={
+            (getIn(formik.touched, 'data.phone') && getIn(formik.errors, 'data.phone')) || ' '
+          }
         />
       </Box>
 
       {/* Location (optional) + Website (optional) */}
-      <Box sx={{ display: 'flex', gap: { xs: 1, sm: 2 }, flexWrap: 'wrap', '@media (max-width: 767px)': { flexDirection: 'column', flexWrap: 'nowrap', gap: 1 } }}>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: { xs: 1, sm: 2 },
+          flexWrap: 'wrap',
+          '@media (max-width: 767px)': { flexDirection: 'column', flexWrap: 'nowrap', gap: 1 },
+        }}
+      >
         <TextField
-          label={t('locationOptional')} size="small" name="data.location" sx={{ flex: '1 1 140px' }}
-          value={values.data.location ?? ''} onChange={handleChange} onBlur={handleBlur}
+          label={t('locationOptional')}
+          size="small"
+          name="data.location"
+          sx={{ flex: '1 1 140px' }}
+          value={values.data.location ?? ''}
+          onChange={handleChange}
+          onBlur={handleBlur}
           helperText=" "
         />
         <TextField
-          label={t('websiteOptional')} size="small" name="data.website" sx={{ flex: '1 1 180px' }}
-          value={values.data.website ?? ''} onChange={handleChange} onBlur={handleBlur}
+          label={t('websiteOptional')}
+          size="small"
+          name="data.website"
+          sx={{ flex: '1 1 180px' }}
+          value={values.data.website ?? ''}
+          onChange={handleChange}
+          onBlur={handleBlur}
           error={!!getIn(formik.touched, 'data.website') && !!getIn(formik.errors, 'data.website')}
-          helperText={(getIn(formik.touched, 'data.website') && getIn(formik.errors, 'data.website')) || ' '}
+          helperText={
+            (getIn(formik.touched, 'data.website') && getIn(formik.errors, 'data.website')) || ' '
+          }
         />
       </Box>
 
@@ -234,7 +352,10 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
       <Box>
         <InputLabel sx={{ fontSize: 16, fontWeight: 500, color: 'text.primary', mb: 2.5 }}>
           {t('socialLinks')}
-          <Box component="span" sx={{ ml: 1, fontSize: 16, color: 'text.disabled', fontWeight: 400 }}>
+          <Box
+            component="span"
+            sx={{ ml: 1, fontSize: 16, color: 'text.disabled', fontWeight: 400 }}
+          >
             {links.length}/{MAX_HEADER_LINKS}
           </Box>
         </InputLabel>
@@ -248,10 +369,14 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
                 <Select
                   label={t('platform')}
                   value={link.platform}
-                  onChange={(e) => void setFieldValue(`data.links[${index}].platform`, e.target.value)}
+                  onChange={(e) =>
+                    void setFieldValue(`data.links[${index}].platform`, e.target.value)
+                  }
                 >
                   {platforms.map((p) => (
-                    <MenuItem key={p} value={p}>{p}</MenuItem>
+                    <MenuItem key={p} value={p}>
+                      {p}
+                    </MenuItem>
                   ))}
                 </Select>
                 {/* spacer matches TextField helperText height so both columns are equal */}
@@ -265,12 +390,15 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
                 onChange={(e) => void setFieldValue(`data.links[${index}].title`, e.target.value)}
                 onBlur={() => touchLinkField(link.id, 'title')}
                 error={
-                  (touchedLinkFields.has(`${link.id}.title`) || submittedLinkIds.current.has(link.id)) &&
+                  (touchedLinkFields.has(`${link.id}.title`) ||
+                    submittedLinkIds.current.has(link.id)) &&
                   Boolean(getIn(formik.errors, `data.links[${index}].title`))
                 }
                 helperText={
-                  ((touchedLinkFields.has(`${link.id}.title`) || submittedLinkIds.current.has(link.id)) &&
-                  getIn(formik.errors, `data.links[${index}].title`)) || ' '
+                  ((touchedLinkFields.has(`${link.id}.title`) ||
+                    submittedLinkIds.current.has(link.id)) &&
+                    getIn(formik.errors, `data.links[${index}].title`)) ||
+                  ' '
                 }
               />
               <IconButton
@@ -284,7 +412,11 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
                   borderColor: 'divider',
                   borderRadius: 1,
                   p: '5px',
-                  '&:hover': { color: 'error.main', borderColor: 'error.main', background: 'transparent' },
+                  '&:hover': {
+                    color: 'error.main',
+                    borderColor: 'error.main',
+                    background: 'transparent',
+                  },
                 }}
               >
                 <Icon name="trash" size={14} strokeWidth={1.9} />
@@ -300,12 +432,15 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
                 onChange={(e) => void setFieldValue(`data.links[${index}].url`, e.target.value)}
                 onBlur={() => touchLinkField(link.id, 'url')}
                 error={
-                  (touchedLinkFields.has(`${link.id}.url`) || submittedLinkIds.current.has(link.id)) &&
+                  (touchedLinkFields.has(`${link.id}.url`) ||
+                    submittedLinkIds.current.has(link.id)) &&
                   Boolean(getIn(formik.errors, `data.links[${index}].url`))
                 }
                 helperText={
-                  ((touchedLinkFields.has(`${link.id}.url`) || submittedLinkIds.current.has(link.id)) &&
-                  getIn(formik.errors, `data.links[${index}].url`)) || ' '
+                  ((touchedLinkFields.has(`${link.id}.url`) ||
+                    submittedLinkIds.current.has(link.id)) &&
+                    getIn(formik.errors, `data.links[${index}].url`)) ||
+                  ' '
                 }
               />
             </Box>
@@ -335,7 +470,6 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
           onCancel={handleCropCancel}
         />
       )}
-
     </Box>
   );
 }

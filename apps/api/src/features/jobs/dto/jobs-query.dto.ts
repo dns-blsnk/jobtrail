@@ -1,14 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import {
-  IsArray,
-  IsBoolean,
-  IsEnum,
-  IsInt,
-  IsOptional,
-  Max,
-  Min,
-} from 'class-validator';
+import { IsArray, IsBoolean, IsEnum, IsInt, IsOptional, Max, Min } from 'class-validator';
 import type { JobStatus } from '@prisma/client';
 
 export class JobsQueryDto {
@@ -27,7 +19,9 @@ export class JobsQueryDto {
   @Max(100)
   limit?: number = 20;
 
-  @ApiPropertyOptional({ enum: ['SAVED', 'APPLYING', 'APPLIED', 'INTERVIEW', 'OFFER', 'REJECTED', 'ARCHIVED'] })
+  @ApiPropertyOptional({
+    enum: ['SAVED', 'APPLYING', 'APPLIED', 'INTERVIEW', 'OFFER', 'REJECTED', 'ARCHIVED'],
+  })
   @IsOptional()
   @IsEnum(['SAVED', 'APPLYING', 'APPLIED', 'INTERVIEW', 'OFFER', 'REJECTED', 'ARCHIVED'])
   status?: JobStatus;
@@ -40,9 +34,7 @@ export class JobsQueryDto {
 
   @ApiPropertyOptional({ type: [String] })
   @IsOptional()
-  @Transform(({ value }: { value: string | string[] }) =>
-    Array.isArray(value) ? value : [value],
-  )
+  @Transform(({ value }: { value: string | string[] }) => (Array.isArray(value) ? value : [value]))
   @IsArray()
   stack?: string[];
 

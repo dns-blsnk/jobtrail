@@ -20,10 +20,7 @@ describe('LocalStrategy', () => {
     authService = { validateUser: jest.fn() };
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        LocalStrategy,
-        { provide: AuthService, useValue: authService },
-      ],
+      providers: [LocalStrategy, { provide: AuthService, useValue: authService }],
     }).compile();
 
     strategy = module.get<LocalStrategy>(LocalStrategy);

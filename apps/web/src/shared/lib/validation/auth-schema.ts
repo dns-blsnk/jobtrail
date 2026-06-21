@@ -11,10 +11,7 @@ export type AuthFormErrors = Partial<Record<'email' | 'password', string>>;
 
 export function createAuthSchema(msgs: AuthValidationMessages) {
   return z.object({
-    email: z
-      .string()
-      .min(1, msgs.emailRequired)
-      .email(msgs.emailInvalid),
+    email: z.string().min(1, msgs.emailRequired).email(msgs.emailInvalid),
     password: z
       .string()
       .min(1, msgs.passwordRequired)
@@ -26,7 +23,10 @@ export function createAuthSchema(msgs: AuthValidationMessages) {
 
 export type AuthFormValues = z.infer<ReturnType<typeof createAuthSchema>>;
 
-export function validateAuthForm(values: AuthFormValues, msgs: AuthValidationMessages): AuthFormErrors {
+export function validateAuthForm(
+  values: AuthFormValues,
+  msgs: AuthValidationMessages,
+): AuthFormErrors {
   const result = createAuthSchema(msgs).safeParse(values);
   if (result.success) return {};
   return result.error.issues.reduce<AuthFormErrors>((acc, issue) => {

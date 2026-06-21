@@ -49,8 +49,8 @@ describe('JwtStrategy', () => {
   it('throws UnauthorizedException when user is not found', async () => {
     prisma.user.findUnique.mockResolvedValue(null);
 
-    await expect(
-      strategy.validate({ sub: 'unknown', email: 'no@example.com' }),
-    ).rejects.toThrow(UnauthorizedException);
+    await expect(strategy.validate({ sub: 'unknown', email: 'no@example.com' })).rejects.toThrow(
+      UnauthorizedException,
+    );
   });
 });

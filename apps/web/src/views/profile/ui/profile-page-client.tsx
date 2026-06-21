@@ -19,8 +19,15 @@ import { ProfileLinksSkeleton } from '@/widgets/profile-links/ui/profile-links-s
 import s from './profile-page.module.scss';
 
 const COMPLETION_FIELDS: (keyof UserProfile)[] = [
-  'headline', 'bio', 'location', 'experienceLevel',
-  'targetRoles', 'preferredStack', 'salaryMin', 'searchStatus', 'linkedinUrl',
+  'headline',
+  'bio',
+  'location',
+  'experienceLevel',
+  'targetRoles',
+  'preferredStack',
+  'salaryMin',
+  'searchStatus',
+  'linkedinUrl',
 ];
 
 function calcCompletion(profile: UserProfile): number {

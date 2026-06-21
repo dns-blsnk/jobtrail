@@ -24,7 +24,9 @@ interface PhotoCropDialogProps {
 async function getCroppedImg(imageSrc: string, pixelCrop: Area): Promise<string> {
   const image = new Image();
   image.src = imageSrc;
-  await new Promise<void>((resolve) => { image.onload = () => resolve(); });
+  await new Promise<void>((resolve) => {
+    image.onload = () => resolve();
+  });
 
   const canvas = document.createElement('canvas');
   canvas.width = pixelCrop.width;
@@ -104,8 +106,12 @@ export function PhotoCropDialog({ open, src, shape, onConfirm, onCancel }: Photo
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleCancel} color="inherit">{t('cancel')}</Button>
-        <Button onClick={() => void handleConfirm()} variant="contained">{t('apply')}</Button>
+        <Button onClick={handleCancel} color="inherit">
+          {t('cancel')}
+        </Button>
+        <Button onClick={() => void handleConfirm()} variant="contained">
+          {t('apply')}
+        </Button>
       </DialogActions>
     </Dialog>
   );

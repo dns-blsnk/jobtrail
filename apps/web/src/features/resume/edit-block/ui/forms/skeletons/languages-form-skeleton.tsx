@@ -1,7 +1,12 @@
 'use client';
 
 import Box from '@mui/material/Box';
-import { FieldSk, SelectSk, IconBtnSk, AddBtnSk } from '@/features/resume/edit-block/ui/forms/skeletons/parts';
+import {
+  FieldSk,
+  SelectSk,
+  IconBtnSk,
+  AddBtnSk,
+} from '@/features/resume/edit-block/ui/forms/skeletons/parts';
 
 export function LanguagesFormSkeleton() {
   return (

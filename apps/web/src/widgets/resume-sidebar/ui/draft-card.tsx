@@ -65,11 +65,19 @@ export function DraftCard({ draft, isActive, onSelect }: DraftCardProps) {
   return (
     <div
       className={clsx(s.draftCard, isActive && s.draftCardActive)}
-      onClick={() => { setActiveDraft(draft.id); onSelect(draft.id); }}
+      onClick={() => {
+        setActiveDraft(draft.id);
+        onSelect(draft.id);
+      }}
       role="button"
       tabIndex={0}
       aria-pressed={isActive}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { setActiveDraft(draft.id); onSelect(draft.id); } }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          setActiveDraft(draft.id);
+          onSelect(draft.id);
+        }
+      }}
     >
       <div className={s.draftCardMain}>
         {renameMode ? (
@@ -92,10 +100,7 @@ export function DraftCard({ draft, isActive, onSelect }: DraftCardProps) {
         </div>
       </div>
       <div className={s.draftCardActions} onClick={(e) => e.stopPropagation()}>
-        <DraftActionsMenu
-          draftId={draft.id}
-          onRenameStart={() => setRenameMode(true)}
-        />
+        <DraftActionsMenu draftId={draft.id} onRenameStart={() => setRenameMode(true)} />
       </div>
     </div>
   );

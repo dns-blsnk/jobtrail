@@ -59,29 +59,33 @@ function isBlockEmpty(block: ResumeBlock): boolean {
     case 'summary':
       return !bd.data.text;
     case 'experience':
-      return bd.data.items.length === 0 ||
-        bd.data.items.every((item) => !item.company && !item.role && !item.description);
+      return (
+        bd.data.items.length === 0 ||
+        bd.data.items.every((item) => !item.company && !item.role && !item.description)
+      );
     case 'education':
-      return bd.data.items.length === 0 ||
-        bd.data.items.every((item) => !item.institution && !item.degree);
+      return (
+        bd.data.items.length === 0 ||
+        bd.data.items.every((item) => !item.institution && !item.degree)
+      );
     case 'skills':
-      return bd.data.groups.length === 0 ||
-        bd.data.groups.every((g) => !g.name && g.tags.length === 0);
+      return (
+        bd.data.groups.length === 0 || bd.data.groups.every((g) => !g.name && g.tags.length === 0)
+      );
     case 'projects':
-      return bd.data.items.length === 0 ||
-        bd.data.items.every((item) => !item.name && !item.description);
+      return (
+        bd.data.items.length === 0 || bd.data.items.every((item) => !item.name && !item.description)
+      );
     case 'languages':
-      return bd.data.items.length === 0 ||
-        bd.data.items.every((item) => !item.language);
+      return bd.data.items.length === 0 || bd.data.items.every((item) => !item.language);
     case 'certifications':
-      return bd.data.items.length === 0 ||
-        bd.data.items.every((item) => !item.name && !item.issuer);
+      return (
+        bd.data.items.length === 0 || bd.data.items.every((item) => !item.name && !item.issuer)
+      );
     case 'social-links':
-      return bd.data.items.length === 0 ||
-        bd.data.items.every((item) => !item.url);
+      return bd.data.items.length === 0 || bd.data.items.every((item) => !item.url);
     case 'awards':
-      return bd.data.items.length === 0 ||
-        bd.data.items.every((item) => !item.title);
+      return bd.data.items.length === 0 || bd.data.items.every((item) => !item.title);
     case 'custom':
       return !bd.data.sectionTitle && !bd.data.content;
   }
@@ -158,21 +162,81 @@ export function ResumeEditor({ isPreview }: ResumeEditorProps) {
                   sx={{ borderRadius: '8px', flexShrink: 0 }}
                 />
                 <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 0.75 }}>
-                  <Skeleton variant="rectangular" width="60%" height={24} animation="wave" sx={{ borderRadius: '4px' }} />
-                  <Skeleton variant="rectangular" width="40%" height={16} animation="wave" sx={{ borderRadius: '4px' }} />
-                  <Skeleton variant="rectangular" width="50%" height={16} animation="wave" sx={{ borderRadius: '4px' }} />
+                  <Skeleton
+                    variant="rectangular"
+                    width="60%"
+                    height={24}
+                    animation="wave"
+                    sx={{ borderRadius: '4px' }}
+                  />
+                  <Skeleton
+                    variant="rectangular"
+                    width="40%"
+                    height={16}
+                    animation="wave"
+                    sx={{ borderRadius: '4px' }}
+                  />
+                  <Skeleton
+                    variant="rectangular"
+                    width="50%"
+                    height={16}
+                    animation="wave"
+                    sx={{ borderRadius: '4px' }}
+                  />
                 </Box>
               </Box>
-              <Skeleton variant="rectangular" width="100%" height={60} animation="wave" sx={{ borderRadius: '8px' }} />
-              <Skeleton variant="rectangular" width="100%" height={80} animation="wave" sx={{ borderRadius: '8px' }} />
-              <Skeleton variant="rectangular" width="100%" height={80} animation="wave" sx={{ borderRadius: '8px' }} />
+              <Skeleton
+                variant="rectangular"
+                width="100%"
+                height={60}
+                animation="wave"
+                sx={{ borderRadius: '8px' }}
+              />
+              <Skeleton
+                variant="rectangular"
+                width="100%"
+                height={80}
+                animation="wave"
+                sx={{ borderRadius: '8px' }}
+              />
+              <Skeleton
+                variant="rectangular"
+                width="100%"
+                height={80}
+                animation="wave"
+                sx={{ borderRadius: '8px' }}
+              />
             </Box>
           ) : (
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <Skeleton variant="rectangular" width="100%" height={120} animation="wave" sx={{ borderRadius: '8px' }} />
-              <Skeleton variant="rectangular" width="100%" height={80} animation="wave" sx={{ borderRadius: '8px' }} />
-              <Skeleton variant="rectangular" width="100%" height={100} animation="wave" sx={{ borderRadius: '8px' }} />
-              <Skeleton variant="rectangular" width="100%" height={100} animation="wave" sx={{ borderRadius: '8px' }} />
+              <Skeleton
+                variant="rectangular"
+                width="100%"
+                height={120}
+                animation="wave"
+                sx={{ borderRadius: '8px' }}
+              />
+              <Skeleton
+                variant="rectangular"
+                width="100%"
+                height={80}
+                animation="wave"
+                sx={{ borderRadius: '8px' }}
+              />
+              <Skeleton
+                variant="rectangular"
+                width="100%"
+                height={100}
+                animation="wave"
+                sx={{ borderRadius: '8px' }}
+              />
+              <Skeleton
+                variant="rectangular"
+                width="100%"
+                height={100}
+                animation="wave"
+                sx={{ borderRadius: '8px' }}
+              />
             </Box>
           )}
         </div>
@@ -190,16 +254,16 @@ export function ResumeEditor({ isPreview }: ResumeEditorProps) {
     );
   }
 
-  const headerBlock  = activeDraft.blocks.find((b) => b.blockData.type === 'header') ?? null;
+  const headerBlock = activeDraft.blocks.find((b) => b.blockData.type === 'header') ?? null;
   const summaryBlock = activeDraft.blocks.find((b) => b.blockData.type === 'summary') ?? null;
 
   const sortableBlocks = activeDraft.blocks.filter(
-    (b) => b.blockData.type !== 'header' && b.blockData.type !== 'summary'
+    (b) => b.blockData.type !== 'header' && b.blockData.type !== 'summary',
   );
   const sortableIds = sortableBlocks.map((b) => b.id);
 
   const activeDragBlock = activeDragId
-    ? activeDraft.blocks.find((b) => b.id === activeDragId) ?? null
+    ? (activeDraft.blocks.find((b) => b.id === activeDragId) ?? null)
     : null;
 
   function handleDragStart(event: DragStartEvent) {
@@ -212,7 +276,7 @@ export function ResumeEditor({ isPreview }: ResumeEditorProps) {
     if (!over || active.id === over.id) return;
 
     const oldIndex = sortableIds.indexOf(active.id as string);
-    const newIndex  = sortableIds.indexOf(over.id as string);
+    const newIndex = sortableIds.indexOf(over.id as string);
     if (oldIndex === -1 || newIndex === -1) return;
 
     const newSortable = [...sortableIds];
@@ -220,7 +284,7 @@ export function ResumeEditor({ isPreview }: ResumeEditorProps) {
     newSortable.splice(newIndex, 0, active.id as string);
 
     const newOrder = [
-      ...(headerBlock  ? [headerBlock.id]  : []),
+      ...(headerBlock ? [headerBlock.id] : []),
       ...(summaryBlock ? [summaryBlock.id] : []),
       ...newSortable,
     ];
@@ -238,7 +302,7 @@ export function ResumeEditor({ isPreview }: ResumeEditorProps) {
         className={clsx(
           s.canvas,
           s[`template_${activeDraft.templateId}`],
-          isPreview && s.previewMode
+          isPreview && s.previewMode,
         )}
       >
         {/* Header — always first, no DnD */}
@@ -292,9 +356,7 @@ export function ResumeEditor({ isPreview }: ResumeEditorProps) {
 
           <DragOverlay dropAnimation={dropAnimation}>
             {activeDragBlock ? (
-              <div className={s.dragOverlay}>
-                {renderBlockContent(activeDragBlock)}
-              </div>
+              <div className={s.dragOverlay}>{renderBlockContent(activeDragBlock)}</div>
             ) : null}
           </DragOverlay>
         </DndContext>

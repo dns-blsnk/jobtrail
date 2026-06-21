@@ -26,8 +26,14 @@ const WORK_FORMATS = ['REMOTE', 'HYBRID', 'ONSITE', 'ANY'] as const;
 function validate(values: CareerPrefsFormValues) {
   const sanitized = {
     ...values,
-    salaryMin: values.salaryMin === undefined || String(values.salaryMin) === '' ? undefined : Number(values.salaryMin),
-    salaryMax: values.salaryMax === undefined || String(values.salaryMax) === '' ? undefined : Number(values.salaryMax),
+    salaryMin:
+      values.salaryMin === undefined || String(values.salaryMin) === ''
+        ? undefined
+        : Number(values.salaryMin),
+    salaryMax:
+      values.salaryMax === undefined || String(values.salaryMax) === ''
+        ? undefined
+        : Number(values.salaryMax),
   };
   const result = careerPrefsSchema.safeParse(sanitized);
   if (result.success) return {};
@@ -62,8 +68,14 @@ export function EditCareerPrefsForm({
     onSubmit: (values) => {
       onSave({
         ...values,
-        salaryMin: values.salaryMin !== undefined && String(values.salaryMin) !== '' ? Number(values.salaryMin) : undefined,
-        salaryMax: values.salaryMax !== undefined && String(values.salaryMax) !== '' ? Number(values.salaryMax) : undefined,
+        salaryMin:
+          values.salaryMin !== undefined && String(values.salaryMin) !== ''
+            ? Number(values.salaryMin)
+            : undefined,
+        salaryMax:
+          values.salaryMax !== undefined && String(values.salaryMax) !== ''
+            ? Number(values.salaryMax)
+            : undefined,
       });
     },
   });
@@ -85,7 +97,9 @@ export function EditCareerPrefsForm({
         >
           <MenuItem value="">—</MenuItem>
           {EXPERIENCE_LEVELS.map((lvl) => (
-            <MenuItem key={lvl} value={lvl}>{lvl.charAt(0) + lvl.slice(1).toLowerCase()}</MenuItem>
+            <MenuItem key={lvl} value={lvl}>
+              {lvl.charAt(0) + lvl.slice(1).toLowerCase()}
+            </MenuItem>
           ))}
         </TextField>
 
@@ -96,7 +110,9 @@ export function EditCareerPrefsForm({
             value={formik.values.targetRoles ?? []}
             onChange={(tags) => void formik.setFieldValue('targetRoles', tags)}
             error={Boolean(formik.errors.targetRoles)}
-            helperText={typeof formik.errors.targetRoles === 'string' ? formik.errors.targetRoles : ' '}
+            helperText={
+              typeof formik.errors.targetRoles === 'string' ? formik.errors.targetRoles : ' '
+            }
           />
         </Box>
 
@@ -107,7 +123,9 @@ export function EditCareerPrefsForm({
             value={formik.values.preferredStack ?? []}
             onChange={(tags) => void formik.setFieldValue('preferredStack', tags)}
             error={Boolean(formik.errors.preferredStack)}
-            helperText={typeof formik.errors.preferredStack === 'string' ? formik.errors.preferredStack : ' '}
+            helperText={
+              typeof formik.errors.preferredStack === 'string' ? formik.errors.preferredStack : ' '
+            }
           />
         </Box>
 
@@ -161,7 +179,9 @@ export function EditCareerPrefsForm({
         >
           <MenuItem value="">—</MenuItem>
           {WORK_FORMATS.map((fmt) => (
-            <MenuItem key={fmt} value={fmt}>{fmt.charAt(0) + fmt.slice(1).toLowerCase()}</MenuItem>
+            <MenuItem key={fmt} value={fmt}>
+              {fmt.charAt(0) + fmt.slice(1).toLowerCase()}
+            </MenuItem>
           ))}
         </TextField>
 

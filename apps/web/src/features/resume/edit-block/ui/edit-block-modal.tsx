@@ -1,58 +1,100 @@
 'use client';
 
-import {type ComponentType, useCallback} from 'react';
+import { type ComponentType, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import {useTheme} from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import Skeleton from '@mui/material/Skeleton';
-import {useFormik} from 'formik';
-import {useTranslations} from 'next-intl';
-import {useResumeStore} from '@/entities/resume/model/resume-store';
-import {getValidationSchema} from '@/entities/resume/model/validation-schemas';
-import type {BlockData, BlockType} from '@/entities/resume/model/types';
-import {HeaderFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/header-form-skeleton';
-import {SummaryFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/summary-form-skeleton';
-import {ExperienceFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/experience-form-skeleton';
-import {EducationFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/education-form-skeleton';
-import {SkillsFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/skills-form-skeleton';
-import {ProjectsFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/projects-form-skeleton';
-import {LanguagesFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/languages-form-skeleton';
-import {CertificationsFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/certifications-form-skeleton';
-import {SocialLinksFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/social-links-form-skeleton';
-import {AwardsFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/awards-form-skeleton';
-import {CustomFormSkeleton} from '@/features/resume/edit-block/ui/forms/skeletons/custom-form-skeleton';
+import { useFormik } from 'formik';
+import { useTranslations } from 'next-intl';
+import { useResumeStore } from '@/entities/resume/model/resume-store';
+import { getValidationSchema } from '@/entities/resume/model/validation-schemas';
+import type { BlockData, BlockType } from '@/entities/resume/model/types';
+import { HeaderFormSkeleton } from '@/features/resume/edit-block/ui/forms/skeletons/header-form-skeleton';
+import { SummaryFormSkeleton } from '@/features/resume/edit-block/ui/forms/skeletons/summary-form-skeleton';
+import { ExperienceFormSkeleton } from '@/features/resume/edit-block/ui/forms/skeletons/experience-form-skeleton';
+import { EducationFormSkeleton } from '@/features/resume/edit-block/ui/forms/skeletons/education-form-skeleton';
+import { SkillsFormSkeleton } from '@/features/resume/edit-block/ui/forms/skeletons/skills-form-skeleton';
+import { ProjectsFormSkeleton } from '@/features/resume/edit-block/ui/forms/skeletons/projects-form-skeleton';
+import { LanguagesFormSkeleton } from '@/features/resume/edit-block/ui/forms/skeletons/languages-form-skeleton';
+import { CertificationsFormSkeleton } from '@/features/resume/edit-block/ui/forms/skeletons/certifications-form-skeleton';
+import { SocialLinksFormSkeleton } from '@/features/resume/edit-block/ui/forms/skeletons/social-links-form-skeleton';
+import { AwardsFormSkeleton } from '@/features/resume/edit-block/ui/forms/skeletons/awards-form-skeleton';
+import { CustomFormSkeleton } from '@/features/resume/edit-block/ui/forms/skeletons/custom-form-skeleton';
 
 const BLOCK_FORMS = {
-  header:         dynamic(() => import('@/features/resume/edit-block/ui/forms/header-form').then((m) => m.HeaderForm),         { loading: () => <HeaderFormSkeleton /> }),
-  summary:        dynamic(() => import('@/features/resume/edit-block/ui/forms/summary-form').then((m) => m.SummaryForm),       { loading: () => <SummaryFormSkeleton /> }),
-  experience:     dynamic(() => import('@/features/resume/edit-block/ui/forms/experience-form').then((m) => m.ExperienceForm), { loading: () => <ExperienceFormSkeleton /> }),
-  education:      dynamic(() => import('@/features/resume/edit-block/ui/forms/education-form').then((m) => m.EducationForm),   { loading: () => <EducationFormSkeleton /> }),
-  skills:         dynamic(() => import('@/features/resume/edit-block/ui/forms/skills-form').then((m) => m.SkillsForm),         { loading: () => <SkillsFormSkeleton /> }),
-  projects:       dynamic(() => import('@/features/resume/edit-block/ui/forms/projects-form').then((m) => m.ProjectsForm),     { loading: () => <ProjectsFormSkeleton /> }),
-  languages:      dynamic(() => import('@/features/resume/edit-block/ui/forms/languages-form').then((m) => m.LanguagesForm),   { loading: () => <LanguagesFormSkeleton /> }),
-  certifications: dynamic(() => import('@/features/resume/edit-block/ui/forms/certifications-form').then((m) => m.CertificationsForm), { loading: () => <CertificationsFormSkeleton /> }),
-  'social-links': dynamic(() => import('@/features/resume/edit-block/ui/forms/social-links-form').then((m) => m.SocialLinksForm), { loading: () => <SocialLinksFormSkeleton /> }),
-  awards:         dynamic(() => import('@/features/resume/edit-block/ui/forms/awards-form').then((m) => m.AwardsForm),         { loading: () => <AwardsFormSkeleton /> }),
-  custom:         dynamic(() => import('@/features/resume/edit-block/ui/forms/custom-form').then((m) => m.CustomForm),         { loading: () => <CustomFormSkeleton /> }),
+  header: dynamic(
+    () => import('@/features/resume/edit-block/ui/forms/header-form').then((m) => m.HeaderForm),
+    { loading: () => <HeaderFormSkeleton /> },
+  ),
+  summary: dynamic(
+    () => import('@/features/resume/edit-block/ui/forms/summary-form').then((m) => m.SummaryForm),
+    { loading: () => <SummaryFormSkeleton /> },
+  ),
+  experience: dynamic(
+    () =>
+      import('@/features/resume/edit-block/ui/forms/experience-form').then((m) => m.ExperienceForm),
+    { loading: () => <ExperienceFormSkeleton /> },
+  ),
+  education: dynamic(
+    () =>
+      import('@/features/resume/edit-block/ui/forms/education-form').then((m) => m.EducationForm),
+    { loading: () => <EducationFormSkeleton /> },
+  ),
+  skills: dynamic(
+    () => import('@/features/resume/edit-block/ui/forms/skills-form').then((m) => m.SkillsForm),
+    { loading: () => <SkillsFormSkeleton /> },
+  ),
+  projects: dynamic(
+    () => import('@/features/resume/edit-block/ui/forms/projects-form').then((m) => m.ProjectsForm),
+    { loading: () => <ProjectsFormSkeleton /> },
+  ),
+  languages: dynamic(
+    () =>
+      import('@/features/resume/edit-block/ui/forms/languages-form').then((m) => m.LanguagesForm),
+    { loading: () => <LanguagesFormSkeleton /> },
+  ),
+  certifications: dynamic(
+    () =>
+      import('@/features/resume/edit-block/ui/forms/certifications-form').then(
+        (m) => m.CertificationsForm,
+      ),
+    { loading: () => <CertificationsFormSkeleton /> },
+  ),
+  'social-links': dynamic(
+    () =>
+      import('@/features/resume/edit-block/ui/forms/social-links-form').then(
+        (m) => m.SocialLinksForm,
+      ),
+    { loading: () => <SocialLinksFormSkeleton /> },
+  ),
+  awards: dynamic(
+    () => import('@/features/resume/edit-block/ui/forms/awards-form').then((m) => m.AwardsForm),
+    { loading: () => <AwardsFormSkeleton /> },
+  ),
+  custom: dynamic(
+    () => import('@/features/resume/edit-block/ui/forms/custom-form').then((m) => m.CustomForm),
+    { loading: () => <CustomFormSkeleton /> },
+  ),
 } satisfies Record<BlockType, unknown>;
 
 const BLOCK_SKELETONS: Record<BlockType, ComponentType> = {
-  header:         HeaderFormSkeleton,
-  summary:        SummaryFormSkeleton,
-  experience:     ExperienceFormSkeleton,
-  education:      EducationFormSkeleton,
-  skills:         SkillsFormSkeleton,
-  projects:       ProjectsFormSkeleton,
-  languages:      LanguagesFormSkeleton,
+  header: HeaderFormSkeleton,
+  summary: SummaryFormSkeleton,
+  experience: ExperienceFormSkeleton,
+  education: EducationFormSkeleton,
+  skills: SkillsFormSkeleton,
+  projects: ProjectsFormSkeleton,
+  languages: LanguagesFormSkeleton,
   certifications: CertificationsFormSkeleton,
   'social-links': SocialLinksFormSkeleton,
-  awards:         AwardsFormSkeleton,
-  custom:         CustomFormSkeleton,
+  awards: AwardsFormSkeleton,
+  custom: CustomFormSkeleton,
 };
 
 function getNewBlockFormValues(type: BlockType): BlockData {
@@ -60,7 +102,14 @@ function getNewBlockFormValues(type: BlockType): BlockData {
     case 'header':
       return {
         type: 'header',
-        data: { firstName: '', lastName: '', jobTitle: '', email: '', photoShape: 'circle', links: [] },
+        data: {
+          firstName: '',
+          lastName: '',
+          jobTitle: '',
+          email: '',
+          photoShape: 'circle',
+          links: [],
+        },
       };
     case 'summary':
       return { type: 'summary', data: { sectionTitle: '', text: '' } };
@@ -68,22 +117,35 @@ function getNewBlockFormValues(type: BlockType): BlockData {
       return {
         type: 'experience',
         data: {
-          items: [{
-            id: crypto.randomUUID(),
-            company: '', role: '', startDate: '', endDate: '',
-            present: false, location: '', description: '',
-          }],
+          items: [
+            {
+              id: crypto.randomUUID(),
+              company: '',
+              role: '',
+              startDate: '',
+              endDate: '',
+              present: false,
+              location: '',
+              description: '',
+            },
+          ],
         },
       };
     case 'education':
       return {
         type: 'education',
         data: {
-          items: [{
-            id: crypto.randomUUID(),
-            institution: '', degree: '', field: '',
-            startDate: '', endDate: '', gpa: '',
-          }],
+          items: [
+            {
+              id: crypto.randomUUID(),
+              institution: '',
+              degree: '',
+              field: '',
+              startDate: '',
+              endDate: '',
+              gpa: '',
+            },
+          ],
         },
       };
     case 'skills':
@@ -95,11 +157,17 @@ function getNewBlockFormValues(type: BlockType): BlockData {
       return {
         type: 'projects',
         data: {
-          items: [{
-            id: crypto.randomUUID(),
-            name: '', description: '', techStack: [],
-            url: '', startDate: '', endDate: '',
-          }],
+          items: [
+            {
+              id: crypto.randomUUID(),
+              name: '',
+              description: '',
+              techStack: [],
+              url: '',
+              startDate: '',
+              endDate: '',
+            },
+          ],
         },
       };
     case 'languages':
@@ -111,10 +179,16 @@ function getNewBlockFormValues(type: BlockType): BlockData {
       return {
         type: 'certifications',
         data: {
-          items: [{
-            id: crypto.randomUUID(),
-            name: '', issuer: '', issueDate: '', expiryDate: '', url: '',
-          }],
+          items: [
+            {
+              id: crypto.randomUUID(),
+              name: '',
+              issuer: '',
+              issueDate: '',
+              expiryDate: '',
+              url: '',
+            },
+          ],
         },
       };
     case 'social-links':
@@ -140,7 +214,13 @@ interface EditBlockModalProps {
   onClose: () => void;
 }
 
-export function EditBlockModal({ open, blockId, pendingBlockType, isNew, onClose }: EditBlockModalProps) {
+export function EditBlockModal({
+  open,
+  blockId,
+  pendingBlockType,
+  isNew,
+  onClose,
+}: EditBlockModalProps) {
   const t = useTranslations('resumeBuilderPage.editBlockTitles');
   const tBlock = useTranslations('resumeBuilderPage.editBlock');
   const theme = useTheme();
@@ -154,12 +234,13 @@ export function EditBlockModal({ open, blockId, pendingBlockType, isNew, onClose
     ? (activeDraft?.blocks.find((b) => b.id === blockId) ?? null)
     : null;
 
-  const blockType: BlockType | null =
-    existingBlock?.blockData.type ?? pendingBlockType ?? null;
+  const blockType: BlockType | null = existingBlock?.blockData.type ?? pendingBlockType ?? null;
 
   const initialValues: BlockData =
     existingBlock?.blockData ??
-    (pendingBlockType ? getNewBlockFormValues(pendingBlockType) : { type: 'summary', data: { sectionTitle: '', text: '' } });
+    (pendingBlockType
+      ? getNewBlockFormValues(pendingBlockType)
+      : { type: 'summary', data: { sectionTitle: '', text: '' } });
 
   const handleClose = useCallback(() => {
     if (isNew && blockId) removeBlock(blockId);
@@ -197,8 +278,20 @@ export function EditBlockModal({ open, blockId, pendingBlockType, isNew, onClose
           <ActiveSkeleton />
         </DialogContent>
         <DialogActions>
-          <Skeleton variant="rectangular" width={80} height={36} animation="wave" sx={{ borderRadius: '6px' }} />
-          <Skeleton variant="rectangular" width={80} height={36} animation="wave" sx={{ borderRadius: '6px' }} />
+          <Skeleton
+            variant="rectangular"
+            width={80}
+            height={36}
+            animation="wave"
+            sx={{ borderRadius: '6px' }}
+          />
+          <Skeleton
+            variant="rectangular"
+            width={80}
+            height={36}
+            animation="wave"
+            sx={{ borderRadius: '6px' }}
+          />
         </DialogActions>
       </Dialog>
     );
@@ -218,12 +311,19 @@ export function EditBlockModal({ open, blockId, pendingBlockType, isNew, onClose
       <DialogTitle id="edit-block-title">{t(blockType)}</DialogTitle>
       <DialogContent dividers>
         <form id="edit-block-form" onSubmit={formik.handleSubmit} noValidate>
-          <ActiveForm formik={formik}/>
+          <ActiveForm formik={formik} />
         </form>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="inherit">{tBlock('cancel')}</Button>
-        <Button type="submit" form="edit-block-form" variant="contained" disabled={formik.isSubmitting}>
+        <Button onClick={handleClose} color="inherit">
+          {tBlock('cancel')}
+        </Button>
+        <Button
+          type="submit"
+          form="edit-block-form"
+          variant="contained"
+          disabled={formik.isSubmitting}
+        >
           {isNew ? tBlock('apply') : tBlock('save')}
         </Button>
       </DialogActions>

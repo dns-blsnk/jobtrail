@@ -14,7 +14,9 @@ export function BlockSkills({ data }: BlockSkillsProps) {
           {group.name && <div className={s.skillGroupName}>{group.name}</div>}
           <div className={s.tagList}>
             {group.tags.map((tag) => (
-              <span key={tag} className={s.tag}>{tag}</span>
+              <span key={tag} className={s.tag}>
+                {tag}
+              </span>
             ))}
           </div>
         </div>

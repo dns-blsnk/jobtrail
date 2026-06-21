@@ -1,4 +1,5 @@
 import { aboutPage } from './en/about-page';
+import { landingPage } from './en/landing-page';
 import { resumeBuilderPage } from './en/resume-builder-page';
 import { analyticsPage } from './en/analytics-page';
 import { applicationsPage } from './en/applications-page';
@@ -93,6 +94,7 @@ const en = {
   },
   authPage,
   aboutPage,
+  landingPage,
   analyticsPage,
   applicationsPage,
   blogPage,

@@ -8,10 +8,7 @@ import { JobsFilterBar } from '@/features/jobs/filter-jobs/ui/jobs-filter-bar';
 import s from './jobs-page.module.scss';
 
 export async function JobsPage() {
-  const [t, messages] = await Promise.all([
-    getTranslations('jobsPage'),
-    getMessages(),
-  ]);
+  const [t, messages] = await Promise.all([getTranslations('jobsPage'), getMessages()]);
 
   return (
     <div className={s.root}>

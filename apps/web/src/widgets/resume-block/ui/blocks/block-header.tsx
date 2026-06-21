@@ -9,11 +9,11 @@ interface BlockHeaderProps {
 }
 
 const PLATFORM_ICONS: Record<string, IconName> = {
-  LinkedIn:  'linkedin',
-  GitHub:    'github',
+  LinkedIn: 'linkedin',
+  GitHub: 'github',
   Portfolio: 'globe',
-  Twitter:   'twitter',
-  Other:     'link',
+  Twitter: 'twitter',
+  Other: 'link',
 };
 
 export function BlockHeader({ data }: BlockHeaderProps) {
@@ -29,8 +29,8 @@ export function BlockHeader({ data }: BlockHeaderProps) {
             alt={fullName || 'Profile photo'}
             className={clsx(
               s.headerPhoto,
-              shape === 'circle'  && s.headerPhotoCircle,
-              shape === 'square'   && s.headerPhotoSquare,
+              shape === 'circle' && s.headerPhotoCircle,
+              shape === 'square' && s.headerPhotoSquare,
               shape === 'portrait' && s.headerPhotoPortrait,
             )}
           />
@@ -61,7 +61,12 @@ export function BlockHeader({ data }: BlockHeaderProps) {
             </span>
           )}
           {data.website && (
-            <a href={data.website} target="_blank" rel="noopener noreferrer" className={s.headerContactItem}>
+            <a
+              href={data.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={s.headerContactItem}
+            >
               <Icon name="globe" size={13} strokeWidth={1.9} className={s.headerContactIcon} />
               <span>{data.website.replace(/^https?:\/\/(www\.)?/, '')}</span>
             </a>

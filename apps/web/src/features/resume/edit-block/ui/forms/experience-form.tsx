@@ -51,7 +51,10 @@ export function ExperienceForm({ formik }: { formik: ExperienceFormik }) {
   }
 
   function removeItem(index: number) {
-    void setFieldValue('data.items', values.data.items.filter((_, i) => i !== index));
+    void setFieldValue(
+      'data.items',
+      values.data.items.filter((_, i) => i !== index),
+    );
   }
 
   function moveUp(index: number) {
@@ -71,17 +74,47 @@ export function ExperienceForm({ formik }: { formik: ExperienceFormik }) {
   return (
     <Box>
       {values.data.items.map((item, index) => (
-        <Box key={item.id} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 2, p: { xs: 1.5, sm: 2 }, mb: 2 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
-            <Box sx={{ fontWeight: 600, fontSize: 14 }}>{item.role || item.company || t('positionNumber', { number: index + 1 })}</Box>
+        <Box
+          key={item.id}
+          sx={{
+            border: '1px solid',
+            borderColor: 'divider',
+            borderRadius: 2,
+            p: { xs: 1.5, sm: 2 },
+            mb: 2,
+          }}
+        >
+          <Box
+            sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}
+          >
+            <Box sx={{ fontWeight: 600, fontSize: 14 }}>
+              {item.role || item.company || t('positionNumber', { number: index + 1 })}
+            </Box>
             <Box sx={{ display: 'flex', gap: 1 }}>
-              <IconButton onClick={() => moveUp(index)} disabled={index === 0} aria-label="Move up" size="small" sx={moveButtonSx}>
+              <IconButton
+                onClick={() => moveUp(index)}
+                disabled={index === 0}
+                aria-label="Move up"
+                size="small"
+                sx={moveButtonSx}
+              >
                 <Icon name="moveUp" size={14} />
               </IconButton>
-              <IconButton onClick={() => moveDown(index)} disabled={index === values.data.items.length - 1} aria-label="Move down" size="small" sx={moveButtonSx}>
+              <IconButton
+                onClick={() => moveDown(index)}
+                disabled={index === values.data.items.length - 1}
+                aria-label="Move down"
+                size="small"
+                sx={moveButtonSx}
+              >
                 <Icon name="moveDown" size={14} />
               </IconButton>
-              <IconButton onClick={() => removeItem(index)} aria-label="Remove position" size="small" sx={deleteButtonSx}>
+              <IconButton
+                onClick={() => removeItem(index)}
+                aria-label="Remove position"
+                size="small"
+                sx={deleteButtonSx}
+              >
                 <Icon name="trash" size={14} />
               </IconButton>
             </Box>
@@ -91,39 +124,83 @@ export function ExperienceForm({ formik }: { formik: ExperienceFormik }) {
             {row(
               <>
                 <TextField
-                  label={t('company')} size="small" value={item.company}
-                  onChange={(e) => void setFieldValue(`data.items[${index}].company`, e.target.value)}
+                  label={t('company')}
+                  size="small"
+                  value={item.company}
+                  onChange={(e) =>
+                    void setFieldValue(`data.items[${index}].company`, e.target.value)
+                  }
                   onBlur={() => void formik.setFieldTouched(`data.items[${index}].company`, true)}
-                  error={getIn(formik.touched, `data.items[${index}].company`) && Boolean(getIn(formik.errors, `data.items[${index}].company`))}
-                  helperText={(getIn(formik.touched, `data.items[${index}].company`) && getIn(formik.errors, `data.items[${index}].company`)) || ' '}
+                  error={
+                    getIn(formik.touched, `data.items[${index}].company`) &&
+                    Boolean(getIn(formik.errors, `data.items[${index}].company`))
+                  }
+                  helperText={
+                    (getIn(formik.touched, `data.items[${index}].company`) &&
+                      getIn(formik.errors, `data.items[${index}].company`)) ||
+                    ' '
+                  }
                 />
                 <TextField
-                  label={t('role')} size="small" value={item.role}
+                  label={t('role')}
+                  size="small"
+                  value={item.role}
                   onChange={(e) => void setFieldValue(`data.items[${index}].role`, e.target.value)}
                   onBlur={() => void formik.setFieldTouched(`data.items[${index}].role`, true)}
-                  error={getIn(formik.touched, `data.items[${index}].role`) && Boolean(getIn(formik.errors, `data.items[${index}].role`))}
-                  helperText={(getIn(formik.touched, `data.items[${index}].role`) && getIn(formik.errors, `data.items[${index}].role`)) || ' '}
+                  error={
+                    getIn(formik.touched, `data.items[${index}].role`) &&
+                    Boolean(getIn(formik.errors, `data.items[${index}].role`))
+                  }
+                  helperText={
+                    (getIn(formik.touched, `data.items[${index}].role`) &&
+                      getIn(formik.errors, `data.items[${index}].role`)) ||
+                    ' '
+                  }
                 />
-              </>
+              </>,
             )}
             {row(
               <>
                 <TextField
-                  label={t('startDate')} size="small" placeholder="Jan 2022" value={item.startDate}
-                  onChange={(e) => void setFieldValue(`data.items[${index}].startDate`, e.target.value)}
+                  label={t('startDate')}
+                  size="small"
+                  placeholder="Jan 2022"
+                  value={item.startDate}
+                  onChange={(e) =>
+                    void setFieldValue(`data.items[${index}].startDate`, e.target.value)
+                  }
                   onBlur={() => void formik.setFieldTouched(`data.items[${index}].startDate`, true)}
-                  error={getIn(formik.touched, `data.items[${index}].startDate`) && Boolean(getIn(formik.errors, `data.items[${index}].startDate`))}
-                  helperText={(getIn(formik.touched, `data.items[${index}].startDate`) && getIn(formik.errors, `data.items[${index}].startDate`)) || ' '}
+                  error={
+                    getIn(formik.touched, `data.items[${index}].startDate`) &&
+                    Boolean(getIn(formik.errors, `data.items[${index}].startDate`))
+                  }
+                  helperText={
+                    (getIn(formik.touched, `data.items[${index}].startDate`) &&
+                      getIn(formik.errors, `data.items[${index}].startDate`)) ||
+                    ' '
+                  }
                 />
                 <TextField
-                  label={t('endDate')} size="small" placeholder="Dec 2023" value={item.endDate}
+                  label={t('endDate')}
+                  size="small"
+                  placeholder="Dec 2023"
+                  value={item.endDate}
                   disabled={item.present}
-                  onChange={(e) => void setFieldValue(`data.items[${index}].endDate`, e.target.value)}
+                  onChange={(e) =>
+                    void setFieldValue(`data.items[${index}].endDate`, e.target.value)
+                  }
                   onBlur={() => void formik.setFieldTouched(`data.items[${index}].endDate`, true)}
-                  error={getIn(formik.touched, `data.items[${index}].endDate`) && Boolean(getIn(formik.errors, `data.items[${index}].endDate`))}
-                  helperText={(getIn(formik.touched, `data.items[${index}].endDate`) && getIn(formik.errors, `data.items[${index}].endDate`)) || ' '}
+                  error={
+                    getIn(formik.touched, `data.items[${index}].endDate`) &&
+                    Boolean(getIn(formik.errors, `data.items[${index}].endDate`))
+                  }
+                  helperText={
+                    (getIn(formik.touched, `data.items[${index}].endDate`) &&
+                      getIn(formik.errors, `data.items[${index}].endDate`)) ||
+                    ' '
+                  }
                 />
-              </>
+              </>,
             )}
 
             <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
@@ -155,10 +232,13 @@ export function ExperienceForm({ formik }: { formik: ExperienceFormik }) {
                 </Box>
               </Box>
               <TextField
-                label={t('location')} size="small"
+                label={t('location')}
+                size="small"
                 sx={{ flex: '1 1 200px' }}
                 value={item.location}
-                onChange={(e) => void setFieldValue(`data.items[${index}].location`, e.target.value)}
+                onChange={(e) =>
+                  void setFieldValue(`data.items[${index}].location`, e.target.value)
+                }
               />
             </Box>
 
@@ -168,13 +248,20 @@ export function ExperienceForm({ formik }: { formik: ExperienceFormik }) {
               rows={3}
               label={t('description')}
               value={item.description}
-              onChange={(e) => void setFieldValue(`data.items[${index}].description`, e.target.value)}
+              onChange={(e) =>
+                void setFieldValue(`data.items[${index}].description`, e.target.value)
+              }
             />
           </Box>
         </Box>
       ))}
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
-        <Button startIcon={<Icon name="plus" size={14} />} onClick={addItem} variant="outlined" size="small">
+        <Button
+          startIcon={<Icon name="plus" size={14} />}
+          onClick={addItem}
+          variant="outlined"
+          size="small"
+        >
           {t('addPosition')}
         </Button>
       </Box>

@@ -20,7 +20,9 @@ export function ProfileCard({ user }: ProfileCardProps) {
 
   return (
     <div className={s.card}>
-      <div aria-hidden className={s.avatar}>{initial}</div>
+      <div aria-hidden className={s.avatar}>
+        {initial}
+      </div>
       <p className={s.name}>{displayName}</p>
       {user.name && user.email && <p className={s.email}>{user.email}</p>}
       <button

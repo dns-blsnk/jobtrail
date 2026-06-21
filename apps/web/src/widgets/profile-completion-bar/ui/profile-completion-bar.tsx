@@ -61,7 +61,9 @@ export function ProfileCompletionBar({ profile }: ProfileCompletionBarProps) {
 
   return (
     <div className={s.root}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.75 }}>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.75 }}
+      >
         <Typography variant="body2" sx={{ fontWeight: 600 }}>
           {t('completion.label')}
         </Typography>

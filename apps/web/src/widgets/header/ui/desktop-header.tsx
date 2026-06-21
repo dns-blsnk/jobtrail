@@ -15,7 +15,7 @@ import s from './header.module.scss';
 
 const UserMenuPopover = dynamic(
   () => import('./user-menu-popover').then((m) => ({ default: m.UserMenuPopover })),
-  { ssr: false }
+  { ssr: false },
 );
 
 interface NavItem {
@@ -38,11 +38,7 @@ function Logo() {
 
 function NavLink({ item, active }: { item: NavItem; active: boolean }) {
   return (
-    <Link
-      href={item.href}
-      prefetch={false}
-      className={clsx(s.navLink, active && s.navLinkActive)}
-    >
+    <Link href={item.href} prefetch={false} className={clsx(s.navLink, active && s.navLinkActive)}>
       {item.icon && <Icon name={item.icon} size={17} strokeWidth={1.9} />}
       {item.label}
     </Link>
@@ -58,9 +54,7 @@ export function DesktopHeader() {
   const menuOpen = Boolean(anchorEl);
   const closeMenu = useCallback(() => setAnchorEl(null), []);
 
-  const user = profileUser
-    ? { name: profileUser.name ?? null, email: profileUser.email }
-    : null;
+  const user = profileUser ? { name: profileUser.name ?? null, email: profileUser.email } : null;
 
   const navLogged: NavItem[] = [
     { label: th('nav.dashboard'), icon: 'layoutDashboard', href: '/dashboard' },
@@ -120,7 +114,10 @@ export function DesktopHeader() {
                   anchorEl={anchorEl}
                   user={user}
                   onClose={closeMenu}
-                  onLogout={() => { closeMenu(); void signOut(); }}
+                  onLogout={() => {
+                    closeMenu();
+                    void signOut();
+                  }}
                 />
               )}
             </>

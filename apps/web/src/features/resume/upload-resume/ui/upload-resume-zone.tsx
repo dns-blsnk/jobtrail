@@ -35,7 +35,11 @@ export function UploadResumeZone({ activeDraftId }: UploadResumeZoneProps) {
         type="button"
         className={s.btn}
         onClick={() => inputRef.current?.click()}
-        title={activeDraftId ? 'Upload and import into current draft' : 'Upload — a new draft will be created'}
+        title={
+          activeDraftId
+            ? 'Upload and import into current draft'
+            : 'Upload — a new draft will be created'
+        }
         aria-label="Upload resume"
       >
         <Icon name="upload" size={16} strokeWidth={1.9} />

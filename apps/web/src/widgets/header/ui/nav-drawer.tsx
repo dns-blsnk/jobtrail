@@ -45,7 +45,14 @@ function Logo() {
   );
 }
 
-export function NavDrawer({ open, isLoggedIn, user, onClose, onLinkClick, onAvatarClick }: NavDrawerProps) {
+export function NavDrawer({
+  open,
+  isLoggedIn,
+  user,
+  onClose,
+  onLinkClick,
+  onAvatarClick,
+}: NavDrawerProps) {
   const tc = useTranslations('common');
   const th = useTranslations('header');
 
@@ -53,10 +60,19 @@ export function NavDrawer({ open, isLoggedIn, user, onClose, onLinkClick, onAvat
     <>
       <div aria-hidden className={clsx(s.scrim, open && s.scrimVisible)} onClick={onClose} />
 
-      <div role="dialog" aria-label={th('drawer.navLabel')} className={clsx(s.drawer, open && s.open)}>
+      <div
+        role="dialog"
+        aria-label={th('drawer.navLabel')}
+        className={clsx(s.drawer, open && s.open)}
+      >
         <div className={s.drawerHead}>
           <Logo />
-          <button type="button" aria-label={th('aria.closeMenu')} className={s.closeBtn} onClick={onClose}>
+          <button
+            type="button"
+            aria-label={th('aria.closeMenu')}
+            className={s.closeBtn}
+            onClick={onClose}
+          >
             <Icon name="x" size={20} strokeWidth={2} />
           </button>
         </div>
@@ -75,11 +91,31 @@ export function NavDrawer({ open, isLoggedIn, user, onClose, onLinkClick, onAvat
         <nav className={s.nav} aria-label="Main navigation">
           {isLoggedIn ? (
             <>
-              <DrawerLink href="/dashboard" icon="layoutDashboard" label={th('nav.dashboard')} onClick={onLinkClick} />
-              <DrawerLink href="/jobs" icon="briefcase" label={th('nav.jobs')} onClick={onLinkClick} />
-              <DrawerLink href="/applications" icon="fileText" label={th('nav.applications')} onClick={onLinkClick} />
+              <DrawerLink
+                href="/dashboard"
+                icon="layoutDashboard"
+                label={th('nav.dashboard')}
+                onClick={onLinkClick}
+              />
+              <DrawerLink
+                href="/jobs"
+                icon="briefcase"
+                label={th('nav.jobs')}
+                onClick={onLinkClick}
+              />
+              <DrawerLink
+                href="/applications"
+                icon="fileText"
+                label={th('nav.applications')}
+                onClick={onLinkClick}
+              />
               <DrawerLink href="/resume" icon="fileText" label="Resume" onClick={onLinkClick} />
-              <DrawerLink href="/analytics" icon="barChart" label={th('nav.analytics')} onClick={onLinkClick} />
+              <DrawerLink
+                href="/analytics"
+                icon="barChart"
+                label={th('nav.analytics')}
+                onClick={onLinkClick}
+              />
             </>
           ) : (
             <>

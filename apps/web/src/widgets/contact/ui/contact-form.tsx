@@ -26,7 +26,6 @@ const sxGrid = {
 
 const sxSubmitBtn = { py: 1.25, fontWeight: 600 } as const;
 
-
 export function ContactForm() {
   const t = useTranslations('contactPage.form');
   const mutation = useContactForm();
@@ -55,7 +54,11 @@ export function ContactForm() {
 
   return (
     <section className={s.root}>
-      <Typography component="h2" variant="h6" sx={{ letterSpacing: '-0.3px', fontWeight: 700, m: 0 }}>
+      <Typography
+        component="h2"
+        variant="h6"
+        sx={{ letterSpacing: '-0.3px', fontWeight: 700, m: 0 }}
+      >
         {t('heading')}
       </Typography>
 
@@ -74,7 +77,6 @@ export function ContactForm() {
               helperText={fieldError('name')}
               fullWidth
               size="small"
-
             />
             <FormTextField
               id="contact-email"
@@ -89,7 +91,6 @@ export function ContactForm() {
               helperText={fieldError('email')}
               fullWidth
               size="small"
-
             />
           </Box>
 

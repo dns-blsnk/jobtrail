@@ -47,7 +47,13 @@ export function BlockTypeSelector({ open, onClose, onTypeSelected }: BlockTypeSe
   }
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth aria-labelledby="block-type-selector-title">
+    <Dialog
+      open={open}
+      onClose={onClose}
+      maxWidth="sm"
+      fullWidth
+      aria-labelledby="block-type-selector-title"
+    >
       <DialogTitle id="block-type-selector-title">Add section</DialogTitle>
       <DialogContent>
         <div className={s.blockTypeGrid}>
@@ -62,7 +68,12 @@ export function BlockTypeSelector({ open, onClose, onTypeSelected }: BlockTypeSe
                 disabled={isUsed}
                 aria-disabled={isUsed}
               >
-                <Icon name={option.icon} size={22} strokeWidth={1.7} className={s.blockTypeCardIcon} />
+                <Icon
+                  name={option.icon}
+                  size={22}
+                  strokeWidth={1.7}
+                  className={s.blockTypeCardIcon}
+                />
                 <span className={s.blockTypeCardLabel}>{option.label}</span>
                 {isUsed && <span className={s.blockTypeCardBadge}>Added</span>}
               </button>

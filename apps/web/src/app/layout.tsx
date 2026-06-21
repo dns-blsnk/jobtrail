@@ -10,8 +10,15 @@ import { Providers } from './providers';
 import './globals.scss';
 
 export const metadata: Metadata = {
-  title: 'Jobtrail — Job Search Tracker',
-  description: 'Track your job applications in one place',
+  title: 'Jobtrail — Resume Builder & Job Search Assistant',
+  description:
+    'Build ATS-friendly resumes, track job applications, and match your skills to job postings with AI-powered analysis.',
+  openGraph: {
+    title: 'Jobtrail — Resume Builder & Job Search Assistant',
+    description:
+      'Build ATS-friendly resumes, track job applications, and match your skills to job postings with AI-powered analysis.',
+    type: 'website',
+  },
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

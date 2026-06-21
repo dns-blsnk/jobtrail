@@ -4,32 +4,150 @@ import * as cheerio from 'cheerio';
 import type { JobSource } from '@prisma/client';
 
 const TECH_DICTIONARY = [
-  'JavaScript', 'TypeScript', 'React', 'Next.js', 'Vue', 'Nuxt', 'Angular', 'Svelte',
-  'Node.js', 'NestJS', 'Express', 'Fastify', 'Koa',
-  'Python', 'FastAPI', 'Django', 'Flask', 'SQLAlchemy',
-  'Go', 'Rust', 'Java', 'Kotlin', 'Spring Boot', 'Spring', 'Hibernate',
-  'Swift', 'Objective-C', 'C#', '.NET', 'ASP.NET', 'C++', 'PHP', 'Laravel', 'Symfony',
-  'Ruby', 'Ruby on Rails', 'Scala', 'Elixir', 'Phoenix',
-  'PostgreSQL', 'MySQL', 'SQLite', 'MSSQL', 'Oracle',
-  'MongoDB', 'CouchDB', 'DynamoDB', 'Cassandra', 'Elasticsearch', 'OpenSearch',
-  'Redis', 'Memcached', 'RabbitMQ', 'Kafka', 'NATS',
-  'Docker', 'Kubernetes', 'Helm', 'Terraform', 'Pulumi', 'Ansible',
-  'AWS', 'GCP', 'Azure', 'DigitalOcean', 'Heroku', 'Vercel', 'Netlify',
-  'CI/CD', 'GitHub Actions', 'GitLab CI', 'Jenkins', 'CircleCI', 'Bitbucket',
-  'GraphQL', 'REST', 'gRPC', 'WebSockets', 'tRPC', 'OpenAPI', 'Swagger',
-  'Jest', 'Vitest', 'Cypress', 'Playwright', 'Testing Library', 'Mocha', 'Chai',
-  'Prisma', 'TypeORM', 'Sequelize', 'Drizzle', 'Knex',
-  'Tailwind', 'SCSS', 'Sass', 'CSS-in-JS', 'Styled Components', 'Emotion', 'MUI', 'Ant Design',
-  'Webpack', 'Vite', 'Rollup', 'esbuild', 'Babel', 'SWC',
-  'Git', 'GitHub', 'GitLab', 'Bitbucket',
-  'Figma', 'Storybook', 'Chromatic',
-  'Zustand', 'Redux', 'MobX', 'Jotai', 'Recoil', 'Pinia', 'Vuex',
-  'React Native', 'Flutter', 'Expo',
-  'Linux', 'Unix', 'Nginx', 'Apache', 'HAProxy',
-  'Microservices', 'Monorepo', 'Turborepo', 'Nx', 'Lerna',
-  'WebAssembly', 'WASM',
-  'TensorFlow', 'PyTorch', 'scikit-learn', 'Pandas', 'NumPy',
-  'Solidity', 'Web3', 'Ethers.js',
+  'JavaScript',
+  'TypeScript',
+  'React',
+  'Next.js',
+  'Vue',
+  'Nuxt',
+  'Angular',
+  'Svelte',
+  'Node.js',
+  'NestJS',
+  'Express',
+  'Fastify',
+  'Koa',
+  'Python',
+  'FastAPI',
+  'Django',
+  'Flask',
+  'SQLAlchemy',
+  'Go',
+  'Rust',
+  'Java',
+  'Kotlin',
+  'Spring Boot',
+  'Spring',
+  'Hibernate',
+  'Swift',
+  'Objective-C',
+  'C#',
+  '.NET',
+  'ASP.NET',
+  'C++',
+  'PHP',
+  'Laravel',
+  'Symfony',
+  'Ruby',
+  'Ruby on Rails',
+  'Scala',
+  'Elixir',
+  'Phoenix',
+  'PostgreSQL',
+  'MySQL',
+  'SQLite',
+  'MSSQL',
+  'Oracle',
+  'MongoDB',
+  'CouchDB',
+  'DynamoDB',
+  'Cassandra',
+  'Elasticsearch',
+  'OpenSearch',
+  'Redis',
+  'Memcached',
+  'RabbitMQ',
+  'Kafka',
+  'NATS',
+  'Docker',
+  'Kubernetes',
+  'Helm',
+  'Terraform',
+  'Pulumi',
+  'Ansible',
+  'AWS',
+  'GCP',
+  'Azure',
+  'DigitalOcean',
+  'Heroku',
+  'Vercel',
+  'Netlify',
+  'CI/CD',
+  'GitHub Actions',
+  'GitLab CI',
+  'Jenkins',
+  'CircleCI',
+  'Bitbucket',
+  'GraphQL',
+  'REST',
+  'gRPC',
+  'WebSockets',
+  'tRPC',
+  'OpenAPI',
+  'Swagger',
+  'Jest',
+  'Vitest',
+  'Cypress',
+  'Playwright',
+  'Testing Library',
+  'Mocha',
+  'Chai',
+  'Prisma',
+  'TypeORM',
+  'Sequelize',
+  'Drizzle',
+  'Knex',
+  'Tailwind',
+  'SCSS',
+  'Sass',
+  'CSS-in-JS',
+  'Styled Components',
+  'Emotion',
+  'MUI',
+  'Ant Design',
+  'Webpack',
+  'Vite',
+  'Rollup',
+  'esbuild',
+  'Babel',
+  'SWC',
+  'Git',
+  'GitHub',
+  'GitLab',
+  'Bitbucket',
+  'Figma',
+  'Storybook',
+  'Chromatic',
+  'Zustand',
+  'Redux',
+  'MobX',
+  'Jotai',
+  'Recoil',
+  'Pinia',
+  'Vuex',
+  'React Native',
+  'Flutter',
+  'Expo',
+  'Linux',
+  'Unix',
+  'Nginx',
+  'Apache',
+  'HAProxy',
+  'Microservices',
+  'Monorepo',
+  'Turborepo',
+  'Nx',
+  'Lerna',
+  'WebAssembly',
+  'WASM',
+  'TensorFlow',
+  'PyTorch',
+  'scikit-learn',
+  'Pandas',
+  'NumPy',
+  'Solidity',
+  'Web3',
+  'Ethers.js',
 ];
 
 export interface ParsedJobData {
@@ -57,7 +175,7 @@ export class JobsParserService {
           'User-Agent':
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
             '(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
           'Accept-Language': 'en-US,en;q=0.9',
         },
         timeout: 10_000,
@@ -109,7 +227,10 @@ export class JobsParserService {
     $: cheerio.CheerioAPI,
     source: JobSource,
     _url: string,
-  ): Omit<ParsedJobData, 'techStack' | 'source' | 'sourceUrl' | 'salaryMin' | 'salaryMax' | 'salaryCurrency'> {
+  ): Omit<
+    ParsedJobData,
+    'techStack' | 'source' | 'sourceUrl' | 'salaryMin' | 'salaryMax' | 'salaryCurrency'
+  > {
     switch (source) {
       case 'LINKEDIN':
         return this.extractLinkedIn($);
@@ -138,9 +259,7 @@ export class JobsParserService {
       $('.job-details-jobs-unified-top-card__bullet').text().trim() ||
       null;
 
-    const descriptionEl =
-      $('.jobs-description__content') ||
-      $('.description__text');
+    const descriptionEl = $('.jobs-description__content') || $('.description__text');
     const description = descriptionEl.text().trim() || this.extractBodyText($);
 
     const remote = /remote/i.test(location ?? '') || /remote/i.test(description ?? '') || null;
@@ -154,8 +273,7 @@ export class JobsParserService {
       $('.job-details__company-name, .employer-card__title').text().trim() ||
       $('a[href*="/companies/"]').first().text().trim();
     const location = $('.job-details__location, .location').first().text().trim() || null;
-    const description =
-      $('.job-description, .mb-4').text().trim() || this.extractBodyText($);
+    const description = $('.job-description, .mb-4').text().trim() || this.extractBodyText($);
     const remote = /remote/i.test(description ?? '') || /remote/i.test(location ?? '') || null;
 
     return { title, company, location, remote, description, requirements: null };
@@ -187,8 +305,7 @@ export class JobsParserService {
       $('meta[property="og:site_name"]').attr('content') ||
       '';
 
-    const location =
-      $('[class*="location"], [class*="place"]').first().text().trim() || null;
+    const location = $('[class*="location"], [class*="place"]').first().text().trim() || null;
 
     const description = this.extractBodyText($);
     const remote = /remote/i.test(description ?? '') || /remote/i.test(title ?? '') || null;
@@ -205,7 +322,10 @@ export class JobsParserService {
     const found = new Set<string>();
     const lower = text.toLowerCase();
     for (const tech of TECH_DICTIONARY) {
-      const pattern = new RegExp(`(?<![a-z])${tech.toLowerCase().replace(/\./g, '\\.')}(?![a-z])`, 'i');
+      const pattern = new RegExp(
+        `(?<![a-z])${tech.toLowerCase().replace(/\./g, '\\.')}(?![a-z])`,
+        'i',
+      );
       if (pattern.test(lower)) {
         found.add(tech);
       }
@@ -213,7 +333,11 @@ export class JobsParserService {
     return [...found];
   }
 
-  private extractSalary(text: string): { min: number | null; max: number | null; currency: string | null } {
+  private extractSalary(text: string): {
+    min: number | null;
+    max: number | null;
+    currency: string | null;
+  } {
     const usdPattern = /\$\s*(\d[\d,]*)\s*(?:k\b)?(?:\s*[-–—]\s*\$?\s*(\d[\d,]*)\s*(?:k\b)?)?/i;
     const match = usdPattern.exec(text);
     if (!match) return { min: null, max: null, currency: null };

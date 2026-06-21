@@ -20,7 +20,9 @@ export function BlockEducation({ data }: BlockEducationProps) {
               </div>
             </div>
             <div className={s.itemDate}>
-              {item.startDate}{item.startDate || item.endDate ? ' – ' : ''}{item.endDate}
+              {item.startDate}
+              {item.startDate || item.endDate ? ' – ' : ''}
+              {item.endDate}
             </div>
           </div>
         </div>

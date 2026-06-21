@@ -27,11 +27,7 @@ export function Footer() {
       <div className={s.inner}>
         <nav aria-label="Footer navigation" className={s.nav}>
           {NAV_LINKS.map(({ href, key }) => (
-            <Link
-              key={key}
-              className={clsx(s.link, pathname === href && s.linkActive)}
-              href={href}
-            >
+            <Link key={key} className={clsx(s.link, pathname === href && s.linkActive)} href={href}>
               {t(`nav.${key as NavKey}`)}
             </Link>
           ))}

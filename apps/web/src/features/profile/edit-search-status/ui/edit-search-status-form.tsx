@@ -14,7 +14,11 @@ interface EditSearchStatusFormProps {
   isPending: boolean;
 }
 
-const STATUSES: { value: SearchStatus; emoji: string; labelKey: 'activelyLooking' | 'openTo' | 'notLooking' }[] = [
+const STATUSES: {
+  value: SearchStatus;
+  emoji: string;
+  labelKey: 'activelyLooking' | 'openTo' | 'notLooking';
+}[] = [
   { value: 'ACTIVELY_LOOKING', emoji: '🟢', labelKey: 'activelyLooking' },
   { value: 'OPEN_TO_OPPORTUNITIES', emoji: '🟡', labelKey: 'openTo' },
   { value: 'NOT_LOOKING', emoji: '⚫', labelKey: 'notLooking' },
@@ -34,11 +38,7 @@ export function EditSearchStatusForm({
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <Box
-        role="radiogroup"
-        aria-label={t('searchStatus.title')}
-        className={s.statusGrid}
-      >
+      <Box role="radiogroup" aria-label={t('searchStatus.title')} className={s.statusGrid}>
         {STATUSES.map(({ value, emoji, labelKey }) => {
           const isActive = profile.searchStatus === value;
           return (

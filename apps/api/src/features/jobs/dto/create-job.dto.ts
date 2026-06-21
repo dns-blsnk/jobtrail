@@ -92,7 +92,9 @@ export class CreateJobDto {
   @IsEnum(['INTERN', 'JUNIOR', 'MIDDLE', 'SENIOR', 'LEAD', 'PRINCIPAL'])
   seniority?: ExperienceLevel;
 
-  @ApiPropertyOptional({ enum: ['SAVED', 'APPLYING', 'APPLIED', 'INTERVIEW', 'OFFER', 'REJECTED', 'ARCHIVED'] })
+  @ApiPropertyOptional({
+    enum: ['SAVED', 'APPLYING', 'APPLIED', 'INTERVIEW', 'OFFER', 'REJECTED', 'ARCHIVED'],
+  })
   @IsOptional()
   @IsEnum(['SAVED', 'APPLYING', 'APPLIED', 'INTERVIEW', 'OFFER', 'REJECTED', 'ARCHIVED'])
   status?: JobStatus;

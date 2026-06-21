@@ -15,10 +15,17 @@ export function BlockCertifications({ data }: BlockCertificationsProps) {
             <div>
               <div className={s.itemTitle}>
                 {item.url ? (
-                  <a href={item.url} target="_blank" rel="noopener noreferrer" className={s.itemLink}>
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={s.itemLink}
+                  >
                     {item.name}
                   </a>
-                ) : item.name}
+                ) : (
+                  item.name
+                )}
               </div>
               <div className={s.itemSubtitle}>{item.issuer}</div>
             </div>

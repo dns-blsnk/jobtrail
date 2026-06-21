@@ -30,7 +30,17 @@ export function UserMenuBody({ user, onClose, onLogout }: UserMenuBodyProps) {
 
   return (
     <>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, px: 2, pt: 1.5, pb: 1.5, minWidth: 260 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1.5,
+          px: 2,
+          pt: 1.5,
+          pb: 1.5,
+          minWidth: 260,
+        }}
+      >
         <Avatar loggedIn size={44} user={user} />
         <Box sx={{ minWidth: 0 }}>
           <Typography noWrap sx={{ fontWeight: 600 }} variant="body2">
@@ -60,7 +70,15 @@ export function UserMenuBody({ user, onClose, onLogout }: UserMenuBodyProps) {
           <Typography
             component="span"
             variant="caption"
-            sx={{ ml: 'auto', bgcolor: 'primary.main', color: 'primary.contrastText', px: 0.75, py: 0.25, borderRadius: 10, fontWeight: 700 }}
+            sx={{
+              ml: 'auto',
+              bgcolor: 'primary.main',
+              color: 'primary.contrastText',
+              px: 0.75,
+              py: 0.25,
+              borderRadius: 10,
+              fontWeight: 700,
+            }}
           >
             12
           </Typography>
