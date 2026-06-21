@@ -10,7 +10,7 @@ export function AwardsFormSkeleton() {
         <CardHeaderSk />
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
           <RowSk><FieldSk labelWidth={40} /><FieldSk labelWidth={40} /></RowSk>
-          <FieldSk labelWidth={85} height={80} />
+          <FieldSk labelWidth={85} height={88} />
         </Box>
       </CardSk>
       <AddBtnSk width={115} />
