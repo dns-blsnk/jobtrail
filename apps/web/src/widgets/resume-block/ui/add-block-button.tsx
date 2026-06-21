@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Icon } from '@/shared/ui/icon/icon';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { BlockTypeSelector } from '@/widgets/resume-block/ui/block-type-selector';
 import { EditBlockModal } from '@/features/resume/edit-block/ui/edit-block-modal';
 import type { BlockType } from '@/entities/resume/model/types';
@@ -19,7 +19,7 @@ export function AddBlockButton() {
         onClick={() => setSelectorOpen(true)}
         aria-label="Add section"
       >
-        <Icon name="plus" size={16} strokeWidth={2.2} />
+        <AddOutlinedIcon sx={{ fontSize: 16 }} />
         Add section
       </button>
 

@@ -1,12 +1,19 @@
 'use client';
 
+import type { ComponentType } from 'react';
 import { clsx } from 'clsx';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
+import WorkOutlinedIcon from '@mui/icons-material/WorkOutlined';
+import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
+import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
+import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
+import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
+import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
+import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 import { useResumeStore } from '@/entities/resume/model/resume-store';
-import { Icon } from '@/shared/ui/icon/icon';
-import type { IconName } from '@/shared/ui/icon/icon';
 import type { BlockType } from '@/entities/resume/model/types';
 import s from './resume-block.module.scss';
 
@@ -16,23 +23,25 @@ interface BlockTypeSelectorProps {
   onTypeSelected: (type: BlockType) => void;
 }
 
+type IconComponent = ComponentType<{ sx?: object; className?: string }>;
+
 interface BlockTypeOption {
   type: BlockType;
   label: string;
-  icon: IconName;
+  icon: IconComponent;
 }
 
 const BLOCK_OPTIONS: BlockTypeOption[] = [
-  { type: 'summary', label: 'Summary', icon: 'fileText' },
-  { type: 'experience', label: 'Experience', icon: 'briefcase' },
-  { type: 'education', label: 'Education', icon: 'graduationCap' },
-  { type: 'skills', label: 'Skills', icon: 'star' },
-  { type: 'projects', label: 'Projects', icon: 'filePlus' },
-  { type: 'languages', label: 'Languages', icon: 'globe' },
-  { type: 'certifications', label: 'Certifications', icon: 'check' },
-  { type: 'social-links', label: 'Social Links', icon: 'link2' },
-  { type: 'awards', label: 'Awards', icon: 'star' },
-  { type: 'custom', label: 'Custom', icon: 'fileText' },
+  { type: 'summary', label: 'Summary', icon: ArticleOutlinedIcon },
+  { type: 'experience', label: 'Experience', icon: WorkOutlinedIcon },
+  { type: 'education', label: 'Education', icon: SchoolOutlinedIcon },
+  { type: 'skills', label: 'Skills', icon: StarBorderOutlinedIcon },
+  { type: 'projects', label: 'Projects', icon: NoteAddOutlinedIcon },
+  { type: 'languages', label: 'Languages', icon: LanguageOutlinedIcon },
+  { type: 'certifications', label: 'Certifications', icon: CheckOutlinedIcon },
+  { type: 'social-links', label: 'Social Links', icon: LinkOutlinedIcon },
+  { type: 'awards', label: 'Awards', icon: StarBorderOutlinedIcon },
+  { type: 'custom', label: 'Custom', icon: ArticleOutlinedIcon },
 ];
 
 export function BlockTypeSelector({ open, onClose, onTypeSelected }: BlockTypeSelectorProps) {
@@ -59,6 +68,7 @@ export function BlockTypeSelector({ open, onClose, onTypeSelected }: BlockTypeSe
         <div className={s.blockTypeGrid}>
           {BLOCK_OPTIONS.map((option) => {
             const isUsed = usedTypes.has(option.type) && option.type !== 'custom';
+            const OptionIcon = option.icon;
             return (
               <button
                 key={option.type}
@@ -68,12 +78,7 @@ export function BlockTypeSelector({ open, onClose, onTypeSelected }: BlockTypeSe
                 disabled={isUsed}
                 aria-disabled={isUsed}
               >
-                <Icon
-                  name={option.icon}
-                  size={22}
-                  strokeWidth={1.7}
-                  className={s.blockTypeCardIcon}
-                />
+                <OptionIcon sx={{ fontSize: 22 }} className={s.blockTypeCardIcon} />
                 <span className={s.blockTypeCardLabel}>{option.label}</span>
                 {isUsed && <span className={s.blockTypeCardBadge}>Added</span>}
               </button>

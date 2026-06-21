@@ -4,7 +4,9 @@ import type { CSSProperties } from 'react';
 import { clsx } from 'clsx';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Icon } from '@/shared/ui/icon/icon';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import type { BlockType } from '@/entities/resume/model/types';
 import { EditBlockModal } from '@/features/resume/edit-block/ui/edit-block-modal';
 import { useEditBlock } from '@/features/resume/edit-block/model/use-edit-block';
@@ -61,7 +63,7 @@ export function BlockWrapper({
               onClick={() => openEdit(id)}
               aria-label="Edit block"
             >
-              <Icon name="pencil" size={14} strokeWidth={1.9} />
+              <EditOutlinedIcon sx={{ fontSize: 14 }} />
               Edit
             </button>
             {blockType !== 'header' && (
@@ -71,7 +73,7 @@ export function BlockWrapper({
                 onClick={() => removeBlock(id)}
                 aria-label="Delete block"
               >
-                <Icon name="trash" size={14} strokeWidth={1.9} />
+                <DeleteOutlineOutlinedIcon sx={{ fontSize: 14 }} />
               </button>
             )}
           </div>
@@ -102,7 +104,7 @@ export function BlockWrapper({
           {...attributes}
           {...listeners}
         >
-          <Icon name="grip" size={14} strokeWidth={1.9} />
+          <DragIndicatorIcon sx={{ fontSize: 14 }} />
         </div>
       )}
       {!isPreview && (
@@ -113,7 +115,7 @@ export function BlockWrapper({
             onClick={() => openEdit(id)}
             aria-label="Edit block"
           >
-            <Icon name="pencil" size={14} strokeWidth={1.9} />
+            <EditOutlinedIcon sx={{ fontSize: 14 }} />
             Edit
           </button>
           <button
@@ -122,7 +124,7 @@ export function BlockWrapper({
             onClick={() => removeBlock(id)}
             aria-label="Delete block"
           >
-            <Icon name="trash" size={14} strokeWidth={1.9} />
+            <DeleteOutlineOutlinedIcon sx={{ fontSize: 14 }} />
           </button>
         </div>
       )}

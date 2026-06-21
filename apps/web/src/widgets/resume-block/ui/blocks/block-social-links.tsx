@@ -1,24 +1,29 @@
+import type { ComponentType } from 'react';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
+import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 import type { SocialLinkItem } from '@/entities/resume/model/types';
-import { Icon } from '@/shared/ui/icon/icon';
-import type { IconName } from '@/shared/ui/icon/icon';
 import s from './blocks.module.scss';
 
 interface BlockSocialLinksProps {
   data: { items: SocialLinkItem[] };
 }
 
-function getPlatformIcon(platform: SocialLinkItem['platform']): IconName {
+type IconComponent = ComponentType<{ sx?: object; className?: string }>;
+
+function getPlatformIcon(platform: SocialLinkItem['platform']): IconComponent {
   switch (platform) {
     case 'LinkedIn':
-      return 'linkedin';
+      return LinkedInIcon;
     case 'GitHub':
-      return 'github';
+      return GitHubIcon;
     case 'Portfolio':
-      return 'globe';
+      return LanguageOutlinedIcon;
     case 'Twitter':
-      return 'globe';
+      return LanguageOutlinedIcon;
     case 'Other':
-      return 'link2';
+      return LinkOutlinedIcon;
   }
 }
 
@@ -27,20 +32,23 @@ export function BlockSocialLinks({ data }: BlockSocialLinksProps) {
     <div className={s.section}>
       <h2 className={s.sectionTitle}>Links</h2>
       <div className={s.socialList}>
-        {data.items.map((item) => (
-          <a
-            key={item.id}
-            href={item.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={s.socialItem}
-          >
-            <Icon name={getPlatformIcon(item.platform)} size={16} strokeWidth={1.9} />
-            <span>
-              {item.platform}: {item.url}
-            </span>
-          </a>
-        ))}
+        {data.items.map((item) => {
+          const PlatformIcon = getPlatformIcon(item.platform);
+          return (
+            <a
+              key={item.id}
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={s.socialItem}
+            >
+              <PlatformIcon sx={{ fontSize: 16 }} />
+              <span>
+                {item.platform}: {item.url}
+              </span>
+            </a>
+          );
+        })}
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
 import { FormTextField } from '@/shared/ui/form-text-field/form-text-field';
 import Typography from '@mui/material/Typography';
-import { Icon } from '@/shared/ui/icon/icon';
+import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import { useContactForm } from '@job-search-tracker/api-client/contact/hooks';
 import { ContactApiError } from '@job-search-tracker/api-client/contact';
 import type { ContactPayload } from '@job-search-tracker/api-client/contact';
@@ -149,7 +149,7 @@ export function ContactForm() {
                   mutation.isPending ? (
                     <CircularProgress size={16} color="inherit" />
                   ) : (
-                    <Icon name="send" size={16} strokeWidth={2} />
+                    <SendOutlinedIcon sx={{ fontSize: 16 }} />
                   )
                 }
                 sx={sxSubmitBtn}

@@ -10,8 +10,8 @@ import { useTranslations } from 'next-intl';
 import ArrowUpwardOutlinedIcon from '@mui/icons-material/ArrowUpwardOutlined';
 import ArrowDownwardOutlinedIcon from '@mui/icons-material/ArrowDownwardOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { row } from '@/features/resume/edit-block/ui/forms/form-row';
-import { Icon } from '@/shared/ui/icon/icon';
 import type { BlockData, ExperienceItem } from '@/entities/resume/model/types';
 
 type ExperienceFormik = ReturnType<typeof useFormik<Extract<BlockData, { type: 'experience' }>>>;
@@ -260,7 +260,7 @@ export function ExperienceForm({ formik }: { formik: ExperienceFormik }) {
       ))}
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
         <Button
-          startIcon={<Icon name="plus" size={14} />}
+          startIcon={<AddOutlinedIcon sx={{ fontSize: 14 }} />}
           onClick={addItem}
           variant="outlined"
           size="small"

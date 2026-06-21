@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Icon } from '@/shared/ui/icon/icon';
+import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import s from './location-block.module.scss';
 
 const MAPS_EMBED_URL =
@@ -29,7 +30,7 @@ function TallinnClock({ label }: { label: string }) {
 
   return (
     <div className={s.timeRow}>
-      <Icon name="clock" size={15} strokeWidth={1.9} />
+      <AccessTimeOutlinedIcon sx={{ fontSize: 15 }} />
       <span className={s.timeLabel}>{label}</span>
       <span className={s.timeValue}>{time}</span>
     </div>
@@ -57,7 +58,7 @@ export function LocationBlock() {
 
         <div className={s.meta}>
           <div className={s.cityRow}>
-            <Icon name="mapPin" size={18} strokeWidth={1.9} />
+            <LocationOnOutlinedIcon sx={{ fontSize: 18 }} />
             <span className={s.city}>{t('city')}</span>
           </div>
 

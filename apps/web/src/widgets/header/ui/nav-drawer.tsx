@@ -1,10 +1,18 @@
 'use client';
 
+import type { ComponentType } from 'react';
 import Link from 'next/link';
 import { clsx } from 'clsx';
 import { useTranslations } from 'next-intl';
-import { Icon } from '@/shared/ui/icon/icon';
-import type { IconName } from '@/shared/ui/icon/icon';
+import WorkOutlinedIcon from '@mui/icons-material/WorkOutlined';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
+import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
+import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { Avatar } from '@/shared/ui/avatar/avatar';
 import s from './nav-drawer.module.scss';
 
@@ -17,17 +25,19 @@ interface NavDrawerProps {
   onAvatarClick: () => void;
 }
 
+type IconComponent = ComponentType<{ sx?: object; className?: string }>;
+
 interface DrawerLinkProps {
   href: string;
   label: string;
-  icon?: IconName;
+  icon?: IconComponent;
   onClick: () => void;
 }
 
-function DrawerLink({ href, label, icon, onClick }: DrawerLinkProps) {
+function DrawerLink({ href, label, icon: NavIcon, onClick }: DrawerLinkProps) {
   return (
     <Link href={href} prefetch={false} className={s.link} onClick={onClick}>
-      {icon && <Icon className={s.linkIcon} name={icon} size={18} strokeWidth={1.9} />}
+      {NavIcon && <NavIcon className={s.linkIcon} sx={{ fontSize: 18 }} />}
       {label}
     </Link>
   );
@@ -38,7 +48,7 @@ function Logo() {
   return (
     <Link href="/" prefetch={false} className={s.logo}>
       <span className={s.logoMark} style={{ width: 30, height: 30 }}>
-        <Icon name="briefcase" size={18} strokeWidth={2.1} />
+        <WorkOutlinedIcon sx={{ fontSize: 18 }} />
       </span>
       <span className={s.logoWord}>{tc('appName')}</span>
     </Link>
@@ -73,7 +83,7 @@ export function NavDrawer({
             className={s.closeBtn}
             onClick={onClose}
           >
-            <Icon name="x" size={20} strokeWidth={2} />
+            <CloseOutlinedIcon sx={{ fontSize: 20 }} />
           </button>
         </div>
 
@@ -84,7 +94,7 @@ export function NavDrawer({
               <span className={s.avatarName}>{user.name ?? tc('appName')}</span>
               <span className={s.avatarEmail}>{user.email}</span>
             </div>
-            <Icon className={s.avatarChevron} name="chevronRight" size={16} />
+            <ChevronRightOutlinedIcon className={s.avatarChevron} sx={{ fontSize: 16 }} />
           </button>
         )}
 
@@ -93,26 +103,26 @@ export function NavDrawer({
             <>
               <DrawerLink
                 href="/dashboard"
-                icon="layoutDashboard"
+                icon={DashboardOutlinedIcon}
                 label={th('nav.dashboard')}
                 onClick={onLinkClick}
               />
               <DrawerLink
                 href="/jobs"
-                icon="briefcase"
+                icon={WorkOutlinedIcon}
                 label={th('nav.jobs')}
                 onClick={onLinkClick}
               />
               <DrawerLink
                 href="/applications"
-                icon="fileText"
+                icon={ArticleOutlinedIcon}
                 label={th('nav.applications')}
                 onClick={onLinkClick}
               />
-              <DrawerLink href="/resume" icon="fileText" label="Resume" onClick={onLinkClick} />
+              <DrawerLink href="/resume" icon={ArticleOutlinedIcon} label="Resume" onClick={onLinkClick} />
               <DrawerLink
                 href="/analytics"
-                icon="barChart"
+                icon={BarChartOutlinedIcon}
                 label={th('nav.analytics')}
                 onClick={onLinkClick}
               />
@@ -129,9 +139,9 @@ export function NavDrawer({
         <div className={s.divider} />
 
         <nav className={s.nav} aria-label="Discover">
-          <DrawerLink href="/blog" icon="bookmark" label="Blog" onClick={onLinkClick} />
+          <DrawerLink href="/blog" icon={BookmarkBorderOutlinedIcon} label="Blog" onClick={onLinkClick} />
           <DrawerLink href="/help" label="Help" onClick={onLinkClick} />
-          <DrawerLink href="/contact" icon="mail" label="Contact" onClick={onLinkClick} />
+          <DrawerLink href="/contact" icon={MailOutlinedIcon} label="Contact" onClick={onLinkClick} />
         </nav>
 
         <div className={s.spacer} />
@@ -139,7 +149,7 @@ export function NavDrawer({
         <div className={s.footer}>
           {isLoggedIn ? (
             <button type="button" className={s.addJobBtn}>
-              <Icon name="plus" size={16} strokeWidth={2.2} />
+              <AddOutlinedIcon sx={{ fontSize: 16 }} />
               {tc('addJob')}
             </button>
           ) : (

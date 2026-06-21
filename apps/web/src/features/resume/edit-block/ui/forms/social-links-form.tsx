@@ -9,9 +9,10 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import IconButton from '@mui/material/IconButton';
-import { useFormik, getIn } from 'formik';
+import { type useFormik, getIn } from 'formik';
 import { useTranslations } from 'next-intl';
-import { Icon } from '@/shared/ui/icon/icon';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import type { BlockData, SocialLinkItem } from '@/entities/resume/model/types';
 
 type SocialLinksFormik = ReturnType<typeof useFormik<Extract<BlockData, { type: 'social-links' }>>>;
@@ -87,7 +88,7 @@ export function SocialLinksForm({ formik }: { formik: SocialLinksFormik }) {
               size="small"
               sx={deleteButtonSx}
             >
-              <Icon name="trash" size={14} />
+              <DeleteOutlineOutlinedIcon sx={{ fontSize: 14 }} />
             </IconButton>
           </Box>
           <TextField
@@ -111,7 +112,7 @@ export function SocialLinksForm({ formik }: { formik: SocialLinksFormik }) {
       ))}
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
         <Button
-          startIcon={<Icon name="plus" size={14} />}
+          startIcon={<AddOutlinedIcon sx={{ fontSize: 14 }} />}
           onClick={addItem}
           variant="outlined"
           size="small"

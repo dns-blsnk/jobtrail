@@ -1,7 +1,7 @@
 'use client';
 
 import { useResumeStore } from '@/entities/resume/model/resume-store';
-import { Icon } from '@/shared/ui/icon/icon';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import s from './create-draft-button.module.scss';
 
 export function CreateDraftButton() {
@@ -14,7 +14,7 @@ export function CreateDraftButton() {
       onClick={() => createDraft()}
       aria-label="Create new draft"
     >
-      <Icon name="plus" size={14} strokeWidth={2.2} />
+      <AddOutlinedIcon sx={{ fontSize: 14 }} />
       New draft
     </button>
   );

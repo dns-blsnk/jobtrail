@@ -6,8 +6,10 @@ import { useCallback, useState } from 'react';
 import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { clsx } from 'clsx';
+import WorkOutlinedIcon from '@mui/icons-material/WorkOutlined';
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useProfile } from '@/entities/session/model/use-profile';
-import { Icon } from '@/shared/ui/icon/icon';
 import { Avatar } from '@/shared/ui/avatar/avatar';
 import { IconButton } from '@/shared/ui/icon-button/icon-button';
 import s from './header.module.scss';
@@ -25,7 +27,7 @@ function Logo() {
   return (
     <Link href="/" prefetch={false} className={s.logo}>
       <span className={s.logoMark} style={{ width: 30, height: 30 }}>
-        <Icon name="briefcase" size={18} strokeWidth={2.1} />
+        <WorkOutlinedIcon sx={{ fontSize: 18 }} />
       </span>
       <span className={s.logoWord}>{tc('appName')}</span>
     </Link>
@@ -55,7 +57,7 @@ export function MobileHeader() {
         <div className={clsx(s.inner, s.innerMobile)}>
           <div className={s.left}>
             <IconButton
-              icon="menu"
+              icon={MenuOutlinedIcon}
               label={th('aria.openMenu')}
               onClick={() => setDrawerOpen(true)}
             />
@@ -65,7 +67,7 @@ export function MobileHeader() {
             {isLoggedIn ? (
               <>
                 <button type="button" className={s.addBtn} aria-label={tc('addJob')}>
-                  <Icon name="plus" size={18} strokeWidth={2.2} />
+                  <AddOutlinedIcon sx={{ fontSize: 18 }} />
                 </button>
                 <button
                   type="button"

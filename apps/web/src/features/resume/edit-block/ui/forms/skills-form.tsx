@@ -5,9 +5,10 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
-import { useFormik, getIn } from 'formik';
+import { type useFormik, getIn } from 'formik';
 import { useTranslations } from 'next-intl';
-import { Icon } from '@/shared/ui/icon/icon';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import type { BlockData, SkillsData } from '@/entities/resume/model/types';
 
 type SkillsFormik = ReturnType<typeof useFormik<Extract<BlockData, { type: 'skills' }>>>;
@@ -101,7 +102,7 @@ export function SkillsForm({ formik }: { formik: SkillsFormik }) {
                 size="small"
                 sx={deleteButtonSx}
               >
-                <Icon name="trash" size={14} />
+                <DeleteOutlineOutlinedIcon sx={{ fontSize: 14 }} />
               </IconButton>
             </Box>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
@@ -129,7 +130,7 @@ export function SkillsForm({ formik }: { formik: SkillsFormik }) {
       ))}
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
         <Button
-          startIcon={<Icon name="plus" size={14} />}
+          startIcon={<AddOutlinedIcon sx={{ fontSize: 14 }} />}
           onClick={addGroup}
           variant="outlined"
           size="small"

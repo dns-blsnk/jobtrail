@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { Icon } from '@/shared/ui/icon/icon';
+import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import { useUploadResume } from '@/features/resume/upload-resume/model/use-upload-resume';
 import s from './upload-resume-zone.module.scss';
 
@@ -42,7 +42,7 @@ export function UploadResumeZone({ activeDraftId }: UploadResumeZoneProps) {
         }
         aria-label="Upload resume"
       >
-        <Icon name="upload" size={16} strokeWidth={1.9} />
+        <FileUploadOutlinedIcon sx={{ fontSize: 16 }} />
         <span className={s.label}>Upload resume</span>
       </button>
     </>

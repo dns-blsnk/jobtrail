@@ -11,8 +11,11 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import IconButton from '@mui/material/IconButton';
-import { useFormik, getIn } from 'formik';
-import { Icon } from '@/shared/ui/icon/icon';
+import { type useFormik, getIn } from 'formik';
+import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
+import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { PhotoCropDialog } from '@/features/resume/edit-block/ui/photo-crop-dialog';
 import type { BlockData, SocialLinkItem } from '@/entities/resume/model/types';
 
@@ -155,7 +158,7 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
                 sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
             ) : (
-              <Icon name="user" size={32} strokeWidth={1.4} style={{ color: 'var(--ink-3)' }} />
+              <PersonOutlinedIcon sx={{ fontSize: 32, color: 'var(--ink-3)' }} />
             )}
           </Box>
 
@@ -164,7 +167,7 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
               variant="outlined"
               size="small"
               onClick={() => photoInputRef.current?.click()}
-              startIcon={<Icon name="upload" size={14} strokeWidth={1.9} />}
+              startIcon={<FileUploadOutlinedIcon sx={{ fontSize: 14 }} />}
               sx={{ fontSize: 12, textTransform: 'none' }}
             >
               {values.data.photoUrl ? t('changePhoto') : t('uploadPhoto')}
@@ -175,7 +178,7 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
                 size="small"
                 color="error"
                 onClick={() => void setFieldValue('data.photoUrl', undefined)}
-                startIcon={<Icon name="trash" size={14} strokeWidth={1.9} />}
+                startIcon={<DeleteOutlineOutlinedIcon sx={{ fontSize: 14 }} />}
                 sx={{ fontSize: 12, textTransform: 'none' }}
               >
                 {t('removePhoto')}
@@ -419,7 +422,7 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
                   },
                 }}
               >
-                <Icon name="trash" size={14} strokeWidth={1.9} />
+                <DeleteOutlineOutlinedIcon sx={{ fontSize: 14 }} />
               </IconButton>
             </Box>
             {/* Row 2: URL — extra top gap to separate from row 1 */}
@@ -449,7 +452,7 @@ export function HeaderForm({ formik }: { formik: HeaderFormik }) {
 
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
           <Button
-            startIcon={<Icon name="plus" size={13} strokeWidth={2} />}
+            startIcon={<AddOutlinedIcon sx={{ fontSize: 13 }} />}
             onClick={addLink}
             disabled={links.length >= MAX_HEADER_LINKS}
             variant="outlined"

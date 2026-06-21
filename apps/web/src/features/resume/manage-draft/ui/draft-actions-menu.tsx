@@ -5,7 +5,10 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Icon } from '@/shared/ui/icon/icon';
+import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { useDraftActions } from '@/features/resume/manage-draft/model/use-draft-actions';
 
 interface DraftActionsMenuProps {
@@ -65,7 +68,7 @@ export function DraftActionsMenu({ draftId, onRenameStart }: DraftActionsMenuPro
           height: '40px',
         }}
       >
-        <Icon name="moreVertical" size={16} strokeWidth={2} />
+        <MoreVertOutlinedIcon sx={{ fontSize: 16 }} />
       </button>
       <Menu
         anchorEl={anchorEl}
@@ -84,19 +87,19 @@ export function DraftActionsMenu({ draftId, onRenameStart }: DraftActionsMenuPro
       >
         <MenuItem onClick={handleRename}>
           <ListItemIcon sx={{ minWidth: 32 }}>
-            <Icon name="pencil" size={14} strokeWidth={1.9} />
+            <EditOutlinedIcon sx={{ fontSize: 14 }} />
           </ListItemIcon>
           <ListItemText primary="Rename" />
         </MenuItem>
         <MenuItem onClick={handleDuplicate}>
           <ListItemIcon sx={{ minWidth: 32 }}>
-            <Icon name="copy" size={14} strokeWidth={1.9} />
+            <ContentCopyOutlinedIcon sx={{ fontSize: 14 }} />
           </ListItemIcon>
           <ListItemText primary="Duplicate" />
         </MenuItem>
         <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
           <ListItemIcon sx={{ minWidth: 32, color: 'error.main' }}>
-            <Icon name="trash" size={14} strokeWidth={1.9} />
+            <DeleteOutlineOutlinedIcon sx={{ fontSize: 14 }} />
           </ListItemIcon>
           <ListItemText primary="Delete" />
         </MenuItem>

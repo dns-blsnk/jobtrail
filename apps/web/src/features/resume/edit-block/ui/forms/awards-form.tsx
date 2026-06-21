@@ -4,9 +4,12 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
-import { useFormik, getIn } from 'formik';
+import { type useFormik, getIn } from 'formik';
 import { useTranslations } from 'next-intl';
-import { Icon } from '@/shared/ui/icon/icon';
+import ArrowUpwardOutlinedIcon from '@mui/icons-material/ArrowUpwardOutlined';
+import ArrowDownwardOutlinedIcon from '@mui/icons-material/ArrowDownwardOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { row } from '@/features/resume/edit-block/ui/forms/form-row';
 import type { BlockData, AwardItem } from '@/entities/resume/model/types';
 
@@ -93,7 +96,7 @@ export function AwardsForm({ formik }: { formik: AwardsFormik }) {
                 size="small"
                 sx={moveButtonSx}
               >
-                <Icon name="moveUp" size={14} />
+                <ArrowUpwardOutlinedIcon sx={{ fontSize: 14 }} />
               </IconButton>
               <IconButton
                 onClick={() => moveDown(index)}
@@ -102,7 +105,7 @@ export function AwardsForm({ formik }: { formik: AwardsFormik }) {
                 size="small"
                 sx={moveButtonSx}
               >
-                <Icon name="moveDown" size={14} />
+                <ArrowDownwardOutlinedIcon sx={{ fontSize: 14 }} />
               </IconButton>
               <IconButton
                 onClick={() => removeItem(index)}
@@ -110,7 +113,7 @@ export function AwardsForm({ formik }: { formik: AwardsFormik }) {
                 size="small"
                 sx={deleteButtonSx}
               >
-                <Icon name="trash" size={14} />
+                <DeleteOutlineOutlinedIcon sx={{ fontSize: 14 }} />
               </IconButton>
             </Box>
           </Box>
@@ -176,7 +179,7 @@ export function AwardsForm({ formik }: { formik: AwardsFormik }) {
       ))}
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
         <Button
-          startIcon={<Icon name="plus" size={14} />}
+          startIcon={<AddOutlinedIcon sx={{ fontSize: 14 }} />}
           onClick={addItem}
           variant="outlined"
           size="small"

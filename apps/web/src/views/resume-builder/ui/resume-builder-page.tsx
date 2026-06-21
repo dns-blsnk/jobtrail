@@ -1,7 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { Icon } from '@/shared/ui/icon/icon';
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import { useResumeStore } from '@/entities/resume/model/resume-store';
 import { ResumeSidebar } from '@/widgets/resume-sidebar/ui/resume-sidebar';
 import { ResumeEditor } from '@/widgets/resume-editor/ui/resume-editor';
@@ -34,7 +37,7 @@ export function ResumeBuilderPage() {
             aria-label="Open drafts"
             aria-expanded={sidebarOpen}
           >
-            <Icon name="menu" size={20} strokeWidth={1.9} />
+            <MenuOutlinedIcon sx={{ fontSize: 20 }} />
           </button>
           <h1 className={s.topBarTitle}>Resume Builder</h1>
         </div>
@@ -48,7 +51,7 @@ export function ResumeBuilderPage() {
               onClick={handleDownloadPdf}
               aria-label="Download PDF"
             >
-              <Icon name="download" size={16} strokeWidth={1.9} />
+              <FileDownloadOutlinedIcon sx={{ fontSize: 16 }} />
               <span className={s.btnLabel}>Download PDF</span>
             </button>
             <button
@@ -58,7 +61,7 @@ export function ResumeBuilderPage() {
               aria-label="Toggle preview"
               aria-pressed={isPreview}
             >
-              <Icon name="eye" size={16} strokeWidth={1.9} />
+              <VisibilityOutlinedIcon sx={{ fontSize: 16 }} />
               <span className={s.btnLabel}>Preview</span>
             </button>
             <button
@@ -67,7 +70,7 @@ export function ResumeBuilderPage() {
               onClick={handleAiFill}
               aria-label="AI Fill"
             >
-              <Icon name="star" size={16} strokeWidth={1.9} />
+              <StarBorderOutlinedIcon sx={{ fontSize: 16 }} />
               <span className={s.btnLabel}>AI Fill</span>
             </button>
           </div>
