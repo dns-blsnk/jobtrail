@@ -1,0 +1,140 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+@use 'containers' as *;
+@use 'variables' as su;
+
+.root {
+  padding-block: 96px;
+  background: rgba(0, 0, 0, 0.015);
+
+  @include tablet {
+    padding-block: 72px;
+  }
+
+  @include mobile {
+    padding-block: 56px;
+  }
+}
+
+.inner {
+  @include container($max: su.$container-full);
+  @include flex-col($gap: 56px);
+}
+
+.header {
+  @include flex-col($gap: 12px);
+  text-align: center;
+  max-width: 520px;
+  margin-inline: auto;
+}
+
+.title {
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 800;
+  color: v.$color-heading;
+  letter-spacing: -0.8px;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: v.$color-muted;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.step {
+  @include flex-col($gap: 20px);
+  padding: 0 32px;
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
+
+  @include mobile {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 0;
+    padding-block: 20px;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid v.$color-border-soft;
+    }
+  }
+}
+
+.stepTop {
+  @include flex-center($gap: 0);
+  position: relative;
+
+  @include mobile {
+    flex-shrink: 0;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.stepNumber {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: v.$color-primary;
+  color: v.$color-white;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.connector {
+  flex: 1;
+  height: 2px;
+  background: v.$color-border-soft;
+  margin-inline: -1px;
+
+  @include mobile {
+    flex: none;
+    width: 2px;
+    height: 100%;
+    min-height: 24px;
+    margin-block: -1px;
+    margin-inline: 0;
+  }
+}
+
+.stepBody {
+  @include flex-col($gap: 8px);
+}
+
+.stepTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: v.$color-heading;
+  margin: 0;
+}
+
+.stepDesc {
+  font-size: 14px;
+  color: v.$color-muted;
+  line-height: 1.65;
+  margin: 0;
+}
