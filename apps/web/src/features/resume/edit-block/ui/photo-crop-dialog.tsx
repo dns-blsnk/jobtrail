@@ -99,7 +99,7 @@ export function PhotoCropDialog({ open, src, shape, onConfirm, onCancel }: Photo
             min={1}
             max={3}
             step={0.05}
-            onChange={(_, value) => setZoom(value as number)}
+            onChange={(_, value) => setZoom(value)}
             aria-label="Zoom"
             size="small"
           />

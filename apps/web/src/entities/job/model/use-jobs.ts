@@ -29,7 +29,7 @@ export function useJobs(filters: JobFilters) {
   return useInfiniteQuery({
     queryKey: ['jobs', filters] as const,
     queryFn: ({ pageParam }) =>
-      fetchJobs({ ...filters, page: pageParam as number, limit: JOBS_LIMIT }, token),
+      fetchJobs({ ...filters, page: pageParam, limit: JOBS_LIMIT }, token),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => (lastPage.hasMore ? lastPage.page + 1 : undefined),
     enabled: !!token,

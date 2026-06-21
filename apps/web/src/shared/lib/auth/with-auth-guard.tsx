@@ -11,6 +11,6 @@ export function withAuthGuard(handler: (context: AuthContext) => Promise<ReactNo
   return async function ProtectedPage(): Promise<ReactNode> {
     const session = await auth();
     if (!session?.user) redirect('/auth');
-    return handler({ session: session as Session });
+    return handler({ session: session });
   };
 }

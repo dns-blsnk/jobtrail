@@ -2,7 +2,7 @@
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { useFormik, getIn } from 'formik';
+import { type useFormik, getIn } from 'formik';
 import { useTranslations } from 'next-intl';
 import type { BlockData } from '@/entities/resume/model/types';
 
