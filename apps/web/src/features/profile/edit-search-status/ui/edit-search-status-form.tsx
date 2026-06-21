@@ -52,7 +52,7 @@ export function EditSearchStatusForm({
               onClick={() => onStatusChange(value)}
             >
               <span aria-hidden>{emoji}</span>
-              <Typography variant="body2" fontWeight={600}>
+              <Typography variant="body2" sx={{ fontWeight: 600 }}>
                 {t(`searchStatus.${labelKey}`)}
               </Typography>
             </button>
@@ -67,7 +67,7 @@ export function EditSearchStatusForm({
         value={availableFromDate}
         onChange={(e) => onAvailableFromChange(e.target.value || null)}
         disabled={isPending}
-        InputLabelProps={{ shrink: true }}
+        slotProps={{ inputLabel: { shrink: true } }}
         sx={{ maxWidth: 200 }}
       />
     </Box>

@@ -39,7 +39,7 @@ export function ProfileBasicInfo({ profile }: ProfileBasicInfoProps) {
   return (
     <section className={s.root}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
-        <Typography variant="subtitle1" fontWeight={700}>
+        <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
           {t('basicInfo.title')}
         </Typography>
         {!editing && (
@@ -59,7 +59,7 @@ export function ProfileBasicInfo({ profile }: ProfileBasicInfoProps) {
       ) : (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
           {profile.headline ? (
-            <Typography variant="body2" fontWeight={600}>{profile.headline}</Typography>
+            <Typography variant="body2" sx={{ fontWeight: 600 }}>{profile.headline}</Typography>
           ) : (
             <Typography variant="body2" color="text.disabled">—</Typography>
           )}

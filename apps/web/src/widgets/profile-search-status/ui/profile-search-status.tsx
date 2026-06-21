@@ -1,6 +1,5 @@
 'use client';
 
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useTranslations } from 'next-intl';
 import { useAnalytics } from '@/shared/analytics/use-analytics';
@@ -16,7 +15,6 @@ interface ProfileSearchStatusProps {
 export function ProfileSearchStatus({ profile }: ProfileSearchStatusProps) {
   const t = useTranslations('profilePage');
   const mutation = useMutateUserProfile();
-  const qc = useQueryClient();
   const { capture } = useAnalytics();
 
   function handleStatusChange(status: SearchStatus) {
@@ -34,7 +32,7 @@ export function ProfileSearchStatus({ profile }: ProfileSearchStatusProps) {
 
   return (
     <section className={s.root}>
-      <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 1.5 }}>
+      <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 1.5 }}>
         {t('searchStatus.title')}
       </Typography>
 

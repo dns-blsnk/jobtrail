@@ -56,7 +56,7 @@ export function ProfileLinks({ profile }: ProfileLinksProps) {
   return (
     <section className={s.root}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
-        <Typography variant="subtitle1" fontWeight={700}>
+        <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
           {t('links.title')}
         </Typography>
         {!editing && (

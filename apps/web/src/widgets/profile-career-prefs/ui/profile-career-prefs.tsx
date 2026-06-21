@@ -46,7 +46,7 @@ export function ProfileCareerPrefs({ profile }: ProfileCareerPrefsProps) {
   return (
     <section className={s.root}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
-        <Typography variant="subtitle1" fontWeight={700}>
+        <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
           {t('careerPrefs.title')}
         </Typography>
         {!editing && (
