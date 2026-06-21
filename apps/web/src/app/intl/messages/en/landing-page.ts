@@ -52,24 +52,26 @@ export const landingPage = {
   howItWorks: {
     title: 'How it works',
     subtitle: 'Get from zero to interview-ready in three steps.',
-    step1: {
-      number: '01',
-      title: 'Build your resume',
-      description:
-        'Fill in your experience, choose a template, and download a polished PDF in minutes.',
-    },
-    step2: {
-      number: '02',
-      title: 'Collect job postings',
-      description:
-        'Paste a job URL and we automatically parse the tech stack, salary, and requirements.',
-    },
-    step3: {
-      number: '03',
-      title: 'Track & improve',
-      description:
-        'See your match score, mark application statuses, and grow with actionable analytics.',
-    },
+    steps: [
+      {
+        number: '01',
+        title: 'Build your resume',
+        description:
+          'Fill in your experience, choose a template, and download a polished PDF in minutes.',
+      },
+      {
+        number: '02',
+        title: 'Collect job postings',
+        description:
+          'Paste a job URL and we automatically parse the tech stack, salary, and requirements.',
+      },
+      {
+        number: '03',
+        title: 'Track & improve',
+        description:
+          'See your match score, mark application statuses, and grow with actionable analytics.',
+      },
+    ],
   },
   cta: {
     title: 'Ready to supercharge your job search?',
