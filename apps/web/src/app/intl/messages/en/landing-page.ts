@@ -23,25 +23,31 @@ export const landingPage = {
   features: {
     title: 'Everything you need to land the job',
     subtitle: 'One platform to build, track, and optimize your entire job search.',
-    resumeBuilder: {
-      title: 'Resume Builder',
-      description:
-        'Create polished, ATS-optimized resumes with multiple templates and real-time preview.',
-    },
-    jobTracker: {
-      title: 'Job Tracker',
-      description:
-        'Save job postings by URL — we extract the tech stack, salary, and requirements automatically.',
-    },
-    resumeMatching: {
-      title: 'Resume Matching',
-      description: 'See your match score for each job based on skills gap analysis.',
-    },
-    analytics: {
-      title: 'Analytics',
-      description:
-        'Track response rates, interview conversion, and identify which skills to learn next.',
-    },
+    items: [
+      {
+        icon: 'article',
+        title: 'Resume Builder',
+        description:
+          'Create polished, ATS-optimized resumes with multiple templates and real-time preview.',
+      },
+      {
+        icon: 'work',
+        title: 'Job Tracker',
+        description:
+          'Save job postings by URL — we extract the tech stack, salary, and requirements automatically.',
+      },
+      {
+        icon: 'adjust',
+        title: 'Resume Matching',
+        description: 'See your match score for each job based on skills gap analysis.',
+      },
+      {
+        icon: 'barChart',
+        title: 'Analytics',
+        description:
+          'Track response rates, interview conversion, and identify which skills to learn next.',
+      },
+    ],
   },
   howItWorks: {
     title: 'How it works',
