@@ -29,6 +29,8 @@ export async function HeroV2() {
                   stroke="#375dfb"
                   strokeWidth="2.5"
                   fill="none"
+                  pathLength="1"
+                  vectorEffect="non-scaling-stroke"
                 />
               </svg>
             </span>{' '}

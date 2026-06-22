@@ -135,12 +135,40 @@
   @include flex-col($gap: 10px);
 }
 
+@keyframes resultIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .resultCard {
   background: var(--v2-base);
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 14px 16px;
   @include flex-col($gap: 10px);
+  animation: resultIn 0.3s ease both;
+
+  &:nth-child(1) {
+    animation-delay: 0ms;
+  }
+
+  &:nth-child(2) {
+    animation-delay: 60ms;
+  }
+
+  &:nth-child(3) {
+    animation-delay: 120ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 .resultTop {

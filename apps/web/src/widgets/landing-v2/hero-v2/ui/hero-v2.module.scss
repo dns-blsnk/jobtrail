@@ -25,6 +25,17 @@
   }
 }
 
+@keyframes contentIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .inner {
   @include container($max: su.$container-wide);
   display: grid;
@@ -56,6 +67,12 @@
   font-weight: 500;
   color: var(--ink-3);
   margin: 0;
+  animation: contentIn 0.5s ease both;
+  animation-delay: 0.05s;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 .heading {
@@ -66,6 +83,12 @@
   line-height: 1;
   color: var(--ink);
   margin: 0;
+  animation: contentIn 0.65s cubic-bezier(0.2, 0, 0, 1) both;
+  animation-delay: 0.15s;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 .wavyWord {
@@ -81,6 +104,23 @@
   height: 12px;
   overflow: visible;
   pointer-events: none;
+
+  path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: wavyDraw 0.75s ease-out 0.65s both;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+  }
+}
+
+@keyframes wavyDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 .subtitle {
@@ -90,9 +130,15 @@
   line-height: 1.7;
   max-width: 420px;
   margin: 0;
+  animation: contentIn 0.5s ease both;
+  animation-delay: 0.3s;
 
   @include mobile {
     font-size: 15px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
   }
 }
 
@@ -101,6 +147,12 @@
   flex-wrap: wrap;
   gap: 12px;
   align-items: center;
+  animation: contentIn 0.5s ease both;
+  animation-delay: 0.45s;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 .btnPrimary {
@@ -117,13 +169,31 @@
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
-  @include transition(background, su.$duration-base);
+  transition:
+    background su.$duration-base su.$ease-default,
+    transform su.$duration-fast su.$ease-spring,
+    box-shadow su.$duration-base su.$ease-default;
 
   &:hover {
     background: #2f4ed6;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(55, 93, 251, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
   }
 
   @include focus-ring(var(--accent));
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: background su.$duration-base;
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
 }
 
 .btnGhost {
@@ -137,6 +207,7 @@
   color: var(--ink-2);
   text-decoration: none;
   white-space: nowrap;
+  @include transition(color, su.$duration-base);
 
   &:hover {
     text-decoration: underline;
@@ -151,6 +222,12 @@
   font-size: 13px;
   color: var(--ink-3);
   margin: 0;
+  animation: contentIn 0.4s ease both;
+  animation-delay: 0.6s;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 .matrixCol {
@@ -165,4 +242,15 @@
   border-radius: 16px;
   padding: 24px;
   box-shadow: 0 4px 32px rgba(55, 93, 251, 0.08);
+  animation: contentIn 0.7s cubic-bezier(0.2, 0, 0, 1) both;
+  animation-delay: 0.3s;
+  transition: box-shadow su.$duration-slow su.$ease-default;
+
+  &:hover {
+    box-shadow: 0 8px 48px rgba(55, 93, 251, 0.13);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }

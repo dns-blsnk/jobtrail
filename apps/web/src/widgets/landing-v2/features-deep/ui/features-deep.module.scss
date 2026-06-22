@@ -80,6 +80,16 @@
   margin: 0;
 }
 
+@keyframes mockFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
 /* ── Resume mock ── */
 .resumeMock {
   background: #fff;
@@ -87,7 +97,21 @@
   border-radius: 12px;
   padding: 20px;
   @include flex-col($gap: 14px);
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(55, 93, 251, 0.03);
+  animation: mockFloat 5s ease-in-out infinite;
+  transition: box-shadow su.$duration-slow su.$ease-default;
+
+  &:hover {
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.1),
+      0 0 0 1px rgba(55, 93, 251, 0.06);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 .mockName {
@@ -165,6 +189,11 @@
 /* ── Job cards ── */
 .jobCards {
   @include flex-col($gap: 10px);
+  animation: mockFloat 5.5s ease-in-out 0.5s infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 .jobCard {
@@ -173,6 +202,11 @@
   border-radius: 10px;
   padding: 14px 16px;
   @include flex-col($gap: 8px);
+  transition: box-shadow su.$duration-base su.$ease-default;
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
 }
 
 .jobCardTop {
@@ -238,9 +272,14 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
   align-items: start;
+  animation: mockFloat 6s ease-in-out 1s infinite;
 
   @include mobile {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
   }
 }
 
