@@ -1,0 +1,87 @@
+@use 'mixins' as *;
+@use 'containers' as *;
+@use 'variables' as su;
+
+.root {
+  background: var(--surface);
+  padding-block: 80px;
+}
+
+.inner {
+  @include container($max: su.$container-narrow);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+.col {
+  @include flex-col($gap: 16px);
+
+  &:first-child {
+    padding-right: 40px;
+    border-right: 1px solid var(--border);
+
+    @include mobile {
+      padding-right: 0;
+      border-right: none;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+    }
+  }
+
+  &:last-child {
+    padding-left: 40px;
+
+    @include mobile {
+      padding-left: 0;
+    }
+  }
+}
+
+.colHeader {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 4px;
+}
+
+.colHeaderWithout {
+  color: var(--ink-3);
+}
+
+.colHeaderWith {
+  color: var(--accent);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  @include flex-col($gap: 0);
+}
+
+.itemWithout {
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--ink-3);
+  text-decoration: line-through;
+  text-decoration-color: rgba(0, 0, 0, 0.2);
+}
+
+.itemWith {
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--ink);
+}
