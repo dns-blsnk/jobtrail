@@ -24,18 +24,11 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const [session, locale, messages] = await Promise.all([auth(), getLocale(), getMessages()]);
 
-  const sharedMessages = {
-    common: messages.common,
-    header: messages.header,
-    footer: messages.footer,
-    userMenu: messages.userMenu,
-  } as typeof messages;
-
   return (
     <html lang={locale}>
       <body>
         <AppRouterCacheProvider>
-          <NextIntlClientProvider messages={sharedMessages}>
+          <NextIntlClientProvider messages={messages}>
             <Providers session={session}>
               <Header />
               <main>{children}</main>

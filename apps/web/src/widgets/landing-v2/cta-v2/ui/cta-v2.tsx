@@ -4,6 +4,7 @@ import { useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { clsx } from 'clsx';
 import { useTranslations } from 'next-intl';
+import CheckRounded from '@mui/icons-material/CheckRounded';
 import s from './cta-v2.module.scss';
 
 export function CtaV2() {
@@ -11,6 +12,8 @@ export function CtaV2() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [error, setError] = useState(false);
+
+  const features = t.raw('features') as string[];
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -26,37 +29,48 @@ export function CtaV2() {
   return (
     <section className={s.root} aria-labelledby="cta-v2-heading">
       <div className={s.inner}>
-        <h2 id="cta-v2-heading" className={s.heading}>
-          {t('heading')}
-        </h2>
-        <p className={s.sub}>{t('sub')}</p>
+        <div className={s.card}>
+          <p className={s.eyebrow}>{t('eyebrow')}</p>
+          <h2 id="cta-v2-heading" className={s.heading}>
+            {t('heading')}
+          </h2>
+          <p className={s.sub}>{t('sub')}</p>
 
-        <form className={s.form} onSubmit={handleSubmit} noValidate>
-          <input
-            type="email"
-            className={clsx(s.input, error && s.inputError)}
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              if (error) setError(false);
-            }}
-            placeholder={t('placeholder')}
-            aria-label="Email address"
-            aria-invalid={error}
-            aria-describedby={error ? 'cta-email-error' : undefined}
-          />
-          <button type="submit" className={s.btn}>
-            {t('button')}
-          </button>
-        </form>
+          <form className={s.form} onSubmit={handleSubmit} noValidate>
+            <div className={s.inputWrap}>
+              <input
+                type="email"
+                className={clsx(s.input, error && s.inputError)}
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (error) setError(false);
+                }}
+                placeholder={t('placeholder')}
+                aria-label="Email address"
+                aria-invalid={error}
+                aria-describedby={error ? 'cta-email-error' : undefined}
+              />
+              <button type="submit" className={s.btn}>
+                {t('button')}
+              </button>
+            </div>
+            {error && (
+              <p id="cta-email-error" className={s.errorMsg} role="alert">
+                {t('errorMsg')}
+              </p>
+            )}
+          </form>
 
-        {error && (
-          <p id="cta-email-error" className={s.errorMsg} role="alert">
-            Please enter a valid email address.
-          </p>
-        )}
-
-        <p className={s.facts}>{t('facts')}</p>
+          <ul className={s.features} aria-label="Included features">
+            {features.map((feat) => (
+              <li key={feat} className={s.featureItem}>
+                <CheckRounded className={s.featureIcon} fontSize="small" />
+                <span>{feat}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

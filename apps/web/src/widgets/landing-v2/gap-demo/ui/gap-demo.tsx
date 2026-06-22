@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import CloseRounded from '@mui/icons-material/CloseRounded';
 import s from './gap-demo.module.scss';
 
 const ROLE_DICT: Record<string, string[]> = {
@@ -76,7 +77,7 @@ function TagInput({ tags, onChange, placeholder }: TagInputProps) {
             onClick={() => onChange(tags.filter((t) => t !== tag))}
             aria-label={`Remove ${tag}`}
           >
-            ×
+            <CloseRounded fontSize="inherit" />
           </button>
         </span>
       ))}
@@ -115,7 +116,7 @@ export function GapDemo() {
         </div>
 
         <div className={s.presets}>
-          <span className={s.presetsLabel}>Try:</span>
+          <span className={s.presetsLabel}>{t('tryLabel')}</span>
           {Object.entries(PRESETS).map(([label, skills]) => (
             <button
               key={label}

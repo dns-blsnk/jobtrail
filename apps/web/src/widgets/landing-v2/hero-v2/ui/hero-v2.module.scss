@@ -25,10 +25,21 @@
   }
 }
 
-@keyframes contentIn {
+@keyframes slideInLeft {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateX(-28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(28px) scale(0.97);
   }
   to {
     opacity: 1;
@@ -59,6 +70,11 @@
 
 .content {
   @include flex-col($gap: 24px);
+  animation: slideInLeft 0.75s cubic-bezier(0.2, 0, 0, 1) 0.1s both;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 .label {
@@ -67,12 +83,6 @@
   font-weight: 500;
   color: var(--ink-3);
   margin: 0;
-  animation: contentIn 0.5s ease both;
-  animation-delay: 0.05s;
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
 }
 
 .heading {
@@ -83,12 +93,6 @@
   line-height: 1;
   color: var(--ink);
   margin: 0;
-  animation: contentIn 0.65s cubic-bezier(0.2, 0, 0, 1) both;
-  animation-delay: 0.15s;
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
 }
 
 .wavyWord {
@@ -108,7 +112,7 @@
   path {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
-    animation: wavyDraw 0.75s ease-out 0.65s both;
+    animation: wavyDraw 0.75s ease-out 0.7s both;
 
     @media (prefers-reduced-motion: reduce) {
       animation: none;
@@ -130,15 +134,9 @@
   line-height: 1.7;
   max-width: 420px;
   margin: 0;
-  animation: contentIn 0.5s ease both;
-  animation-delay: 0.3s;
 
   @include mobile {
     font-size: 15px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
   }
 }
 
@@ -147,12 +145,6 @@
   flex-wrap: wrap;
   gap: 12px;
   align-items: center;
-  animation: contentIn 0.5s ease both;
-  animation-delay: 0.45s;
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
 }
 
 .btnPrimary {
@@ -222,12 +214,6 @@
   font-size: 13px;
   color: var(--ink-3);
   margin: 0;
-  animation: contentIn 0.4s ease both;
-  animation-delay: 0.6s;
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
 }
 
 .matrixCol {
@@ -242,8 +228,7 @@
   border-radius: 16px;
   padding: 24px;
   box-shadow: 0 4px 32px rgba(55, 93, 251, 0.08);
-  animation: contentIn 0.7s cubic-bezier(0.2, 0, 0, 1) both;
-  animation-delay: 0.3s;
+  animation: slideInRight 0.75s cubic-bezier(0.2, 0, 0, 1) 0.15s both;
   transition: box-shadow su.$duration-slow su.$ease-default;
 
   &:hover {
