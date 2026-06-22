@@ -98,7 +98,11 @@ export function DesktopHeader() {
           {isLoggedIn ? (
             <>
               <IconButton icon={SearchOutlinedIcon} label={th('aria.search')} />
-              <IconButton dot icon={NotificationsNoneOutlinedIcon} label={th('aria.notifications')} />
+              <IconButton
+                dot
+                icon={NotificationsNoneOutlinedIcon}
+                label={th('aria.notifications')}
+              />
               <span className={s.divider} />
               <button type="button" className={s.addJobBtn}>
                 <AddOutlinedIcon sx={{ fontSize: 16 }} />

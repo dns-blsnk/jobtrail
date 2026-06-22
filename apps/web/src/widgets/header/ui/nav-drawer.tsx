@@ -119,7 +119,12 @@ export function NavDrawer({
                 label={th('nav.applications')}
                 onClick={onLinkClick}
               />
-              <DrawerLink href="/resume" icon={ArticleOutlinedIcon} label="Resume" onClick={onLinkClick} />
+              <DrawerLink
+                href="/resume"
+                icon={ArticleOutlinedIcon}
+                label="Resume"
+                onClick={onLinkClick}
+              />
               <DrawerLink
                 href="/analytics"
                 icon={BarChartOutlinedIcon}
@@ -139,9 +144,19 @@ export function NavDrawer({
         <div className={s.divider} />
 
         <nav className={s.nav} aria-label="Discover">
-          <DrawerLink href="/blog" icon={BookmarkBorderOutlinedIcon} label="Blog" onClick={onLinkClick} />
+          <DrawerLink
+            href="/blog"
+            icon={BookmarkBorderOutlinedIcon}
+            label="Blog"
+            onClick={onLinkClick}
+          />
           <DrawerLink href="/help" label="Help" onClick={onLinkClick} />
-          <DrawerLink href="/contact" icon={MailOutlinedIcon} label="Contact" onClick={onLinkClick} />
+          <DrawerLink
+            href="/contact"
+            icon={MailOutlinedIcon}
+            label="Contact"
+            onClick={onLinkClick}
+          />
         </nav>
 
         <div className={s.spacer} />

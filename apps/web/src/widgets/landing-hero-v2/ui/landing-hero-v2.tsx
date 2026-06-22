@@ -14,13 +14,16 @@ export async function LandingHeroV2() {
         <div className={s.content}>
           <p className={s.eyebrow}>{t('eyebrow')}</p>
           <h1 id="hero-v2-heading" className={s.heading}>
-            {t('title')}{' '}
-            <span className={s.accent}>{t('titleAccent')}</span>
+            {t('title')} <span className={s.accent}>{t('titleAccent')}</span>
           </h1>
           <p className={s.subtitle}>{t('subtitle')}</p>
           <div className={s.buttons}>
-            <Link href="/auth" className={s.btnPrimary}>{t('ctaPrimary')}</Link>
-            <Link href="#how-it-works" className={s.btnSecondary}>{t('ctaSecondary')}</Link>
+            <Link href="/auth" className={s.btnPrimary}>
+              {t('ctaPrimary')}
+            </Link>
+            <Link href="#how-it-works" className={s.btnSecondary}>
+              {t('ctaSecondary')}
+            </Link>
           </div>
         </div>
 
@@ -28,8 +31,8 @@ export async function LandingHeroV2() {
           {[
             { value: '5,200+', label: 'Resumes built' },
             { value: '1,800+', label: 'Jobs tracked' },
-            { value: '340+',   label: 'Interviews landed' },
-            { value: '71%',    label: 'Avg match score' },
+            { value: '340+', label: 'Interviews landed' },
+            { value: '71%', label: 'Avg match score' },
           ].map(({ value, label }) => (
             <div key={label} className={s.statCard}>
               <span className={s.statValue}>{value}</span>

@@ -16,7 +16,9 @@ interface PixiGfx {
 
 interface PixiApp {
   screen: { width: number; height: number };
-  stage: { addChild(child: PixiGfx | { addChild(c: PixiGfx): void; removeChild(c: PixiGfx): void }): void };
+  stage: {
+    addChild(child: PixiGfx | { addChild(c: PixiGfx): void; removeChild(c: PixiGfx): void }): void;
+  };
   ticker: { add(fn: () => void): void };
   init(opts: object): Promise<void>;
   destroy(removeView: boolean, opts: { children: boolean; texture: boolean }): void | Promise<void>;
@@ -35,8 +37,8 @@ interface Particle {
 
 export function HeroCanvas() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef    = useRef<HTMLCanvasElement>(null);
-  const mouseRef     = useRef({ x: -9999, y: -9999 });
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mouseRef = useRef({ x: -9999, y: -9999 });
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -47,11 +49,11 @@ export function HeroCanvas() {
     let ro: ResizeObserver | null = null;
     const particles: Particle[] = [];
 
-    (async () => {
+    void (async () => {
       const { Application, Graphics, Container } = await import('pixi.js');
 
       const container = containerRef.current;
-      const canvas    = canvasRef.current;
+      const canvas = canvasRef.current;
       if (!container || !canvas) return;
 
       app = new Application() as unknown as PixiApp;
@@ -75,7 +77,8 @@ export function HeroCanvas() {
       app.stage.addChild(dotsCont as unknown as PixiGfx);
 
       const buildParticles = () => {
-        for (const p of particles) dotsCont.removeChild(p.gfx as unknown as Parameters<typeof dotsCont.removeChild>[0]);
+        for (const p of particles)
+          dotsCont.removeChild(p.gfx as unknown as Parameters<typeof dotsCont.removeChild>[0]);
         particles.length = 0;
 
         const W = app!.screen.width;
@@ -102,8 +105,8 @@ export function HeroCanvas() {
       buildParticles();
 
       const CONNECTION_RADIUS = 110;
-      const REPEL_RADIUS      = 130;
-      const REPEL_FORCE       = 0.06;
+      const REPEL_RADIUS = 130;
+      const REPEL_FORCE = 0.06;
 
       const drawLines = () => {
         linesGfx.clear();
@@ -126,14 +129,14 @@ export function HeroCanvas() {
       };
 
       app.ticker.add(() => {
-        const W  = app!.screen.width;
-        const H  = app!.screen.height;
+        const W = app!.screen.width;
+        const H = app!.screen.height;
         const mx = mouseRef.current.x;
         const my = mouseRef.current.y;
 
         for (const p of particles) {
-          const dx   = p.x - mx;
-          const dy   = p.y - my;
+          const dx = p.x - mx;
+          const dy = p.y - my;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < REPEL_RADIUS && dist > 0) {
             const force = (1 - dist / REPEL_RADIUS) * REPEL_FORCE;
@@ -147,10 +150,22 @@ export function HeroCanvas() {
           p.x += p.vx;
           p.y += p.vy;
 
-          if (p.x < 0) { p.x = 0;  p.vx = Math.abs(p.vx); }
-          if (p.x > W) { p.x = W;  p.vx = -Math.abs(p.vx); }
-          if (p.y < 0) { p.y = 0;  p.vy = Math.abs(p.vy); }
-          if (p.y > H) { p.y = H;  p.vy = -Math.abs(p.vy); }
+          if (p.x < 0) {
+            p.x = 0;
+            p.vx = Math.abs(p.vx);
+          }
+          if (p.x > W) {
+            p.x = W;
+            p.vx = -Math.abs(p.vx);
+          }
+          if (p.y < 0) {
+            p.y = 0;
+            p.vy = Math.abs(p.vy);
+          }
+          if (p.y > H) {
+            p.y = H;
+            p.vy = -Math.abs(p.vy);
+          }
 
           p.gfx.clear();
           p.gfx.circle(0, 0, p.r).fill({ color: p.color, alpha: p.alpha });
@@ -164,11 +179,13 @@ export function HeroCanvas() {
       const onMove = (e: PointerEvent) => {
         const rect = canvas.getBoundingClientRect();
         mouseRef.current = {
-          x: (e.clientX - rect.left) * (app!.screen.width  / rect.width),
-          y: (e.clientY - rect.top)  * (app!.screen.height / rect.height),
+          x: (e.clientX - rect.left) * (app!.screen.width / rect.width),
+          y: (e.clientY - rect.top) * (app!.screen.height / rect.height),
         };
       };
-      const onLeave = () => { mouseRef.current = { x: -9999, y: -9999 }; };
+      const onLeave = () => {
+        mouseRef.current = { x: -9999, y: -9999 };
+      };
       canvas.addEventListener('pointermove', onMove);
       canvas.addEventListener('pointerleave', onLeave);
 
@@ -186,7 +203,7 @@ export function HeroCanvas() {
     return () => {
       destroyed = true;
       ro?.disconnect();
-      app?.destroy(true, { children: true, texture: true });
+      void app?.destroy(true, { children: true, texture: true });
     };
   }, []);
 
