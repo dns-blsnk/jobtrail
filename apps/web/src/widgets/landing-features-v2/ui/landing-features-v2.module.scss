@@ -1,0 +1,109 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+@use 'containers' as *;
+@use 'variables' as su;
+
+.root {
+  padding-block: 100px 120px;
+  background: var(--deep);
+
+  @include tablet {
+    padding-block: 72px 88px;
+  }
+
+  @include mobile {
+    padding-block: 56px 72px;
+  }
+}
+
+.inner {
+  @include container($max: su.$container-full);
+  @include flex-col($gap: 56px);
+}
+
+.header {
+  @include flex-col($gap: 14px);
+  text-align: center;
+  max-width: 560px;
+  margin-inline: auto;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 4vw, 40px);
+  font-weight: 800;
+  color: var(--on-deep);
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: var(--on-deep-2);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  @include flex-col($gap: 16px);
+  padding: 28px 32px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--deep-bd);
+  border-radius: v.$radius-lg;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    background su.$duration-base su.$ease-default,
+    border-color su.$duration-base su.$ease-default,
+    transform su.$duration-base su.$ease-spring;
+
+  &:hover {
+    background: rgba(55, 93, 251, 0.07);
+    border-color: rgba(55, 93, 251, 0.28);
+    transform: translateY(-2px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+.iconWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: v.$radius-md;
+  background: rgba(55, 93, 251, 0.14);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cardTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--on-deep);
+  margin: 0;
+}
+
+.cardDesc {
+  font-size: 14px;
+  color: var(--on-deep-2);
+  line-height: 1.7;
+  margin: 0;
+}
