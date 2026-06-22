@@ -1,4 +1,13 @@
 export const landingPage = {
+  heroV2: {
+    eyebrow: 'AI-powered job search',
+    title: 'Land your next job',
+    titleAccent: 'faster',
+    subtitle:
+      'Build ATS-ready resumes, track applications, and discover skill gaps — all in one place.',
+    ctaPrimary: 'Build your resume free',
+    ctaSecondary: 'See how it works',
+  },
   hero: {
     eyebrow: 'AI-Powered Job Search',
     title: 'Land your next job faster with AI',
