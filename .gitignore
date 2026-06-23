@@ -12,6 +12,7 @@ coverage
 .DS_Store
 expo-env.d.ts
 .idea
+docs
 
 # mobile (expo/react-native)
 apps/mobile/.expo

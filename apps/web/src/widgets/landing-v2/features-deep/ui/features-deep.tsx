@@ -67,7 +67,6 @@ export function FeaturesDeep() {
           </div>
         </div>
       </div>
-
       {/* Strip 2 — Matching */}
       <div className={clsx(s.strip, s.stripBgSurface)}>
         <div className={s.stripInner}>
