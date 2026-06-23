@@ -1,0 +1,101 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  @include flex-col($gap: 10px);
+}
+
+.item {
+  width: 100%;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 6px 8px;
+  border-radius: v.$radius-sm;
+  cursor: default;
+  text-align: left;
+
+  button#{&} {
+    cursor: pointer;
+    @include transition(background);
+    @include focus-ring(v.$color-primary);
+
+    &:hover {
+      background: v.$color-border-soft;
+    }
+  }
+
+  @include mobile {
+    grid-template-columns: 72px 1fr auto;
+    padding: 4px 6px;
+  }
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: v.$color-text;
+  letter-spacing: 0.02em;
+  @include truncate;
+}
+
+.barTrack {
+  height: 8px;
+  background: v.$color-border-soft;
+  border-radius: v.$radius-pill;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  background: v.$color-primary;
+  border-radius: v.$radius-pill;
+  transition: width 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.trailing {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+// Skeleton
+
+.skeletonLabel {
+  height: 12px;
+  width: 64px;
+  background: v.$color-border-soft;
+  border-radius: v.$radius-sm;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonFill {
+  height: 100%;
+  background: v.$color-border-strong;
+  border-radius: v.$radius-pill;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonTrailing {
+  height: 12px;
+  width: 40px;
+  background: v.$color-border-soft;
+  border-radius: v.$radius-sm;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}

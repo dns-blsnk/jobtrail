@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { AnalyticsModule } from '../features/analytics/analytics.module';
 import { AuthModule } from '../features/auth/auth.module';
 import { ContactModule } from '../features/contact/contact.module';
 import { HealthModule } from '../features/health/health.module';
@@ -35,6 +36,7 @@ import { envValidationSchema } from '../shared/config/env.validation';
     }),
     PrismaModule,
     AuthModule,
+    AnalyticsModule,
     ContactModule,
     JobsModule,
     ProfileModule,

@@ -2,6 +2,7 @@
 
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
+import { STALE_TIME_STANDARD } from '@/shared/lib/query/query-config';
 import {
   createJob,
   deleteJob,
@@ -42,7 +43,7 @@ export function useStackStats() {
     queryKey: ['jobs-stack-stats'] as const,
     queryFn: () => fetchStackStats(token),
     enabled: !!token,
-    staleTime: 5 * 60_000,
+    staleTime: STALE_TIME_STANDARD,
   });
 }
 

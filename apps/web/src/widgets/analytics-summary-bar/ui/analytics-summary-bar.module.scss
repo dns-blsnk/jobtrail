@@ -1,0 +1,65 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+
+.root {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mobile {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+.card {
+  @include flex-col($gap: 4px);
+  background: v.$color-background;
+  border: 1px solid v.$color-border-soft;
+  border-radius: v.$radius-lg;
+  padding: 20px;
+}
+
+.value {
+  font-size: 28px;
+  font-weight: 700;
+  color: v.$color-heading;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  font-family: v.$font-display;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  color: v.$color-muted;
+  letter-spacing: 0.01em;
+}
+
+// Skeleton
+
+.skeletonValue {
+  height: 28px;
+  width: 60px;
+  background: v.$color-border-soft;
+  border-radius: v.$radius-sm;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonLabel {
+  height: 12px;
+  width: 80px;
+  background: v.$color-border-soft;
+  border-radius: v.$radius-sm;
+  animation: pulse 1.5s ease-in-out infinite;
+  animation-delay: 0.1s;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
