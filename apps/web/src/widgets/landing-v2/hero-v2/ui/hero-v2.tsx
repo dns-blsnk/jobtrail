@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import { SkillsMatrix } from '@/widgets/landing-v2/hero-v2/ui/skills-matrix';
+import { HeroScanner } from '@/widgets/landing-v2/hero-v2/ui/hero-scanner';
 import s from './hero-v2.module.scss';
 
 export async function HeroV2() {
@@ -13,8 +13,7 @@ export async function HeroV2() {
           <p className={s.label}>{t('label')}</p>
 
           <h1 id="hero-v2-heading" className={s.heading}>
-            {t('headingLine1')}
-            <br />
+            {t('headingLine1')}{' '}
             {t('headingLine2')}{' '}
             <span className={s.wavyWord}>
               {t('headingAccent')}
@@ -53,7 +52,7 @@ export async function HeroV2() {
 
         <div className={s.matrixCol}>
           <div className={s.matrixCard}>
-            <SkillsMatrix />
+            <HeroScanner />
           </div>
         </div>
       </div>

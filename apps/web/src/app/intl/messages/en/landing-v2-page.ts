@@ -94,6 +94,11 @@ export const landingV2Page = {
       },
     ],
   },
+  skillCloud: {
+    label: 'Skill gap',
+    title: 'Know your gaps before they cost you an offer',
+    body: 'Blue bubbles are skills you already have. Dark ones are what jobs in your target role require. Click a bubble to see it fly.',
+  },
   gapDemo: {
     title: "What's in your way?",
     subtitle:
