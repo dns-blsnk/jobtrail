@@ -31,9 +31,7 @@ export function Providers({ children, session }: ProvidersProps) {
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
-        <MuiThemeProvider>
-          {children}
-        </MuiThemeProvider>
+        <MuiThemeProvider>{children}</MuiThemeProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </SessionProvider>

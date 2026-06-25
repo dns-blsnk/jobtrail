@@ -1,0 +1,52 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+
+.root {
+  background: v.$color-background;
+  border: 1px solid v.$color-border-soft;
+  border-radius: v.$radius-lg;
+  padding: 24px;
+  @include flex-col($gap: 16px);
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 700;
+  color: v.$color-heading;
+  margin: 0;
+}
+
+.chartWrap {
+  display: flex;
+  justify-content: center;
+}
+
+// Skeleton
+
+.skeletonTitle {
+  height: 14px;
+  width: 100px;
+  background: v.$color-border-soft;
+  border-radius: v.$radius-sm;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonDonut {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: conic-gradient(
+    v.$color-border-soft 0deg,
+    v.$color-border-strong 180deg,
+    v.$color-border-soft 360deg
+  );
+  mask: radial-gradient(farthest-side, transparent 54px, black 55px);
+  -webkit-mask: radial-gradient(farthest-side, transparent 54px, black 55px);
+  margin: 8px auto;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}

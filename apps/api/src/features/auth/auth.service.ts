@@ -69,10 +69,7 @@ export class AuthService {
     });
 
     if (existing) {
-      const tokens = await this.tokenService.generateTokens(
-        existing.user.id,
-        existing.user.email,
-      );
+      const tokens = await this.tokenService.generateTokens(existing.user.id, existing.user.email);
       return { user: this.toUserResponse(existing.user), tokens };
     }
 

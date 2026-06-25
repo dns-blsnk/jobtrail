@@ -1,0 +1,186 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+
+.card {
+  @include flex-col($gap: 14px);
+  padding: 16px;
+  background: v.$color-background;
+  border: 1px solid v.$color-border-soft;
+  border-radius: v.$radius-lg;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    border-color: v.$color-border-strong;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  &:focus-visible {
+    outline: 2px solid v.$color-primary;
+    outline-offset: 2px;
+  }
+}
+
+.header {
+  @include flex-between;
+  gap: 8px;
+}
+
+.headerActions {
+  @include flex-center($gap: 6px);
+}
+
+.matchBadge {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: v.$radius-pill;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+
+  &[data-variant='high'] {
+    background: rgba(22, 163, 74, 0.1);
+    color: #16a34a;
+  }
+
+  &[data-variant='mid'] {
+    background: rgba(197, 123, 0, 0.1);
+    color: #c57b00;
+  }
+
+  &[data-variant='low'] {
+    background: rgba(229, 72, 77, 0.1);
+    color: v.$color-error;
+  }
+
+  &[data-variant='none'] {
+    background: v.$color-border-soft;
+    color: v.$color-muted;
+  }
+}
+
+.deleteBtn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: v.$color-muted;
+  background: transparent;
+  border: 1px solid v.$color-border-soft;
+  border-radius: v.$radius-sm;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+
+  &:hover:not(:disabled) {
+    color: v.$color-error;
+    border-color: v.$color-error;
+    background: rgba(229, 72, 77, 0.06);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+  }
+}
+
+.body {
+  @include flex-col($gap: 4px);
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: v.$color-heading;
+  margin: 0;
+  @include line-clamp(2);
+}
+
+.meta {
+  @include flex-center($gap: 6px);
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: v.$color-muted;
+  margin: 0;
+}
+
+.company {
+  font-weight: 500;
+  color: v.$color-text;
+}
+
+.separator {
+  color: v.$color-border-strong;
+}
+
+.location {
+  color: v.$color-muted;
+}
+
+.remotePill {
+  height: 18px;
+  padding: 0 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #16a34a;
+  background: rgba(22, 163, 74, 0.08);
+  border-radius: v.$radius-pill;
+}
+
+.salary {
+  font-weight: 500;
+  color: v.$color-text;
+}
+
+.techStack {
+  @include flex-center($gap: 6px);
+  flex-wrap: wrap;
+}
+
+.techPill {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: v.$color-text;
+  background: v.$color-border-soft;
+  border-radius: v.$radius-pill;
+}
+
+.moreTech {
+  height: 24px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: v.$color-primary;
+  background: rgba(55, 93, 251, 0.06);
+  border: none;
+  border-radius: v.$radius-pill;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: rgba(55, 93, 251, 0.12);
+  }
+}
+
+.footer {
+  @include flex-center($gap: 16px);
+  flex-wrap: wrap;
+  padding-top: 4px;
+  border-top: 1px solid v.$color-border-soft;
+}
+
+.footerItem {
+  @include flex-center($gap: 4px);
+  font-size: 12px;
+  color: v.$color-muted;
+}
+
+.footerIcon {
+  font-size: 12px;
+}

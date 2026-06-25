@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 import '@job-search-tracker/tokens/css';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { NextIntlClientProvider } from 'next-intl';
@@ -10,25 +11,25 @@ import { Providers } from './providers';
 import './globals.scss';
 
 export const metadata: Metadata = {
-  title: 'Jobtrail — Job Search Tracker',
-  description: 'Track your job applications in one place',
+  title: 'Jobtrail — Resume Builder & Job Search Assistant',
+  description:
+    'Build ATS-friendly resumes, track job applications, and match your skills to job postings with AI-powered analysis.',
+  openGraph: {
+    title: 'Jobtrail — Resume Builder & Job Search Assistant',
+    description:
+      'Build ATS-friendly resumes, track job applications, and match your skills to job postings with AI-powered analysis.',
+    type: 'website',
+  },
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
   const [session, locale, messages] = await Promise.all([auth(), getLocale(), getMessages()]);
-
-  const sharedMessages = {
-    common: messages.common,
-    header: messages.header,
-    footer: messages.footer,
-    userMenu: messages.userMenu,
-  } as typeof messages;
 
   return (
     <html lang={locale}>
       <body>
         <AppRouterCacheProvider>
-          <NextIntlClientProvider messages={sharedMessages}>
+          <NextIntlClientProvider messages={messages}>
             <Providers session={session}>
               <Header />
               <main>{children}</main>

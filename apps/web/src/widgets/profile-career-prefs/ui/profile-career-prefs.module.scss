@@ -1,0 +1,9 @@
+@use '@/shared/styles/variables' as v;
+
+.root {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid v.$color-border-soft;
+  border-radius: v.$radius-lg;
+  background: v.$color-background;
+}

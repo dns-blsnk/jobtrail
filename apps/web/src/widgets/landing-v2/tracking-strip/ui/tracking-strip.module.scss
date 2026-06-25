@@ -1,0 +1,186 @@
+@use 'mixins' as *;
+@use 'containers' as *;
+@use 'variables' as su;
+
+@keyframes floatY {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.root {
+  background: var(--v2-base);
+  padding-block: 80px;
+}
+
+.inner {
+  @include container($max: su.$container-wide);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.content {
+  @include flex-col($gap: 16px);
+}
+
+.label {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.5vw, 30px);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.body {
+  font-family: var(--font-ui);
+  font-size: 16px;
+  color: var(--ink-2);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  align-items: start;
+  animation: floatY 6s ease-in-out 0.8s infinite;
+
+  @include mobile {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.col {
+  @include flex-col($gap: 6px);
+}
+
+.colHeader {
+  font: 600 11px/1 var(--font-ui);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-3);
+  background: var(--v2-grid-empty);
+  border-radius: 7px;
+  padding: 7px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.colHeaderAccent {
+  color: var(--accent);
+  background: var(--v2-grid-matched);
+}
+
+.count {
+  font: 600 10px/1 var(--font-mono);
+  color: var(--ink-3);
+  background: var(--border);
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.countAccent {
+  color: var(--accent);
+  background: var(--v2-grid-strong);
+}
+
+.cards {
+  @include flex-col($gap: 5px);
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+  @include flex-col($gap: 8px);
+  transition: box-shadow su.$duration-fast su.$ease-default;
+
+  &:hover {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+  }
+}
+
+.cardAccent {
+  border-color: var(--v2-grid-strong);
+  background: var(--surface);
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  color: #fff;
+  font: 700 10px/1 var(--font-ui);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cardInfo {
+  @include flex-col($gap: 2px);
+  min-width: 0;
+}
+
+.cardCompany {
+  font: 600 11px/1 var(--font-ui);
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardRole {
+  font: 400 10px/1 var(--font-ui);
+  color: var(--ink-3);
+}
+
+.dateBadge {
+  font: 400 10px/1 var(--font-mono);
+  color: var(--ink-3);
+  background: var(--v2-grid-empty);
+  padding: 3px 7px;
+  border-radius: 4px;
+  align-self: flex-start;
+}
+
+.dateBadgeAccent {
+  color: var(--accent);
+  background: var(--v2-grid-matched);
+}

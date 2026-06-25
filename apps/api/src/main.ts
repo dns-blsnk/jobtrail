@@ -27,8 +27,7 @@ async function bootstrap() {
       exceptionFactory: (errors: ValidationError[]) => {
         const fields: Record<string, string> = {};
         for (const err of errors) {
-          fields[err.property] =
-            Object.values(err.constraints ?? {}).at(-1) ?? 'Invalid value';
+          fields[err.property] = Object.values(err.constraints ?? {}).at(-1) ?? 'Invalid value';
         }
         return new HttpException(
           { message: 'Validation failed', fields },

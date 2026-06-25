@@ -1,0 +1,93 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+@use 'containers' as *;
+@use 'variables' as su;
+
+.root {
+  padding-block: 96px;
+
+  @include tablet {
+    padding-block: 72px;
+  }
+
+  @include mobile {
+    padding-block: 56px;
+  }
+}
+
+.inner {
+  @include container($max: su.$container-full);
+  @include flex-col($gap: 56px);
+}
+
+.header {
+  @include flex-col($gap: 12px);
+  text-align: center;
+  max-width: 560px;
+  margin-inline: auto;
+}
+
+.title {
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 800;
+  color: v.$color-heading;
+  letter-spacing: -0.8px;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: v.$color-muted;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  @include flex-col($gap: 14px);
+  padding: 28px 32px;
+  border: 1px solid v.$color-border-soft;
+  border-radius: v.$radius-lg;
+  background: v.$color-background;
+  transition: border-color su.$duration-base su.$ease-default, box-shadow su.$duration-base su.$ease-default;
+
+  &:hover {
+    border-color: rgba(55, 93, 251, 0.25);
+    box-shadow: 0 4px 24px rgba(55, 93, 251, 0.08);
+  }
+}
+
+.iconWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: v.$radius-md;
+  background: rgba(55, 93, 251, 0.08);
+  color: v.$color-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cardTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: v.$color-heading;
+  margin: 0;
+}
+
+.cardDesc {
+  font-size: 14px;
+  color: v.$color-muted;
+  line-height: 1.65;
+  margin: 0;
+}

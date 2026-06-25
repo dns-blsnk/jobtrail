@@ -1,19 +1,19 @@
 'use client';
 
-import { Icon, type IconName } from '@/shared/ui/icon/icon';
+import type { ComponentType } from 'react';
 import s from './icon-button.module.scss';
 
 interface IconButtonProps {
-  icon: IconName;
+  icon: ComponentType<{ sx?: object; className?: string }>;
   label: string;
   dot?: boolean;
   onClick?: () => void;
 }
 
-export function IconButton({ icon, label, dot, onClick }: IconButtonProps) {
+export function IconButton({ icon: IconComp, label, dot, onClick }: IconButtonProps) {
   return (
     <button aria-label={label} className={s.root} type="button" onClick={onClick}>
-      <Icon name={icon} size={20} strokeWidth={1.9} />
+      <IconComp sx={{ fontSize: 20 }} />
       {dot && <span aria-hidden className={s.dot} />}
     </button>
   );

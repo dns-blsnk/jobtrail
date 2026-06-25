@@ -1,0 +1,92 @@
+export const landingPage = {
+  heroV2: {
+    eyebrow: 'AI-powered job search',
+    title: 'Land your next job',
+    titleAccent: 'faster',
+    subtitle:
+      'Build ATS-ready resumes, track applications, and discover skill gaps — all in one place.',
+    ctaPrimary: 'Build your resume free',
+    ctaSecondary: 'See how it works',
+  },
+  hero: {
+    eyebrow: 'AI-Powered Job Search',
+    title: 'Land your next job faster with AI',
+    titleAccent: 'faster with AI',
+    subtitle:
+      'Build ATS-friendly resumes, track applications, and match your skills to job postings — all in one place.',
+    ctaPrimary: 'Build your resume free',
+    ctaSecondary: 'See how it works',
+    preview: {
+      sidebarHeading: 'My Jobs',
+      atsLabel: 'ATS Score',
+      atsStatus: 'Optimized ✓',
+    },
+  },
+  stats: {
+    items: [
+      { value: '5,200+', label: 'Resumes created' },
+      { value: '1,800+', label: 'Jobs tracked' },
+      { value: '340+', label: 'Interviews landed' },
+    ],
+  },
+  features: {
+    title: 'Everything you need to land the job',
+    subtitle: 'One platform to build, track, and optimize your entire job search.',
+    items: [
+      {
+        icon: 'article',
+        title: 'Resume Builder',
+        description:
+          'Create polished, ATS-optimized resumes with multiple templates and real-time preview.',
+      },
+      {
+        icon: 'work',
+        title: 'Job Tracker',
+        description:
+          'Save job postings by URL — we extract the tech stack, salary, and requirements automatically.',
+      },
+      {
+        icon: 'adjust',
+        title: 'Resume Matching',
+        description: 'See your match score for each job based on skills gap analysis.',
+      },
+      {
+        icon: 'barChart',
+        title: 'Analytics',
+        description:
+          'Track response rates, interview conversion, and identify which skills to learn next.',
+      },
+    ],
+  },
+  howItWorks: {
+    title: 'How it works',
+    subtitle: 'Get from zero to interview-ready in three steps.',
+    steps: [
+      {
+        number: '01',
+        title: 'Build your resume',
+        description:
+          'Fill in your experience, choose a template, and download a polished PDF in minutes.',
+      },
+      {
+        number: '02',
+        title: 'Collect job postings',
+        description:
+          'Paste a job URL and we automatically parse the tech stack, salary, and requirements.',
+      },
+      {
+        number: '03',
+        title: 'Track & improve',
+        description:
+          'See your match score, mark application statuses, and grow with actionable analytics.',
+      },
+    ],
+  },
+  cta: {
+    title: 'Ready to supercharge your job search?',
+    subtitle: 'Join thousands of job seekers who landed their next role with Jobtrail.',
+    button: 'Get started for free',
+  },
+} as const;
+
+export type LandingPageMessages = typeof landingPage;

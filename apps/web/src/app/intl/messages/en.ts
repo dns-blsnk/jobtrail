@@ -1,4 +1,7 @@
 import { aboutPage } from './en/about-page';
+import { landingPage } from './en/landing-page';
+import { landingV2Page } from './en/landing-v2-page';
+import { resumeBuilderPage } from './en/resume-builder-page';
 import { analyticsPage } from './en/analytics-page';
 import { applicationsPage } from './en/applications-page';
 import { authPage } from './en/auth-page';
@@ -92,6 +95,8 @@ const en = {
   },
   authPage,
   aboutPage,
+  landingPage,
+  landingV2Page,
   analyticsPage,
   applicationsPage,
   blogPage,
@@ -102,6 +107,7 @@ const en = {
   jobsPage,
   privacyPage,
   profilePage,
+  resumeBuilderPage,
   resumeTemplatesPage,
   termsPage,
 } as const;

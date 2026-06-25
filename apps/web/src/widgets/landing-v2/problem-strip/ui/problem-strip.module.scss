@@ -1,0 +1,142 @@
+@use 'mixins' as *;
+@use 'containers' as *;
+@use 'variables' as su;
+
+.root {
+  background: var(--surface);
+  padding-block: 80px;
+}
+
+.inner {
+  @include container($max: su.$container-wide);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+.card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 28px 32px;
+  @include flex-col($gap: 20px);
+}
+
+.cardGood {
+  background: var(--v2-grid-matched);
+  border-color: var(--v2-grid-strong);
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.iconBad {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.iconGood {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--accent-soft-2);
+  color: var(--accent);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cardTitle {
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+.cardTitleGood {
+  color: var(--accent);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  @include flex-col($gap: 0);
+}
+
+.itemBad {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding-block: 11px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--border);
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  &:first-child {
+    padding-top: 0;
+  }
+}
+
+.itemGood {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding-block: 11px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink);
+  border-bottom: 1px solid var(--v2-grid-strong);
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  &:first-child {
+    padding-top: 0;
+  }
+}
+
+.iconItemBad {
+  color: var(--danger);
+  flex-shrink: 0;
+  margin-top: 1px;
+  opacity: 0.55;
+}
+
+.iconItemGood {
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 1px;
+}

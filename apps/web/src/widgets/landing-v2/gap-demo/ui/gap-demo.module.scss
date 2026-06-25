@@ -1,0 +1,232 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+@use 'containers' as *;
+@use 'variables' as su;
+
+.root {
+  background: var(--surface);
+  padding-block: 80px;
+}
+
+.inner {
+  @include container($max: 640px);
+  @include flex-col($gap: 32px);
+}
+
+.header {
+  @include flex-col($gap: 10px);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--ink);
+  margin: 0;
+}
+
+.subtitle {
+  font-family: var(--font-ui);
+  font-size: 16px;
+  color: var(--ink-2);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.presetsLabel {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.presetBtn {
+  font: 500 13px/1 var(--font-ui);
+  color: var(--ink-2);
+  background: var(--v2-grid-empty);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 7px 16px;
+  cursor: pointer;
+  @include transition(background, su.$duration-base);
+
+  &:hover {
+    background: var(--v2-grid-matched);
+    color: var(--accent);
+    border-color: var(--v2-grid-strong);
+  }
+
+  @include focus-ring(var(--accent));
+}
+
+/* Tag input */
+.tagInput {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border-2);
+  border-radius: 12px;
+  background: #fff;
+  cursor: text;
+
+  &:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(55, 93, 251, 0.08);
+  }
+}
+
+.tagChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font: 500 13px/1 var(--font-ui);
+  color: var(--accent);
+  background: var(--v2-grid-matched);
+  border-radius: 999px;
+  padding: 4px 10px 4px 12px;
+}
+
+.tagRemove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+  border-radius: 50%;
+
+  &:hover {
+    background: var(--v2-grid-strong);
+  }
+}
+
+.tagInputField {
+  flex: 1;
+  min-width: 120px;
+  border: none;
+  outline: none;
+  font: 400 14px/1 var(--font-ui);
+  color: var(--ink);
+  background: transparent;
+
+  &::placeholder {
+    color: var(--ink-3);
+  }
+}
+
+/* Results */
+.results {
+  @include flex-col($gap: 10px);
+}
+
+@keyframes resultIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.resultCard {
+  background: var(--v2-base);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  @include flex-col($gap: 10px);
+  animation: resultIn 0.3s ease both;
+
+  &:nth-child(1) {
+    animation-delay: 0ms;
+  }
+
+  &:nth-child(2) {
+    animation-delay: 60ms;
+  }
+
+  &:nth-child(3) {
+    animation-delay: 120ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.resultTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.resultRole {
+  font: 600 14px/1 var(--font-ui);
+  color: var(--ink);
+}
+
+.resultScore {
+  font: 700 13px/1 var(--font-mono);
+  color: var(--accent);
+}
+
+.resultBar {
+  height: 4px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.resultBarFill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+}
+
+.resultMissing {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.resultMissingLabel {
+  font: 500 12px/1 var(--font-ui);
+  color: var(--ink-3);
+}
+
+.resultMissingChip {
+  font: 400 12px/1 var(--font-mono);
+  color: var(--ink-3);
+  background: var(--v2-grid-empty);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.ctaLink {
+  font: 500 14px/1 var(--font-ui);
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(55, 93, 251, 0.4);
+
+  &:hover {
+    text-decoration-color: var(--accent);
+  }
+}

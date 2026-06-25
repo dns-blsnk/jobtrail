@@ -1,0 +1,223 @@
+@use 'mixins' as *;
+
+.root {
+  @include flex-col($gap: 14px);
+}
+
+/* Score bar */
+.scoreBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 28px;
+}
+
+.scoreCompany {
+  font: 600 13px/1 var(--font-ui);
+  color: var(--accent);
+  min-width: 52px;
+  transition: opacity 200ms ease;
+}
+
+.scoreTrack {
+  flex: 1;
+  height: 4px;
+  background: var(--v2-grid-empty);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.scoreFill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width 500ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.scoreLabel {
+  font: 500 12px/1 var(--font-mono);
+  color: var(--ink-3);
+  min-width: 100px;
+  text-align: right;
+}
+
+/* Grid */
+.matrix {
+  display: grid;
+  grid-template-columns: 96px repeat(4, 1fr);
+  gap: 6px;
+  position: relative;
+  --sweep-dist: 200px;
+}
+
+.cornerCell {
+  /* empty top-left placeholder */
+}
+
+.colHeader {
+  font: 600 12px/1 var(--font-ui);
+  color: var(--ink-3);
+  text-align: center;
+  padding: 6px 0;
+  border-radius: 6px;
+  transition:
+    color 250ms ease,
+    background 250ms ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.colHeaderActive {
+  color: var(--accent);
+  background: var(--v2-grid-matched);
+  /* micro-bounce fires each time this class is applied */
+  animation: colBounce 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes colBounce {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.rowLabel {
+  font: 500 13px/1 var(--font-mono);
+  color: var(--ink-2);
+  display: flex;
+  align-items: center;
+  padding-right: 8px;
+  transition: color 150ms ease;
+  cursor: default;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.rowLabelHovered {
+  color: var(--accent);
+}
+
+.cell {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  background: var(--v2-grid-empty);
+  animation: cellIn 300ms ease both;
+  animation-delay: var(--delay, 0ms);
+  transition:
+    background 300ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    transition: none;
+    opacity: 1;
+  }
+}
+
+.cellMatch {
+  background: var(--v2-grid-matched);
+}
+
+/* When a cell's column becomes active, briefly pop */
+.cellMatchActive {
+  background: var(--v2-grid-strong);
+  animation: cellPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes cellPop {
+  0% {
+    transform: scale(0.85);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.cellHovered {
+  box-shadow: 0 0 0 2px var(--accent);
+  transform: scale(1.08);
+}
+
+@keyframes cellIn {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Scan line — sweeps left→right once */
+.scanLine {
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  left: 96px;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(55, 93, 251, 0.6),
+    transparent
+  );
+  animation: scanSweep 1s ease-out 800ms both;
+  pointer-events: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: 12px;
+    left: -5px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(55, 93, 251, 0.08),
+      transparent
+    );
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    display: none;
+  }
+}
+
+@keyframes scanSweep {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(var(--sweep-dist));
+    opacity: 0;
+  }
+}
+
+.matrixFooter {
+  font: 400 11px/1 var(--font-mono);
+  color: var(--ink-3);
+  margin: 0;
+}

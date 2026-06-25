@@ -3,7 +3,9 @@
 import { useId, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { setCookie } from 'cookies-next/client';
-import { Icon } from '@/shared/ui/icon/icon';
+import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
+import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
+import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { clsx } from 'clsx';
 import s from './lang-switch.module.scss';
 
@@ -45,11 +47,7 @@ export function LangSwitch({ up = false, tone = 'light' }: LangSwitchProps) {
   };
 
   return (
-    <div
-      className={clsx(s.root, deep && s.deep)}
-      onBlur={handleBlur}
-      onKeyDown={handleKeyDown}
-    >
+    <div className={clsx(s.root, deep && s.deep)} onBlur={handleBlur} onKeyDown={handleKeyDown}>
       <button
         aria-controls={listboxId}
         aria-expanded={open}
@@ -58,12 +56,11 @@ export function LangSwitch({ up = false, tone = 'light' }: LangSwitchProps) {
         type="button"
         onClick={() => setOpen((v) => !v)}
       >
-        <Icon name="globe" size={17} strokeWidth={1.9} />
+        <LanguageOutlinedIcon sx={{ fontSize: 17 }} />
         {current.name}
-        <Icon
+        <KeyboardArrowDownOutlinedIcon
           className={clsx(s.caret, open && s.caretOpen)}
-          name="chevronDown"
-          size={15}
+          sx={{ fontSize: 15 }}
         />
       </button>
 
@@ -82,7 +79,7 @@ export function LangSwitch({ up = false, tone = 'light' }: LangSwitchProps) {
             >
               <span className={s.optionCode}>{l.label}</span>
               {l.name}
-              {l.code === lang && <Icon className={s.check} name="check" size={16} />}
+              {l.code === lang && <CheckOutlinedIcon className={s.check} sx={{ fontSize: 16 }} />}
             </button>
           </li>
         ))}

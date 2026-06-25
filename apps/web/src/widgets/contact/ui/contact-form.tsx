@@ -9,7 +9,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
 import { FormTextField } from '@/shared/ui/form-text-field/form-text-field';
 import Typography from '@mui/material/Typography';
-import { Icon } from '@/shared/ui/icon/icon';
+import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import { useContactForm } from '@job-search-tracker/api-client/contact/hooks';
 import { ContactApiError } from '@job-search-tracker/api-client/contact';
 import type { ContactPayload } from '@job-search-tracker/api-client/contact';
@@ -25,7 +25,6 @@ const sxGrid = {
 } as const;
 
 const sxSubmitBtn = { py: 1.25, fontWeight: 600 } as const;
-
 
 export function ContactForm() {
   const t = useTranslations('contactPage.form');
@@ -55,7 +54,11 @@ export function ContactForm() {
 
   return (
     <section className={s.root}>
-      <Typography component="h2" variant="h6" sx={{ letterSpacing: '-0.3px', fontWeight: 700, m: 0 }}>
+      <Typography
+        component="h2"
+        variant="h6"
+        sx={{ letterSpacing: '-0.3px', fontWeight: 700, m: 0 }}
+      >
         {t('heading')}
       </Typography>
 
@@ -74,7 +77,6 @@ export function ContactForm() {
               helperText={fieldError('name')}
               fullWidth
               size="small"
-
             />
             <FormTextField
               id="contact-email"
@@ -89,7 +91,6 @@ export function ContactForm() {
               helperText={fieldError('email')}
               fullWidth
               size="small"
-
             />
           </Box>
 
@@ -148,7 +149,7 @@ export function ContactForm() {
                   mutation.isPending ? (
                     <CircularProgress size={16} color="inherit" />
                   ) : (
-                    <Icon name="send" size={16} strokeWidth={2} />
+                    <SendOutlinedIcon sx={{ fontSize: 16 }} />
                   )
                 }
                 sx={sxSubmitBtn}

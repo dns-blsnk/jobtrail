@@ -8,7 +8,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Typography from '@mui/material/Typography';
-import { Icon } from '@/shared/ui/icon/icon';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { SegmentedControl } from '@/shared/ui/segmented-control/segmented-control';
 import { Avatar } from '@/shared/ui/avatar/avatar';
 import type { AvatarUser } from '@/shared/ui/avatar/avatar';
@@ -28,9 +34,21 @@ export function UserMenuBody({ user, onClose, onLogout }: UserMenuBodyProps) {
     { label: t('themeDark'), value: 'dark' as const },
   ];
 
+  const ThemeIcon = theme === 'dark' ? DarkModeOutlinedIcon : LightModeOutlinedIcon;
+
   return (
     <>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, px: 2, pt: 1.5, pb: 1.5, minWidth: 260 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1.5,
+          px: 2,
+          pt: 1.5,
+          pb: 1.5,
+          minWidth: 260,
+        }}
+      >
         <Avatar loggedIn size={44} user={user} />
         <Box sx={{ minWidth: 0 }}>
           <Typography noWrap sx={{ fontWeight: 600 }} variant="body2">
@@ -47,20 +65,28 @@ export function UserMenuBody({ user, onClose, onLogout }: UserMenuBodyProps) {
       <MenuList disablePadding>
         <MenuItem onClick={onClose}>
           <ListItemIcon>
-            <Icon name="userCircle" size={18} strokeWidth={1.9} />
+            <AccountCircleOutlinedIcon sx={{ fontSize: 18 }} />
           </ListItemIcon>
           {t('profile')}
         </MenuItem>
 
         <MenuItem onClick={onClose}>
           <ListItemIcon>
-            <Icon name="bookmark" size={18} strokeWidth={1.9} />
+            <BookmarkBorderOutlinedIcon sx={{ fontSize: 18 }} />
           </ListItemIcon>
           {t('myApplications')}
           <Typography
             component="span"
             variant="caption"
-            sx={{ ml: 'auto', bgcolor: 'primary.main', color: 'primary.contrastText', px: 0.75, py: 0.25, borderRadius: 10, fontWeight: 700 }}
+            sx={{
+              ml: 'auto',
+              bgcolor: 'primary.main',
+              color: 'primary.contrastText',
+              px: 0.75,
+              py: 0.25,
+              borderRadius: 10,
+              fontWeight: 700,
+            }}
           >
             12
           </Typography>
@@ -68,7 +94,7 @@ export function UserMenuBody({ user, onClose, onLogout }: UserMenuBodyProps) {
 
         <MenuItem onClick={onClose}>
           <ListItemIcon>
-            <Icon name="creditCard" size={18} strokeWidth={1.9} />
+            <CreditCardOutlinedIcon sx={{ fontSize: 18 }} />
           </ListItemIcon>
           {t('subscription')}
           <Typography color="text.disabled" variant="caption" sx={{ ml: 'auto' }}>
@@ -78,7 +104,7 @@ export function UserMenuBody({ user, onClose, onLogout }: UserMenuBodyProps) {
 
         <MenuItem onClick={onClose}>
           <ListItemIcon>
-            <Icon name="settings" size={18} strokeWidth={1.9} />
+            <SettingsOutlinedIcon sx={{ fontSize: 18 }} />
           </ListItemIcon>
           {t('settings')}
         </MenuItem>
@@ -99,7 +125,7 @@ export function UserMenuBody({ user, onClose, onLogout }: UserMenuBodyProps) {
           variant="body2"
           sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'text.secondary' }}
         >
-          <Icon name={theme === 'dark' ? 'moon' : 'sun'} size={18} strokeWidth={1.9} />
+          <ThemeIcon sx={{ fontSize: 18 }} />
           {t('theme')}
         </Typography>
         <SegmentedControl options={themeOptions} value={theme} onChange={setTheme} />
@@ -110,7 +136,7 @@ export function UserMenuBody({ user, onClose, onLogout }: UserMenuBodyProps) {
       <MenuList disablePadding>
         <MenuItem onClick={onLogout} sx={{ color: 'error.main' }}>
           <ListItemIcon sx={{ color: 'error.main' }}>
-            <Icon name="logOut" size={18} strokeWidth={1.9} />
+            <LogoutOutlinedIcon sx={{ fontSize: 18 }} />
           </ListItemIcon>
           {t('logOut')}
         </MenuItem>

@@ -1,0 +1,35 @@
+@use '@/shared/styles/variables' as v;
+
+.select {
+  height: 28px;
+  padding: 0 24px 0 8px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1.5px solid v.$color-border-strong;
+  border-radius: v.$radius-sm;
+  background: v.$color-background;
+  color: v.$color-text;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%238c8c8c' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  transition: border-color 0.15s ease;
+
+  &:hover:not(:disabled) {
+    border-color: v.$color-primary;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &[data-status='SAVED'] { color: v.$color-muted; }
+  &[data-status='APPLYING'] { color: #c57b00; }
+  &[data-status='APPLIED'] { color: #375dfb; }
+  &[data-status='INTERVIEW'] { color: #7b2ee8; }
+  &[data-status='OFFER'] { color: #16a34a; }
+  &[data-status='REJECTED'] { color: v.$color-error; }
+  &[data-status='ARCHIVED'] { color: v.$color-muted; }
+}

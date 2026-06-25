@@ -6,19 +6,20 @@ import { useCallback, useState } from 'react';
 import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { clsx } from 'clsx';
+import WorkOutlinedIcon from '@mui/icons-material/WorkOutlined';
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useProfile } from '@/entities/session/model/use-profile';
-import { Icon } from '@/shared/ui/icon/icon';
 import { Avatar } from '@/shared/ui/avatar/avatar';
 import { IconButton } from '@/shared/ui/icon-button/icon-button';
 import s from './header.module.scss';
 
-const NavDrawer = dynamic(
-  () => import('./nav-drawer').then((m) => ({ default: m.NavDrawer })),
-  { ssr: false }
-);
+const NavDrawer = dynamic(() => import('./nav-drawer').then((m) => ({ default: m.NavDrawer })), {
+  ssr: false,
+});
 const UserMenuDrawer = dynamic(
   () => import('./user-menu-drawer').then((m) => ({ default: m.UserMenuDrawer })),
-  { ssr: false }
+  { ssr: false },
 );
 
 function Logo() {
@@ -26,7 +27,7 @@ function Logo() {
   return (
     <Link href="/" prefetch={false} className={s.logo}>
       <span className={s.logoMark} style={{ width: 30, height: 30 }}>
-        <Icon name="briefcase" size={18} strokeWidth={2.1} />
+        <WorkOutlinedIcon sx={{ fontSize: 18 }} />
       </span>
       <span className={s.logoWord}>{tc('appName')}</span>
     </Link>
@@ -48,23 +49,25 @@ export function MobileHeader() {
     setMenuOpen(true);
   }, []);
 
-  const user = profileUser
-    ? { name: profileUser.name ?? null, email: profileUser.email }
-    : null;
+  const user = profileUser ? { name: profileUser.name ?? null, email: profileUser.email } : null;
 
   return (
     <>
       <header className={s.header}>
         <div className={clsx(s.inner, s.innerMobile)}>
           <div className={s.left}>
-            <IconButton icon="menu" label={th('aria.openMenu')} onClick={() => setDrawerOpen(true)} />
+            <IconButton
+              icon={MenuOutlinedIcon}
+              label={th('aria.openMenu')}
+              onClick={() => setDrawerOpen(true)}
+            />
             <Logo />
           </div>
           <div className={s.right}>
             {isLoggedIn ? (
               <>
                 <button type="button" className={s.addBtn} aria-label={tc('addJob')}>
-                  <Icon name="plus" size={18} strokeWidth={2.2} />
+                  <AddOutlinedIcon sx={{ fontSize: 18 }} />
                 </button>
                 <button
                   type="button"
@@ -98,7 +101,10 @@ export function MobileHeader() {
           open={menuOpen}
           user={user}
           onClose={closeMenu}
-          onLogout={() => { closeMenu(); void signOut(); }}
+          onLogout={() => {
+            closeMenu();
+            void signOut();
+          }}
         />
       )}
     </>

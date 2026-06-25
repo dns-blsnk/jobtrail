@@ -14,7 +14,9 @@ export async function DashboardPage({ session }: DashboardPageProps) {
     <div className={s.root}>
       <div className={s.inner}>
         <div className={s.pageHeader}>
-          <h1 className={s.title}>{t('welcome')}, {displayName}</h1>
+          <h1 className={s.title}>
+            {t('welcome')}, {displayName}
+          </h1>
           <p className={s.subtitle}>{t('subtitle')}</p>
         </div>
 

@@ -1,0 +1,93 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+
+.root {
+  @include flex-col($gap: 12px);
+  background: v.$color-background;
+  border: 1px solid v.$color-border-soft;
+  border-radius: v.$radius-lg;
+  padding: 20px;
+  position: sticky;
+  top: 20px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 700;
+  color: v.$color-heading;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: v.$color-muted;
+  margin: -4px 0 0;
+}
+
+.minJobsHint {
+  font-size: 13px;
+  color: v.$color-muted;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.chart {
+  @include flex-col($gap: 8px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  @include flex-center($gap: 8px);
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  color: v.$color-text;
+  min-width: 80px;
+  max-width: 90px;
+  @include truncate;
+  flex-shrink: 0;
+}
+
+.barTrack {
+  flex: 1;
+  height: 8px;
+  background: v.$color-border-soft;
+  border-radius: v.$radius-pill;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  background: v.$color-primary;
+  border-radius: v.$radius-pill;
+  transition: width 0.5s ease;
+}
+
+.count {
+  font-size: 11px;
+  font-weight: 600;
+  color: v.$color-muted;
+  min-width: 20px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.skeleton {
+  @include flex-col($gap: 8px);
+}
+
+.skeletonBar {
+  height: 8px;
+  background: v.$color-border-soft;
+  border-radius: v.$radius-pill;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}

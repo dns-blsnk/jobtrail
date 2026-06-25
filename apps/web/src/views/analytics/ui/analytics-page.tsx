@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+import { AnalyticsContent } from './analytics-content';
 import s from './analytics-page.module.scss';
 
 export async function AnalyticsPage() {
@@ -10,10 +11,7 @@ export async function AnalyticsPage() {
           <h1 className={s.title}>{t('title')}</h1>
           <p className={s.subtitle}>{t('subtitle')}</p>
         </div>
-        <div className={s.emptyState}>
-          <p className={s.emptyTitle}>{t('empty')}</p>
-          <p className={s.emptyHint}>{t('emptyHint')}</p>
-        </div>
+        <AnalyticsContent />
       </div>
     </div>
   );

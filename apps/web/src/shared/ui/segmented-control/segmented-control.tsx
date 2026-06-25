@@ -14,7 +14,11 @@ interface SegmentedControlProps<T extends string> {
   onChange: (value: T) => void;
 }
 
-export function SegmentedControl<T extends string>({ options, value, onChange }: SegmentedControlProps<T>) {
+export function SegmentedControl<T extends string>({
+  options,
+  value,
+  onChange,
+}: SegmentedControlProps<T>) {
   return (
     <div className={s.root} role="tablist">
       {options.map((option) => (

@@ -6,7 +6,11 @@ import { useTranslations } from 'next-intl';
 import { useAuthFlowStore } from '@/features/auth/model/use-auth-flow-store';
 import { useSignIn } from '@/features/auth/sign-in/model/use-sign-in';
 import { useSignUp } from '@/features/auth/sign-up/model/use-sign-up';
-import { type AuthFormErrors, type AuthValidationMessages, validateAuthForm } from '@/shared/lib/validation/auth-schema';
+import {
+  type AuthFormErrors,
+  type AuthValidationMessages,
+  validateAuthForm,
+} from '@/shared/lib/validation/auth-schema';
 import { Button } from '@/shared/ui/button/button';
 import { SegmentedControl } from '@/shared/ui/segmented-control/segmented-control';
 import { TextField } from '@/shared/ui/text-field/text-field';

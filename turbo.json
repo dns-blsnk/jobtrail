@@ -16,6 +16,10 @@
       "inputs": ["src/**"]
     },
     "lint": {},
+    "lint:fix": {
+      "cache": false
+    },
+    "format:check": {},
     "typecheck": {
       "dependsOn": ["^build"]
     }

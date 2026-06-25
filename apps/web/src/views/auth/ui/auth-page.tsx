@@ -9,7 +9,9 @@ export async function AuthPage() {
     <main className={s.root}>
       <div className={s.inner}>
         <div className={s.logo}>
-          <div aria-hidden className={s.logoMark}>{t('logoMark')}</div>
+          <div aria-hidden className={s.logoMark}>
+            {t('logoMark')}
+          </div>
           <span className={s.logoName}>{t('logoName')}</span>
         </div>
         <NextIntlClientProvider messages={{ auth: messages.auth }}>

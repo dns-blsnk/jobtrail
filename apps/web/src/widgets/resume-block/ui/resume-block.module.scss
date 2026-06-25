@@ -1,0 +1,288 @@
+@use 'mixins' as *;
+@use 'variables' as su;
+
+// Block wrapper
+.blockWrapper {
+  position: relative;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  @include transition(border-color, 0.15s, ease);
+
+  &:hover {
+    border-color: var(--border);
+
+    .dragHandle,
+    .blockActions,
+    .editBtn {
+      opacity: 1;
+    }
+  }
+
+  @include mobile { padding: 12px 8px; }
+}
+
+.blockWrapperDragging {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+// Drag handle
+.dragHandle {
+  position: absolute;
+  top: 50%;
+  left: -20px;
+  transform: translateY(-50%);
+  opacity: 0;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 32px;
+  color: var(--ink-3);
+  @include transition(opacity, 0.15s, ease);
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    opacity: 1;
+    left: -24px;
+    width: 24px;
+    height: 44px;
+  }
+}
+
+// Block actions container (edit + delete)
+.blockActions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  @include transition(opacity, 0.15s, ease);
+
+  @media (hover: none) and (pointer: coarse) {
+    opacity: 1;
+  }
+}
+
+// Edit button
+.editBtn {
+  position: relative;
+  @include flex-center($gap: 4px);
+  padding: 4px 10px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink-2);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  @include transition(all, 0.15s, ease);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+  }
+
+  &:hover {
+    background: var(--surface-2);
+    color: var(--ink);
+    border-color: var(--border-2);
+  }
+}
+
+// Delete button
+.deleteBtn {
+  position: relative;
+  @include flex-center;
+  padding: 4px 7px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink-3);
+  cursor: pointer;
+  @include transition(all, 0.15s, ease);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  &:hover {
+    background: var(--error-soft, #fff0f0);
+    border-color: var(--error, #e53e3e);
+    color: var(--error, #e53e3e);
+  }
+}
+
+// Empty state
+.emptyState {
+  @include flex-col($gap: 8px);
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  border: 1.5px dashed var(--border-2);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  @include transition(all, 0.15s, ease);
+
+  &:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  &:active {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+}
+
+.emptyStateIcon {
+  color: var(--ink-3);
+}
+
+.emptyStateTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.emptyStateSubtitle {
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.emptyStateBtn {
+  margin-top: 4px;
+  @include tap-target-responsive;
+  padding: 5px 16px;
+  border-radius: 5px;
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  @include transition(background, 0.15s, ease);
+
+  &:hover {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+}
+
+// Block type selector grid
+.blockTypeGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 8px 0;
+
+  @include breakpoint(sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.blockTypeCard {
+  @include flex-col($gap: 8px);
+  align-items: center;
+  justify-content: center;
+  padding: 16px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  @include transition(all, 0.15s, ease);
+
+  &:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+
+    .blockTypeCardIcon {
+      color: var(--accent);
+    }
+  }
+
+  &:active {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+
+    .blockTypeCardIcon {
+      color: var(--accent);
+    }
+  }
+
+  @include mobile { padding: 14px 10px; }
+}
+
+.blockTypeCardIcon {
+  color: var(--ink-2);
+  @include transition(color, 0.15s, ease);
+}
+
+.blockTypeCardLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+.blockTypeCardBadge {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 4px;
+  padding: 1px 6px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.blockTypeCardDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+// Add block button
+.addBlockBtn {
+  @include flex-center($gap: 6px);
+  @include tap-target-responsive;
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1.5px dashed var(--border-2);
+  background: transparent;
+  color: var(--ink-3);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 8px;
+  @include transition(all, 0.15s, ease);
+
+  &:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  &:active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  @include mobile { padding: 14px 16px; }
+}

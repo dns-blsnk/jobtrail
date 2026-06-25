@@ -1,0 +1,208 @@
+@use 'mixins' as *;
+@use 'containers' as *;
+@use 'variables' as su;
+
+@keyframes floatY {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.root {
+  background: var(--v2-base);
+  padding-block: 80px;
+}
+
+.inner {
+  @include container($max: su.$container-wide);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.content {
+  @include flex-col($gap: 16px);
+}
+
+.label {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.5vw, 30px);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.body {
+  font-family: var(--font-ui);
+  font-size: 16px;
+  color: var(--ink-2);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.visual {
+  display: flex;
+  justify-content: center;
+}
+
+.resumeCard {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  @include flex-col($gap: 16px);
+  box-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.05),
+    0 8px 32px rgba(55, 93, 251, 0.06);
+  animation: floatY 5.5s ease-in-out infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.resumeTop {
+  @include flex-col($gap: 4px);
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.resumeName {
+  font: 700 15px/1 var(--font-ui);
+  color: var(--ink);
+}
+
+.resumeRole {
+  font: 400 13px/1 var(--font-ui);
+  color: var(--ink-2);
+  margin-top: 2px;
+}
+
+.resumeMeta {
+  font: 400 11px/1 var(--font-mono);
+  color: var(--ink-3);
+  margin-top: 4px;
+}
+
+.section {
+  @include flex-col($gap: 8px);
+}
+
+.sectionAccent {
+  background: var(--v2-grid-matched);
+  border: 1px dashed var(--v2-grid-strong);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.sectionLabel {
+  font: 600 10px/1 var(--font-ui);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ink-3);
+}
+
+.sectionLabelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.sectionLabelHighlight {
+  font: 600 10px/1 var(--font-ui);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--accent);
+}
+
+.updateBadge {
+  font: 500 11px/1 var(--font-ui);
+  color: var(--accent);
+  background: var(--v2-grid-strong);
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.line {
+  height: 9px;
+  width: 100%;
+  background: var(--border);
+  border-radius: 3px;
+}
+
+.lineAccent {
+  height: 9px;
+  width: 100%;
+  background: var(--v2-grid-strong);
+  border-radius: 3px;
+}
+
+.skillsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.skillChip {
+  font: 400 12px/1 var(--font-mono);
+  color: var(--ink-2);
+  background: var(--v2-grid-empty);
+  padding: 4px 9px;
+  border-radius: 4px;
+}
+
+.keywordsBar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: var(--accent-soft);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.keywordsLabel {
+  font: 500 12px/1 var(--font-ui);
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.keywordsChips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.keywordChip {
+  font: 600 12px/1 var(--font-mono);
+  color: var(--accent);
+  background: var(--accent-soft-2);
+  padding: 4px 10px;
+  border-radius: 999px;
+}

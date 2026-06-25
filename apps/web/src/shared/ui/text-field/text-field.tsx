@@ -13,16 +13,22 @@ interface TextFieldProps {
   onChange: (value: string) => void;
 }
 
-export function TextField({ label, value, placeholder, type = 'text', error, autoComplete, onChange }: TextFieldProps) {
+export function TextField({
+  label,
+  value,
+  placeholder,
+  type = 'text',
+  error,
+  autoComplete,
+  onChange,
+}: TextFieldProps) {
   const [visible, setVisible] = useState(false);
   const isPassword = type === 'password';
   const inputType = isPassword ? (visible ? 'text' : 'password') : type;
 
-  const inputClass = [
-    s.input,
-    error ? s.hasError : '',
-    isPassword ? s.withToggle : '',
-  ].filter(Boolean).join(' ');
+  const inputClass = [s.input, error ? s.hasError : '', isPassword ? s.withToggle : '']
+    .filter(Boolean)
+    .join(' ');
 
   return (
     <div className={s.wrapper}>
@@ -47,9 +53,7 @@ export function TextField({ label, value, placeholder, type = 'text', error, aut
           </button>
         )}
       </div>
-      <div className={s.errorSlot}>
-        {error && <span className={s.error}>{error}</span>}
-      </div>
+      <div className={s.errorSlot}>{error && <span className={s.error}>{error}</span>}</div>
     </div>
   );
 }

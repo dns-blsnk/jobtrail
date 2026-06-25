@@ -1,0 +1,393 @@
+@use '@/shared/styles/variables' as v;
+@use 'mixins' as *;
+@use 'containers' as *;
+@use 'variables' as su;
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ─── Layout ───────────────────────────────────────────────────────────────────
+
+.root {
+  padding-block: 88px 104px;
+  overflow: hidden;
+
+  @include tablet {
+    padding-block: 64px 80px;
+  }
+
+  @include mobile {
+    padding-block: 48px 64px;
+  }
+}
+
+.inner {
+  @include container($max: su.$container-full);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: stretch;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+// ─── Content column ───────────────────────────────────────────────────────────
+
+.content {
+  @include flex-col($gap: 28px);
+  justify-content: center;
+  animation: fadeUp 0.55s ease both;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: v.$color-primary;
+  background: rgba(55, 93, 251, 0.08);
+  padding: 5px 12px;
+  border-radius: v.$radius-pill;
+  margin: 0;
+}
+
+.heading {
+  font-size: clamp(34px, 5vw, 54px);
+  font-weight: 800;
+  color: v.$color-heading;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 17px;
+  color: v.$color-text;
+  line-height: 1.75;
+  margin: 0;
+  max-width: 440px;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 13px 28px;
+  border-radius: v.$radius-pill;
+  background: v.$color-primary;
+  color: v.$color-white;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background su.$duration-base su.$ease-default, transform su.$duration-fast su.$ease-default;
+
+  &:hover {
+    background: v.$color-primary-hover;
+    transform: translateY(-1px);
+  }
+
+  &:active { transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: background su.$duration-base su.$ease-default;
+    &:hover { transform: none; }
+  }
+
+  @include focus-ring(v.$color-primary);
+}
+
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 13px 22px;
+  border-radius: v.$radius-pill;
+  border: 1.5px solid v.$color-border-strong;
+  color: v.$color-text;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color su.$duration-base su.$ease-default, color su.$duration-base su.$ease-default;
+
+  &:hover {
+    border-color: v.$color-primary;
+    color: v.$color-primary;
+  }
+
+  @include focus-ring(v.$color-primary);
+}
+
+// ─── Preview column ───────────────────────────────────────────────────────────
+
+.preview {
+  position: relative;
+  padding-bottom: 36px;
+  @include flex-col;
+  animation: fadeUp 0.55s 0.12s ease both;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+
+  @include tablet {
+    display: none;
+  }
+}
+
+// Browser window frame
+.window {
+  flex: 1;
+  @include flex-col;
+  border: 1px solid v.$color-border-soft;
+  border-radius: v.$radius-lg;
+  overflow: hidden;
+  box-shadow: 0 16px 56px rgba(0, 0, 0, 0.09), 0 2px 8px rgba(0, 0, 0, 0.04);
+  background: v.$color-background;
+}
+
+.chrome {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.025);
+  border-bottom: 1px solid v.$color-border-soft;
+}
+
+.chromeDots {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.dotRed    { width: 10px; height: 10px; border-radius: 50%; background: #ff5f57; }
+.dotYellow { width: 10px; height: 10px; border-radius: 50%; background: #febc2e; }
+.dotGreen  { width: 10px; height: 10px; border-radius: 50%; background: #28c840; }
+
+.chromeUrl {
+  flex: 1;
+  max-width: 180px;
+  margin-inline: auto;
+  height: 20px;
+  background: v.$color-border-soft;
+  border-radius: v.$radius-pill;
+  font-size: 10px;
+  color: v.$color-muted;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 10px;
+}
+
+// Two-column app body
+.windowBody {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 128px 1fr;
+  min-height: 0;
+  overflow: hidden;
+}
+
+// ─── Sidebar (job list) ───────────────────────────────────────────────────────
+
+.sidebar {
+  border-right: 1px solid v.$color-border-soft;
+  padding: 14px 10px;
+  @include flex-col($gap: 10px);
+  overflow: hidden;
+}
+
+.sidebarHeading {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: v.$color-muted;
+  margin: 0;
+  padding-inline: 4px;
+}
+
+.jobList {
+  @include flex-col($gap: 2px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.jobItem {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 6px;
+  border-radius: v.$radius-sm;
+}
+
+.jobItemActive {
+  background: rgba(55, 93, 251, 0.07);
+}
+
+.jobDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: v.$color-border-strong;
+}
+
+.jobDotActive {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: v.$color-primary;
+}
+
+.jobInfo {
+  @include flex-col($gap: 2px);
+  min-width: 0;
+}
+
+.jobName {
+  font-size: 11px;
+  font-weight: 600;
+  color: v.$color-heading;
+  @include truncate;
+}
+
+.jobPct {
+  font-size: 10px;
+  color: v.$color-muted;
+}
+
+// ─── Resume pane ──────────────────────────────────────────────────────────────
+
+.resumePane {
+  padding: 16px;
+  @include flex-col($gap: 12px);
+  overflow: hidden;
+}
+
+.paneSpacer {
+  flex: 1;
+}
+
+.paneHeader {
+  @include flex-col($gap: 6px);
+}
+
+.paneName {
+  height: 14px;
+  width: 58%;
+  background: v.$color-border-strong;
+  border-radius: 4px;
+}
+
+.paneTitle {
+  height: 10px;
+  width: 38%;
+  background: v.$color-border-soft;
+  border-radius: 4px;
+}
+
+.paneDivider {
+  border: none;
+  height: 1px;
+  background: v.$color-border-soft;
+  margin: 0;
+}
+
+.paneSection {
+  @include flex-col($gap: 6px);
+}
+
+.paneSectionLabel {
+  height: 8px;
+  width: 30%;
+  background: rgba(55, 93, 251, 0.2);
+  border-radius: 4px;
+}
+
+.paneLine {
+  height: 8px;
+  width: 100%;
+  background: v.$color-border-soft;
+  border-radius: 4px;
+}
+
+.paneSkills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.paneChip {
+  font-size: 9px;
+  font-weight: 600;
+  color: v.$color-primary;
+  background: rgba(55, 93, 251, 0.1);
+  border-radius: v.$radius-pill;
+  padding: 3px 8px;
+}
+
+// ─── Floating ATS badge ───────────────────────────────────────────────────────
+
+.atsBadge {
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: v.$color-background;
+  border: 1px solid v.$color-border-soft;
+  border-radius: v.$radius-md;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.atsScore {
+  font-size: 28px;
+  font-weight: 800;
+  color: #16a34a;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.atsInfo {
+  @include flex-col($gap: 2px);
+}
+
+.atsLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: v.$color-heading;
+  white-space: nowrap;
+}
+
+.atsStatus {
+  font-size: 10px;
+  font-weight: 500;
+  color: #16a34a;
+  white-space: nowrap;
+}

@@ -1,0 +1,151 @@
+@use 'mixins' as *;
+@use 'variables' as su;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.topBar {
+  @include flex-between($gap: 12px);
+  height: 56px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  padding: 0 24px;
+  flex-shrink: 0;
+
+  @include mobile {
+    padding: 0 12px;
+    gap: 8px;
+  }
+}
+
+.topBarLeft {
+  @include flex-center($gap: 8px);
+}
+
+.menuBtn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+  flex-shrink: 0;
+  @include transition(background, 0.15s, ease);
+
+  &:hover { background: var(--surface-2); }
+
+  @include mobile {
+    display: flex;
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.topBarTitle {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+
+  @include mobile { font-size: 15px; }
+}
+
+.topBarRight {
+  @include flex-center($gap: 8px);
+  flex-shrink: 0;
+
+  @include mobile { gap: 4px; }
+}
+
+.topBarHint {
+  font-size: 13px;
+  color: var(--ink-3);
+  margin: 0;
+
+  @include mobile { display: none; }
+}
+
+.btnLabel {
+  @include mobile { display: none; }
+}
+
+%topBtn {
+  @include flex-center($gap: 6px);
+  @include tap-target-responsive;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 6px 12px;
+  @include transition(background, 0.15s, ease);
+
+  @include mobile { padding: 6px 8px; }
+}
+
+.topBarBtn {
+  @extend %topBtn;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--ink-2);
+
+  &:hover {
+    background: var(--surface-2);
+    color: var(--ink);
+  }
+}
+
+.topBarBtnActive {
+  @extend %topBtn;
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+
+  &:hover { background: var(--accent-soft); }
+}
+
+.topBarBtnAccent {
+  @extend %topBtn;
+  border: none;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+  padding: 6px 14px;
+
+  &:hover { background: var(--accent-press); }
+
+  @include mobile { padding: 6px 8px; }
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.backdrop {
+  display: none;
+
+  @include mobile {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 99;
+    animation: fadeIn 0.2s ease;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

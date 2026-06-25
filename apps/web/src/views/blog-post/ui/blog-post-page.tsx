@@ -38,7 +38,9 @@ export async function BlogPostPage({ slug }: BlogPostPageProps) {
             <div className={s.meta}>
               <time dateTime={post.publicationDate}>{formattedDate}</time>
               <span>·</span>
-              <span>{post.readTimeMinutes} {t('minRead')}</span>
+              <span>
+                {post.readTimeMinutes} {t('minRead')}
+              </span>
             </div>
           </header>
 
@@ -63,11 +65,7 @@ export async function BlogPostPage({ slug }: BlogPostPageProps) {
 
         <div className={s.divider} />
 
-        <PopularPosts
-          minReadLabel={t('minRead')}
-          posts={popular}
-          title={t('popularPostsTitle')}
-        />
+        <PopularPosts minReadLabel={t('minRead')} posts={popular} title={t('popularPostsTitle')} />
       </div>
     </div>
   );

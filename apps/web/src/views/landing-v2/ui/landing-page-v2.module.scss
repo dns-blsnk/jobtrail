@@ -1,0 +1,14 @@
+@use 'mixins' as *;
+
+.landingV2Root {
+  --v2-base: #f6f7fb;
+  --v2-surface: #ffffff;
+  --v2-grid-matched: #eef1ff;
+  --v2-grid-strong: #dce4ff;
+  --v2-grid-empty: #f0f0f4;
+  --v2-grid-line: #e2e4f0;
+  --v2-violet: #7c3aed;
+
+  /* clip — не создаёт scroll container (не ломает sticky header), но режет overflow */
+  overflow-x: clip;
+}

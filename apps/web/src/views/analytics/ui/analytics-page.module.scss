@@ -32,26 +32,34 @@
   margin: 0;
 }
 
-.emptyState {
-  @include flex-col($gap: 12px);
-  align-items: center;
-  justify-content: center;
-  padding: 80px 24px;
-  border: 1px dashed v.$color-border-strong;
-  border-radius: v.$radius-lg;
-  text-align: center;
+// Content layout
+
+.grid {
+  @include flex-col($gap: 20px);
 }
 
-.emptyTitle {
-  font-size: 16px;
-  font-weight: 600;
-  color: v.$color-text;
-  margin: 0;
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+  }
 }
 
-.emptyHint {
+// Empty state CTA
+
+.emptyCta {
   font-size: 14px;
-  color: v.$color-muted;
-  margin: 0;
-  max-width: 300px;
+  font-weight: 600;
+  color: v.$color-primary;
+  text-decoration: none;
+  margin-top: 4px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  @include focus-ring(v.$color-primary);
 }

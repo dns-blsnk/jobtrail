@@ -28,12 +28,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         });
 
         if (!res.ok) {
-          const body = await res.json().catch(() => ({})) as Record<string, unknown>;
-          const message = typeof body['message'] === 'string' ? body['message'] : 'Authentication failed';
+          const body = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+          const message =
+            typeof body['message'] === 'string' ? body['message'] : 'Authentication failed';
           throw new Error(message);
         }
 
-        const data = await res.json() as AuthResponse;
+        const data = (await res.json()) as AuthResponse;
 
         return {
           id: data.user.id,

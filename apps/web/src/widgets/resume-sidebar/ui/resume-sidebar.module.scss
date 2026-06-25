@@ -1,0 +1,160 @@
+@use 'mixins' as *;
+@use 'variables' as su;
+
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background: var(--surface);
+
+  @include mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: min(300px, 85vw);
+    z-index: 100;
+    transform: translateX(-100%);
+    @include transition(transform, 0.25s, ease);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.sidebarOpen {
+  @include mobile {
+    transform: translateX(0);
+  }
+}
+
+.sidebarHeader {
+  @include flex-between($gap: 8px);
+  padding: 16px 16px 8px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.sidebarTitle {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--ink-3);
+  margin: 0;
+}
+
+.closeBtn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+  flex-shrink: 0;
+  @include transition(background, 0.15s, ease);
+
+  &:hover { background: var(--surface-2); }
+
+  @include mobile {
+    display: flex;
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.sidebarCreate {
+  padding: 12px 12px 8px;
+  flex-shrink: 0;
+}
+
+.draftList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 8px 16px;
+}
+
+.emptyText {
+  font-size: 13px;
+  color: var(--ink-3);
+  text-align: center;
+  padding: 24px 12px;
+  margin: 0;
+}
+
+.draftCard {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 8px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  @include transition(all, 0.12s, ease);
+
+  &:hover { background: var(--surface-2); }
+}
+
+.draftCardActive {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  border-left: 3px solid var(--accent);
+
+  .draftCardName {
+    color: var(--accent);
+    font-weight: 600;
+  }
+}
+
+.draftCardMain {
+  flex: 1;
+  min-width: 0;
+  @include flex-col($gap: 3px);
+}
+
+.draftCardName {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  @include truncate;
+}
+
+.draftCardRenameInput {
+  width: 100%;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  padding: 2px 6px;
+  background: var(--surface);
+  color: var(--ink);
+  outline: none;
+}
+
+.draftCardMeta {
+  @include flex-center($gap: 6px);
+  justify-content: flex-start;
+}
+
+.draftCardTemplate {
+  font-size: 11px;
+  color: var(--ink-3);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.draftCardDate {
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+.draftCardActions {
+  flex-shrink: 0;
+}
